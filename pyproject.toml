@@ -1,0 +1,39 @@
+[project]
+name = "orchid-poster-rag"
+version = "0.1.0"
+description = "本機蘭花研究海報導覽與有來源問答"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi>=0.115,<1", "uvicorn>=0.34,<1", "httpx>=0.28,<1",
+  "numpy>=2,<3", "sentence-transformers>=3.4,<6", "rank-bm25>=0.2.2,<0.3",
+  "pymupdf>=1.25,<2", "qrcode[pil]>=8,<9", "psutil>=6,<8",
+]
+
+[project.scripts]
+orchid = "orchid.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=0.25,<2", "ruff>=0.12,<1"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["orchid"]
+
+[tool.ruff]
+line-length = 110
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }

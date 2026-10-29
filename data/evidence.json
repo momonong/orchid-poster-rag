@@ -1,0 +1,748 @@
+[
+  {
+    "id": "P01",
+    "document": "paper",
+    "title": "研究問題與研究類型",
+    "section": "Abstract / Introduction",
+    "page": 1,
+    "figure": null,
+    "kind": "研究範圍",
+    "version": "2024 corrected publication",
+    "text": "研究問題：斑塊型蝴蝶蘭（harlequin Phalaenopsis） 的大紫斑、融合斑塊與近全紅紫花紋，如何由 PeMYB11、PeMYBx、HORT1 與 miR858 的交互作用形成？本研究是基於既有實驗資料的反應擴散 mathematical model 與 in silico prediction（數值模擬預測），不是新一輪育種實驗驗證。論文作者 Ti-Wen Lu, Wen-Huei Chen, Pao-Yang Chen, Yu-Chen Shu, Hong-Hwa Chen。",
+    "original_excerpt": "Abstract \nBackground  A retrotransposon HORT1 in the promoter of the anthocyanin activator gene PeMYB11, microRNA858 \n(miR858) that targets PeMYB11, and a repressor PeMYBx have been implicated in pigmentation patterning diversity \nof harlequin Phalaenopsis orchids. However, the interrelationship among them remains to be elucidated.\nResults  To understand how these factors interact to generate anthocyanin spots in Phalaenopsis, we success‑\nfully developed a mathematical model based on the known reaction–diffusion system to simulate their interplay \nand refined the conceptual biological model. Intriguingly, the expression of both PeMYBx and PeMYB11 were in phase \nfor purple spot formation, even though they showed adverse effects on anthocyanin accumulations. An increase \nin the self-activation rate of PeMYB11 resulted in the increased size of purple spots, but no effects on spot fusion. \nDecreased degradation rate of miR858 in the purple regions, led to disruption of the formation of spotted pigmen‑\ntation patterning and a full-red pigmentation pattern. Significantly, the reduced miR858 level promotes the fusion \nof large dark purple dots induced by the solo-LTR of HORT1, eventually generating the purple patches. In addition, \nthe spatially heterogeneous insertion of HORT1 caused by the remnant solo-LTR of HORT1 derived from random \nhomologous unequal recombination of HORT1 in individual cells of floral organs could explain the diverse pigmenta‑\ntion patterning of harlequin Phalaenopsis.\nConclusions  This devised model explains how HORT1 and miR858 regulate the formation of the pigmentation pat‑\nterning and holds great promise for developing efficient and innovative approaches to breeding harlequin Phalaeno-\npsis orchids.\nKeywords  Harlequin Phalaenopsis, Retrotransposon HORT1, MicroRNA (miRNA), Pigmentation patterning, Turing \npatterns",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 1,
+        "rect": [
+          0.10604,
+          0.34994,
+          0.89142,
+          0.66944
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "intro"
+    ]
+  },
+  {
+    "id": "P02",
+    "document": "paper",
+    "title": "花青素與 HORT1 背景觀察",
+    "section": "Introduction",
+    "page": 2,
+    "figure": "Fig. 1",
+    "kind": "既有生物實驗背景",
+    "version": "2024 corrected publication",
+    "text": "蝴蝶蘭深紅紫色來自高花青素含量（anthocyanin）。先前研究在白色與紫色區域找到 HORT1 片段；HORT1 solo-LTR 出現在紫色區域，可能作為 PeMYB11 啟動子的 enhancer。P. Ever-spring Prince ‘Plum’ 即使沒有 solo-LTR，只有 full-length HORT1，仍有大紫色斑塊，指出不能只用 solo-LTR 單一因素解釋所有花紋。",
+    "original_excerpt": "Introduction\nHarlequin Phalaenopsis orchids, named after harle-\nquin patches of a dark reddish-purple color, are pop-\nular because of their exotic flower shapes and diverse \npigmentation patterning [1]. Some hybrids have pat-\nterning very similar to full-red patterning, whereas \nothers have extraordinarily large spots that are not \nfused (Fig. 1). The dark reddish-purple coloring on the \nflowers results from high anthocyanin content [2]. The \nclassical harlequin patches are related to insertion of \nsolo-LTR but not to the full-length coding sequence of \nthe harlequin orchid retrotransposon 1 (HORT1) in the \nupstream promoter of PeMYB11. For example, HORT1 \nis responsible for the spotted pigmentation patterns \nin the harlequin Phalaenopsis orchids [2]. Although \nHORT1 fragments were found in white and purple \nregions, only the solo-LTR of HORT1 exists in pur-\nple regions. Hence, the solo-LTR of HORT1 appears \nto serve as an enhancer of PeMYB11 and may lead to \nthe formation of dark reddish-purple patches in harle-\nquin Phalaenopsis [2]. However, P. Ever-spring Prince \n‘Plum’ (Supplementary Fig.  1), a harlequin Phalaeno-\npsis hybrid, has large purple patches in the absence \nof the solo-LTR of HORT1, and only the full-length \nHORT1 was identified in P. Ever-spring Prince ‘Plum’ \n[2]. Therefore, the mechanisms of the diversified \npigmentation patterning of harlequin Phalaenopsis \nremain to be elucidated.",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 2,
+        "rect": [
+          0.09524,
+          0.10889,
+          0.49201,
+          0.53803
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "intro"
+    ]
+  },
+  {
+    "id": "P03",
+    "document": "paper",
+    "title": "模型角色：局部活化與較快擴散抑制",
+    "section": "Methods: Mathematical description",
+    "page": 10,
+    "figure": "Fig. 10",
+    "kind": "模型假設",
+    "version": "2024 corrected publication",
+    "text": "PeMYB11 是 activator A，PeMYBx 是 inhibitor H；A(t,r)、H(t,r) 是時間 t、位置 r 的濃度，單位 µM。PeMYB11 以 G_A 自我活化，也以 G_H 活化 PeMYBx；PeMYBx 抑制 PeMYB11 合成。兩者分別以 µ_A、µ_H 降解，並以 D_A、D_H 擴散。模型需要 D_H > D_A，也就是抑制者比活化者擴散得快，配合反應動力學形成週期斑點。這是簡化的 activator-inhibitor 模型，不是完整分子網路。 模型中的 PeMYB11／PeMYBx 代表包含轉錄、轉錄後與翻譯的整體過程，不是單一基因或蛋白本身。D_H > D_A 是模型設定中的必要條件，不能單獨當作斑點必然形成的充分條件。",
+    "pages": [
+      9,
+      10
+    ],
+    "original_excerpt": "Materials and methods\nConstruction of the PeMYB11‑PeMYBx interaction model \nand its interplay with important factors\nThe construction of the PeMYB11-PeMYBx interaction \nmodel was based on experimental data (2,8). Notably, \ninstead of representing a gene or a protein, “PeMYB11” \nand “PeMYBx” indicate systems of biological processes \nincluding \ntranscriptional, \npost-transcriptional, \nand \ntranslational stages. The PeMYB11-PeMYBx interac-\ntion model comprises the following interaction rules: \n1) PeMYB11 is self-activated, 2) PeMYB11 activates the \nbiosynthesis of PeMYBx and 3) PeMYBx inhibits the \nbiosynthesis of PeMYB11. We studied the direct effects \nof HORT1 on the pigmentation patterning of harlequin \nPhalaenopsis by adjusting the self-activation rate of the \nactivator reflecting the changes in transcription level of \nPeMYB11. In contrast, we studied the effect of miR858 \non the pigmentation patterning by adjusting the deg-\nradation rate of the activator reflecting the changes in \npost-transcriptional level of PeMYB11. In addition to \nmolecular factors such as HORT1 and miR858, the spa-\ntial distribution of full-length HORT1 and its solo-LTR \nthroughout the petal/sepal tissue is a factor in the effect \nof the pigmentation patterning.\n\nFig. 10  Mathematical description of the PeMYB11-PeMYBx interaction model. PeMYB11 is the activator of the reaction–diffusion system, \nand PeMYBx is the inhibitor of the system. PeMYB11 self-activates with the self-activation potency GA value, and it also activates the biosynthesis \nof PeMYBx with the activation potency GH value. PeMYBx inhibits the biosynthesis of PeMYB11. The activator and the inhibitor degrade \nwith degradation rates µA and µH , respectively. The activator diffuses with diffusivity DA, and the inhibitor diffuses with diffusivity DH. The value of DA \nmust be smaller than DH for patterns to form. In the PeMYB11-PeMYBx interaction model, ∅ is the symbol for empty",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 9,
+        "rect": [
+          0.5119,
+          0.4411,
+          0.90869,
+          0.80956
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 10,
+        "rect": [
+          0.10532,
+          0.84753,
+          0.89595,
+          0.91241
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "methods",
+      "clue1"
+    ]
+  },
+  {
+    "id": "P04",
+    "document": "paper",
+    "title": "Gierer–Meinhardt 反應擴散方程",
+    "section": "Methods: Mathematical description",
+    "page": 10,
+    "figure": "Fig. 10",
+    "kind": "模型方程",
+    "version": "2024 corrected publication",
+    "text": "Gierer–Meinhardt model：∂A/∂t = G_A·A²/(H+k) + ρ_A + D_A·∇²A − µ_A·A；∂H/∂t = G_H·A² + D_H·∇²H − µ_H·H。G_A 是 A 的自我活化強度，G_H 是 A 活化 H 的強度；D_A、D_H 是擴散係數，µ_A、µ_H 是 A、H 的降解率，ρ_A 是基本產生率，k 是分母中的常數。這些是模型變數與參數，不應把 µ_A 解讀為 miR858 本身降解率。",
+    "original_excerpt": "where T is the stopping time, L is the side length of the \ncomputational square and \u001f is the Laplacian operator in \nspace. At each computation grid, the initial concentration \nof A(0, r) is randomly assigned with values from 0 to 1 \n(9). The initial concentration of H(0, r)is 0 because the \nbiosynthesis of PeMYBx is activated by PeMYB11. The \nboundary condition is assumed to be the periodic bound-\nary condition. The meaning of the coefficients in the \nequations is as follows: GA represents the potency of self-\nactivation of A2 ; GH represents the potency of activation \nof H activated by A2 ; DA and DH represent the diffusion \nrate of A and H , respectively; and µA and µH represent \nthe degradation rate of A and H respectively. DH must be \nlarger than DA (4).\n\nFig. 10  Mathematical description of the PeMYB11-PeMYBx interaction model. PeMYB11 is the activator of the reaction–diffusion system, \nand PeMYBx is the inhibitor of the system. PeMYB11 self-activates with the self-activation potency GA value, and it also activates the biosynthesis \nof PeMYBx with the activation potency GH value. PeMYBx inhibits the biosynthesis of PeMYB11. The activator and the inhibitor degrade \nwith degradation rates µA and µH , respectively. The activator diffuses with diffusivity DA, and the inhibitor diffuses with diffusivity DH. The value of DA \nmust be smaller than DH for patterns to form. In the PeMYB11-PeMYBx interaction model, ∅ is the symbol for empty",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 10,
+        "rect": [
+          0.09523,
+          0.19962,
+          0.49201,
+          0.41525
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 10,
+        "rect": [
+          0.10532,
+          0.84753,
+          0.89595,
+          0.91241
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "methods",
+      "clue1"
+    ]
+  },
+  {
+    "id": "P05",
+    "document": "paper",
+    "title": "標準模擬參數",
+    "section": "Methods: Simulation of typical spotted patterning",
+    "page": 10,
+    "figure": "Fig. 2",
+    "kind": "數值模擬條件",
+    "version": "2024 corrected publication",
+    "text": "標準斑點的參數：D_A = 0.01，D_H = 0.5，µ_A = 0.03，µ_H = 0.03，G_A = 0.08，G_H = 0.12，ρ_A = 0.01，k = 0.001。值沿用 Ding et al. (2020) 等先前研究。模型方格上 A 初始濃度隨機分布於 0 到 1，H 初始為 0。這些值是模擬設定，不是新量測的每個細胞參數，也不是所有蘭花通用常數。",
+    "original_excerpt": "of PeMYBx, H , was a zero matrix. The value of each \nparameter in the model was the same as in Ding et  al. \n(2020) \n(DA = 0.01, DH = 0.5, µA = 0.03, µH = 0.03,\nGA = 0.08, GH = 0.12, ρA = 0.01, andk = 0.001) , \nwhich \nis widely accepted from previous studies. We used rdsolver, \na Python package for solving reaction–diffusion systems \n(v0.1.5), to simulate the dynamic behavior of the discrete \nsystem of the PeMYB11-PeMYBx interaction model. We \nchose the rdsolver package because it uses variable time \nstep implicit/explicit (VSIMEX) time stepping to attain \nbetter computer efficiency for solving the equations. \nWith rdsolver, the concentrations of both PeMYB11 and \nPeMYBx were solved. In addition, to validate the correct-\nness of the simulation results, comparison simulations \nwere computed with Virtual Cell software by modifying \nthe model constructed by Ding et al. (2020). Virtual Cell \nis a mature and free software for modeling and simulat-\ning biological systems (10). Nevertheless, Virtual Cell does \nnot allow for considering piece-wise GA values. Thus, in this \nstudy, we designed a new script to apply piece-wise GA \nvalues.",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 10,
+        "rect": [
+          0.51076,
+          0.10934,
+          0.90866,
+          0.43118
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "methods",
+      "clue1"
+    ]
+  },
+  {
+    "id": "P06",
+    "document": "paper",
+    "title": "論文數值方法與邊界條件",
+    "section": "Methods: Computational simulations",
+    "page": 10,
+    "figure": null,
+    "kind": "數值模擬條件",
+    "version": "2024 corrected publication",
+    "text": "論文使用二維 100 × 100 均勻空間格點，L = 100，periodic boundary condition（週期邊界條件）。Python rdsolver v0.1.5 使用 variable time step implicit/explicit VSIMEX 時間步進。以 Virtual Cell 比較模擬確認結果；Virtual Cell 無法設定 piece-wise G_A，所以作者另寫腳本處理非均勻 G_A。論文這項方法敘述不是花瓣形 FEM／Neumann 邊界。",
+    "original_excerpt": "where T is the stopping time, L is the side length of the \ncomputational square and \u001f is the Laplacian operator in \nspace. At each computation grid, the initial concentration \nof A(0, r) is randomly assigned with values from 0 to 1 \n(9). The initial concentration of H(0, r)is 0 because the \nbiosynthesis of PeMYBx is activated by PeMYB11. The \nboundary condition is assumed to be the periodic bound-\nary condition. The meaning of the coefficients in the \nequations is as follows: GA represents the potency of self-\nactivation of A2 ; GH represents the potency of activation \nof H activated by A2 ; DA and DH represent the diffusion \nrate of A and H , respectively; and µA and µH represent \nthe degradation rate of A and H respectively. DH must be \nlarger than DA (4).\n\nComputational simulations of the PeMYB11‑PeMYBx \ninteraction model: simulation of typical spotted patterning\nWe wrote the script for performing 2-D numerical simula-\ntions in Python to generate the spotted patterning. Without \nloss of generality, we set Lto100 and used the uniform grid \nin space, that is, all integer grid points i, j , 1 ≤i, j ≤100, \nin the computational square for two concentrations, A and \nH . For the initial setting, random values were assigned to \nA , the concentration of PeMYB11. The initial concentration\n\nof PeMYBx, H , was a zero matrix. The value of each \nparameter in the model was the same as in Ding et  al. \n(2020) \n(DA = 0.01, DH = 0.5, µA = 0.03, µH = 0.03,\nGA = 0.08, GH = 0.12, ρA = 0.01, andk = 0.001) , \nwhich \nis widely accepted from previous studies. We used rdsolver, \na Python package for solving reaction–diffusion systems \n(v0.1.5), to simulate the dynamic behavior of the discrete \nsystem of the PeMYB11-PeMYBx interaction model. We \nchose the rdsolver package because it uses variable time \nstep implicit/explicit (VSIMEX) time stepping to attain \nbetter computer efficiency for solving the equations. \nWith rdsolver, the concentrations of both PeMYB11 and \nPeMYBx were solved. In addition, to validate the correct-\nness of the simulation results, comparison simulations \nwere computed with Virtual Cell software by modifying \nthe model constructed by Ding et al. (2020). Virtual Cell \nis a mature and free software for modeling and simulat-\ning biological systems (10). Nevertheless, Virtual Cell does \nnot allow for considering piece-wise GA values. Thus, in this \nstudy, we designed a new script to apply piece-wise GA \nvalues.",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 10,
+        "rect": [
+          0.09523,
+          0.19962,
+          0.49201,
+          0.41525
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 10,
+        "rect": [
+          0.09524,
+          0.42769,
+          0.49202,
+          0.56698
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 10,
+        "rect": [
+          0.51076,
+          0.10934,
+          0.90866,
+          0.43118
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "methods",
+      "clue1"
+    ]
+  },
+  {
+    "id": "P07",
+    "document": "paper",
+    "title": "Clue 1：活化者與抑制者同相",
+    "section": "Results: PeMYBx is the negative regulator",
+    "page": 3,
+    "figure": "Fig. 2",
+    "kind": "模擬結果與既有觀察比較",
+    "version": "2024 corrected publication",
+    "text": "標準參數產生週期斑點。PeMYB11 與 PeMYBx 的空間表達分布 in-phase（同相），紫色斑點中兩者皆高；這與先前實驗結果相符。抑制者與活化者在同一位置較高並不矛盾，因為 A 同時促進 H，而 H 又限制 A；模型中 H 較快擴散。這不表示 PeMYBx 是花青素活化者。",
+    "original_excerpt": "Results\nPeMYBx is the negative regulator of anthocyanin spot \npatterning in Phalaenopsis\nA revisit of the mechanisms of spotted pigmentation \npatterning formation was essential for explaining the \nformation of big dark purple patches in harlequin Phal-\naenopsis cultivars. The numerical simulation showed \nstandard spotted patterning (Fig.  2), which confirmed \nthat the parameter values determined for the numeri-\ncal simulation were suitable for the VSIMEX method \nused by rdsolver. Moreover, the simulations suggested \nthat the expression patterns of PeMYB11 and PeMYBx \nwere in-phase, showing the same results as the experi-\nmental expression data for PeMYB11 and PeMYBx \n[2]. Consequently, the PeMYB11-PeMYBx interac-\ntion model gave a preliminary explanation of why the \nexpression of PeMYBx was higher in the purple than \nwhite regions. That is, instead of simply competing for \nthe same binding sites as other MYB repressors, the dif-\nfusible repressor system of PeMYBx was more likely\n\nFig. 2  No phase difference between numerical simulations of PeMYB11 and PeMYBx expression pattern. A Simulated expression pattern \nof PeMYB11 with the following parameter values: DA = 0.01; DH = 0.5; µA = 0.03; µH = 0.03; ρA = 0.01; GA = 0.08; GH = 0.12 B Simulated \nexpression pattern of PeMYBx with the same parameter values as (A). C Merged",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 3,
+        "rect": [
+          0.5119,
+          0.33583,
+          0.90867,
+          0.64361
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 3,
+        "rect": [
+          0.10532,
+          0.87222,
+          0.86093,
+          0.91004
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue1"
+    ]
+  },
+  {
+    "id": "P08",
+    "document": "paper",
+    "title": "Clue 2：提高自我活化只讓斑點變大",
+    "section": "Results: Insertion of solo-LTR of HORT1",
+    "page": 4,
+    "figure": "Figs. 4–5",
+    "kind": "數值模擬預測",
+    "version": "2024 corrected publication",
+    "text": "單獨提高 PeMYB11 自我活化參數 G_A，模擬中斑點變大，但不足以重現 Yushan Little Pearl 程度的融合。作者比較 G_A = 0.08、0.1632、0.66、2.712，Virtual Cell 另比較 7 與 70。僅增強轉錄不足以解釋大融合紫斑。此結果是本模型條件下的模擬，不是所有生物系統的普遍定律。",
+    "original_excerpt": "Solo‑LTR of HORT1 increases the size of each spot \nof the spotted patterning of Phalaenopsis\nInsertion of the solo-LTR of HORT1 in the PeMYB11 \npromoter increases promoter activity twofold (2). The \ntwofold increase of the self-activation rate GA , analo-\ngous to the increased transcription activity of PeMYB11, \nresulted in a slight increase in spot sizes in the simula-\ntion (Fig.  4F). More simulation results demonstrated \nthat the simulated level of PeMYB11 increased as GA \nwas increased and resulted in gradually increased spot \nsizes (Fig. 4). For validation, simulations were also imple-\nmented using Virtual Cell, modifying the model con-\nstructed by Ding et  al. (2020). The values of GA in the \nsimulations by using Virtual Cell were 0.66, 7, and 70. \nThe simulations showed that the spot sizes increased \nas the GA value increased. However, even when GA was \nincreased to 70 µM , fusion of the spots was not increased \nto the level expected in P. Yushan Little Pearl (Fig.  5). \nMoreover, the center region of the spots with the high-\nest anthocyanin accumulation did not expand to the level \nof the anthocyanin spots in P. Yushan Little Pearl (Fig. 5).\n\nThe insertion of solo-LTR of HORT1 in the promoter of \nPeMYB11 could result in the big dark purple spots, but \nthe effect on spot fusion was limited. Thus, other factors \nneeded to be investigated to understand the exotic pat-\nterns of the harlequin Phalaenopsis.",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 4,
+        "rect": [
+          0.09524,
+          0.36681,
+          0.49202,
+          0.68818
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 4,
+        "rect": [
+          0.5119,
+          0.1084,
+          0.90863,
+          0.18747
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue2"
+    ]
+  },
+  {
+    "id": "P09",
+    "document": "paper",
+    "title": "G_A = 2.712：品種間 PeMYB11 表達倍率的估計",
+    "section": "Methods: Increased PeMYB11 transcription activity",
+    "page": 11,
+    "figure": null,
+    "kind": "參數估計依據",
+    "version": "2024 corrected publication",
+    "text": "標準基準：G_A = 0.08 是標準模擬的自我活化參數，是以下兩條估計路徑共同使用的計算基準。\n\n啟動子實驗這一條估計路徑：先前 dual luciferase promoter assay 顯示 solo-LTR 插入對啟動子活性的約兩倍增強，據此將標準 G_A = 0.08 調整為 0.1632；再考慮四倍體，0.1632 × 4 ≈ 0.66。\n\n品種間表達量這一條估計路徑（2.712）：P. Yushan Little Pearl 紫區的 PeMYB11 表達量，比 P. OX Red Shoe ‘OX1408’ 高 33.9 倍；作者將這個品種間表達比乘以標準基準，G_A = 33.9 × 0.08 = 2.712。校註：33.9 是這兩個品種間的 PeMYB11 表達倍率，與前項啟動子 assay 的約兩倍估計不同。0.08 是標準基準，2.712 是這條表達倍率路徑的增強設定；它是模型參數，不是直接量測的濃度。\n\n模擬用途：單獨調整 G_A 用於比較斑點尺寸，另有 G_A = 7、70 的尺寸比較。合併調整 G_A 與 µ_A = 0.01 的融合斑塊模擬另見 P11；應將參數估計的資料依據與聯合模擬結果分開。",
+    "original_excerpt": "activity with dual luciferase assay (2). To resemble the \nenhanced transcription activity induced by insertion of \nthe solo-LTR of HORT1 in the promoter of PeMYB11, GA \nwas adjusted to about twofold of the standard GA value \n(= 0.08) and eventually equaled 0.1632. In addition, har-\nlequin Phalaenopsis cultivars are tetraploid plants (11), \nso we also considered another value for GA (0.1632 x 4 \n≈ 0.66) for tetraploid plants. Furthermore, the expression\n\nof PeMYB11 is 33.9-fold higher in the purple region of \nP. Yushan Little Pearl than in P. OX Red Shoe ‘OX1408’ \n(2). The transcription activity of PeMYB11 is enhanced \nby insertion of the solo-LTR of HORT1 but not the full-\nlength HORT1, so the GA value was adjusted to 2.712 \n(= 33.9 x 0.08) to reflect the enhanced PeMYB11 tran-\nscription activity in the purple regions of P. Yushan Lit-\ntle Pearl. In addition, we also considered the GA values \nof 7 and 70 in later simulations for observing the rate of \nchanges of spot sizes, approximately tenfold and 100-\nfold increases of the 0.66 value, respectively, in tetraploid \nplants.",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 11,
+        "rect": [
+          0.09432,
+          0.10934,
+          0.49201,
+          0.23393
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 11,
+        "rect": [
+          0.09524,
+          0.23072,
+          0.49197,
+          0.41599
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue2"
+    ]
+  },
+  {
+    "id": "P10",
+    "document": "paper",
+    "title": "miR858 下降以降低 PeMYB11 降解率表示",
+    "section": "Results / Methods: Reduced degradation rate",
+    "page": 11,
+    "figure": "Fig. 6",
+    "kind": "模型對應與數值模擬預測",
+    "version": "2024 corrected publication",
+    "text": "miR858 靶向 PeMYB11 mRNA；以往觀察白區 miR858 表達較高。模型以降低活化者 PeMYB11 的降解率 µ_A 來代理 miR858 表達降低。標準 µ_A = 0.03，降低為 0.01（小於標準的 0.5 倍），破壞原本斑點生成並呈現近全紅的色素分布。µ_A 並不是 miR858 自身的降解率；降低 miR858 表達與降低 miR858 的降解率不是同義詞。",
+    "original_excerpt": "Reduced degradation rate of PeMYB11 caused by reduced \nmiR858 expression\nAll parameters were the same as those in the numeri-\ncal simulation for typical spotted pigmentation pattern-\ning, except for adjustment of the degradation rate µA . \nTo resemble the reduction in miR858 expression, the \nvalue of µA was adjusted to less than 0.5-fold of 0.03 \n(standard µA ) according to the experimental results of \nquantitative PCR of miR858 (8). The number 0.01 was \nselected as the lowered value of µA . To assess the com-\nbination effects of the solo-LTR of HORT1 and miR858, \nwe used only the parameters GA and µA without affect-\ning other parameters, and the adjustment was based on \nthe two independent cases for solo-LTR of HORT1 and \nmiR858.\n\nDifferential miR858 expression disrupts the formation \nof spotted patterning of Phalaenopsis\nA miRNA regulates the gene expression of its targeted \nmRNA by degradation or inhibition of translation [12]. \nIn harlequin Phalaenopsis, miR858 targeting the mRNA \nof PeMYB11 is related to the formation of purple spots \n[8], and miR858 expression is about threefold higher in \nthe white than purple regions [8], which suggests that \nthe degradation rate of PeMYB11 mRNA is lower in the \npurple than white regions. Thus, we assessed the role of \nmiR858 in generating dark purple patches on harlequin \nPhalaenopsis flowers (Fig.  6). The simulation results \nshowed that decreased degradation rate µA , analogous to \nthe reduced miR858 expression in the purple regions, led \nto disruption of the formation of spotted pigmentation \npatterning and a full-red pigmentation pattern (Fig. 6C). \nHence, the purple patches of P. Ever Spring Prince ‘Plum’ \nwas more likely due to reduced degradation of PeMYB11 \nmRNA than to spot fusion.",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 11,
+        "rect": [
+          0.09523,
+          0.42845,
+          0.49198,
+          0.65877
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 4,
+        "rect": [
+          0.5119,
+          0.19991,
+          0.90869,
+          0.4909
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue2"
+    ]
+  },
+  {
+    "id": "P11",
+    "document": "paper",
+    "title": "Clue 2：兩因素合併產生較大融合紫斑",
+    "section": "Results: Solo-LTR and differential miR858 expression",
+    "page": 7,
+    "figure": "Fig. 7",
+    "kind": "數值模擬預測",
+    "version": "2024 corrected publication",
+    "text": "合併提高 G_A 與降低 µ_A 的模擬會產生較大、融合的紫色斑塊：Fig. 7A 參數 G_A = 0.66、µ_A = 0.01；Fig. 7C 參數 G_A = 2.712、µ_A = 0.01；B 與 D 用 2 µM 閾值畫等高輪廓。這支持 HORT1 solo-LTR 增強活化與較低 miR858 代理的降解減弱，共同解釋大融合斑塊的模型機制。",
+    "original_excerpt": "Fig. 7  Simulation results of combination effects of insertion of solo-LTR of HORT1 and reduced miR858 expression. A Simulated pattern of PeMYB11 \nwith parameter values GA = 0.66 and µA = 0.01. B is generated by plotting contour maps of (A) at the threshold of 2 µM. C Simulated pattern \nof PeMYB11 with parameter values GA = 2.712 and µA = 0.01 . D is generated by plotting contour maps of (C) at the threshold of 2 µM",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 7,
+        "rect": [
+          0.10532,
+          0.52052,
+          0.89654,
+          0.55975
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue2"
+    ]
+  },
+  {
+    "id": "P12",
+    "document": "paper",
+    "title": "Clue 3：空間不均勻的 HORT1 分布",
+    "section": "Results: Heterogeneous spatial distribution",
+    "page": 8,
+    "figure": "Fig. 9",
+    "kind": "數值模擬預測",
+    "version": "2024 corrected publication",
+    "text": "為模擬 P. Yushan Little Pearl 銳利紫白邊界、大斑點與高融合，作者用 piece-wise G_A 表示 full-length HORT1 與 solo-LTR 在花瓣不同細胞區域的不均勻轉錄活性。Fig. 9 參數：G_A_pur = 7，G_A_whi = 0.0296，G_H = 0.12，D_A = 0.01，D_H = 0.5，µ_A = 0.01，µ_H = 0.03，ρ_A = 0.01。這是特定條件下可重現形態的模擬，不能當成直接證明每個細胞的 HORT1 分布。",
+    "original_excerpt": "full-length HORT1 reduces the transcription activity \nof PeMYB11 [2]. The simulation results recapitulated \nthe characteristic pattern of harlequin P. Yushan Little \nPearl, including a sharp separation between purple and \nwhite regions, large anthocyanin spots, and high level \nof spot fusion (Fig. 9). Hence, the spatially heterogene-\nous insertion of HORT1 and its structural variant are \ncrucial factors for generating the patterns specific to P. \nYushan Little Pearl.\n\nFig. 9  A comparison of the floral pattern of P. Yushan Little \nPearl (left) and the simulated pattern (right). The simulation \nresults recapitulated the characteristic pattern of harlequin P. \nYushan Little Pearl, including a sharp separation between purple \nand white regions, large anthocyanin spots, and high levels \nof spot fusion. The simulation parameter values are as follows: \nGA_pur = 7, GA_whi = 0.0296, GH = 0.12, DA = 0.01, DH = 0.5,\nµA = 0.01, µH = 0.03, ρA = 0.01",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 7,
+        "rect": [
+          0.5119,
+          0.59824,
+          0.90866,
+          0.738
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 8,
+        "rect": [
+          0.10466,
+          0.81006,
+          0.45172,
+          0.91251
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue3"
+    ]
+  },
+  {
+    "id": "P13",
+    "document": "paper",
+    "title": "白區 G_A_whi 的估計",
+    "section": "Methods: Heterogeneous spatial distribution",
+    "page": 11,
+    "figure": "Fig. 11",
+    "kind": "參數估計依據",
+    "version": "2024 corrected publication",
+    "text": "G_A_whi = 0.0296 = 0.08 × 0.37，依先前 full-length HORT1 插入對 promoter activity 的 dual luciferase assay 抑制效果估計。雖然 harlequin Phalaenopsis 是四倍體，白區 PeMYB11 轉錄強烈受抑制，模型仍使用一倍 0.0296。分段 G_A 的空間指定規則在更正後論文 Fig. 11。",
+    "original_excerpt": "Comprehensive consideration of the heterogeneous \nspatial distribution of full‑length HORT1 and solo‑LTR \nof HORT1\nIdentification of both full-length HORT1 and solo-LTR \nof HORT1 in the flower of harlequin P. Yushan Little \nPearl indicated the existence of heterogeneous tran-\nscription activity of PeMYB11 in sepal/petal tissue. \nTo simulate the effect of heterogeneous transcription \nactivity of PeMYB11, we assigned piece-wise GA values \nto the computation grids. The assignment rule is illus-\ntrated in Fig.  11. The value of GA_pur is larger than the \nstandard value 0.08. The value of GA_whi was assigned \nas 0.0296 by multiplying the standard GA value (= 0.08) \nby 0.37 according to the experimental data for the effect\n\nof inserting the full-length HORT1 in promoter activ-\nity by using dual luciferase assay (2). The transcription \nof PeMYB11 is strongly inhibited in the white region. \nConsequently, even though harlequin Phalaenopsis cul-\ntivars are tetraploid plants, we used only one-fold of the \nvalue 0.0296 (= 0.08 × 0.37) to resemble the inhibition \neffect of insertion of the full-length HORT1 on PeMYB11 \ntranscription.",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 11,
+        "rect": [
+          0.09523,
+          0.67122,
+          0.49201,
+          0.88638
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 11,
+        "rect": [
+          0.5119,
+          0.45694,
+          0.90869,
+          0.58152
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue3"
+    ]
+  },
+  {
+    "id": "P14",
+    "document": "paper",
+    "title": "視覺化閾值與濃度",
+    "section": "Methods: Visualization",
+    "page": 11,
+    "figure": null,
+    "kind": "視覺化方法",
+    "version": "2024 corrected publication",
+    "text": "PeMYB11 與 PeMYBx 的二維濃度解以 Matplotlib、seaborn 畫熱圖。均勻參數模擬使用 2 µM 閾值顯示花紋；piece-wise G_A 時另定 T > 2 µM 畫較深色層，模擬花朵色彩梯度。顏色是模型濃度的讀出規則，並非直接花青素濃度量測，也不能把 2 µM 當成所有花朵通用的生理臨界值。",
+    "original_excerpt": "Visualization of the pattern of simulated PeMYB11 \nand PeMYBx levels\nTo visualize the patterns, the 2-D solutions of PeMYB11 \nand PeMYBx were colored by plotting the heatmaps of the \n100 × 100 matrix using Matplotlib and seaborn packages. \nWhen each parameter assigned to each computation grid \nwas uniform, we set a threshold of 2 µM for visualizing \nthe pattern. When piece-wise GA was assigned, an addi-\ntional threshold T > 2 µM was defined for a deep coloring \nlayer to mimic the floral-color gradient filling of flowers of \nP. Yushan Little Pearl. To obtain a consistent color-filling \nrule over different pairs of GA_pur and GA_whi values, T was \ndefined as the GA_whi",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 11,
+        "rect": [
+          0.5119,
+          0.59397,
+          0.90866,
+          0.79395
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue2"
+    ]
+  },
+  {
+    "id": "P15",
+    "document": "paper",
+    "title": "摘要與 Methods 的用詞衝突",
+    "section": "Abstract compared with Methods",
+    "page": 1,
+    "figure": null,
+    "kind": "來源校註",
+    "version": "2024 corrected publication",
+    "text": "來源校註：論文摘要原句寫 decreased degradation rate of miR858；但 Methods 與模型方程明確定義 µ_A 為 PeMYB11（activator A）的降解率，降低 µ_A 代理 reduced miR858 expression。因此回答以實際模型定義說明 PeMYB11 降解減少，不將摘要措辭靜默改寫成原文引句，也不解釋成 miR858 自身降解減少。2024-08-17 correction 只更正圖號，沒有解決這個用詞衝突。",
+    "original_excerpt": "Abstract \nBackground  A retrotransposon HORT1 in the promoter of the anthocyanin activator gene PeMYB11, microRNA858 \n(miR858) that targets PeMYB11, and a repressor PeMYBx have been implicated in pigmentation patterning diversity \nof harlequin Phalaenopsis orchids. However, the interrelationship among them remains to be elucidated.\nResults  To understand how these factors interact to generate anthocyanin spots in Phalaenopsis, we success‑\nfully developed a mathematical model based on the known reaction–diffusion system to simulate their interplay \nand refined the conceptual biological model. Intriguingly, the expression of both PeMYBx and PeMYB11 were in phase \nfor purple spot formation, even though they showed adverse effects on anthocyanin accumulations. An increase \nin the self-activation rate of PeMYB11 resulted in the increased size of purple spots, but no effects on spot fusion. \nDecreased degradation rate of miR858 in the purple regions, led to disruption of the formation of spotted pigmen‑\ntation patterning and a full-red pigmentation pattern. Significantly, the reduced miR858 level promotes the fusion \nof large dark purple dots induced by the solo-LTR of HORT1, eventually generating the purple patches. In addition, \nthe spatially heterogeneous insertion of HORT1 caused by the remnant solo-LTR of HORT1 derived from random \nhomologous unequal recombination of HORT1 in individual cells of floral organs could explain the diverse pigmenta‑\ntion patterning of harlequin Phalaenopsis.\nConclusions  This devised model explains how HORT1 and miR858 regulate the formation of the pigmentation pat‑\nterning and holds great promise for developing efficient and innovative approaches to breeding harlequin Phalaeno-\npsis orchids.\nKeywords  Harlequin Phalaenopsis, Retrotransposon HORT1, MicroRNA (miRNA), Pigmentation patterning, Turing \npatterns\n\nReduced degradation rate of PeMYB11 caused by reduced \nmiR858 expression\nAll parameters were the same as those in the numeri-\ncal simulation for typical spotted pigmentation pattern-\ning, except for adjustment of the degradation rate µA . \nTo resemble the reduction in miR858 expression, the \nvalue of µA was adjusted to less than 0.5-fold of 0.03 \n(standard µA ) according to the experimental results of \nquantitative PCR of miR858 (8). The number 0.01 was \nselected as the lowered value of µA . To assess the com-\nbination effects of the solo-LTR of HORT1 and miR858, \nwe used only the parameters GA and µA without affect-\ning other parameters, and the adjustment was based on \nthe two independent cases for solo-LTR of HORT1 and \nmiR858.",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 1,
+        "rect": [
+          0.10604,
+          0.34994,
+          0.89142,
+          0.66944
+        ]
+      },
+      {
+        "document": "paper",
+        "page": 11,
+        "rect": [
+          0.09523,
+          0.42845,
+          0.49198,
+          0.65877
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+    "poster_sections": [
+      "clue2"
+    ]
+  },
+  {
+    "id": "S01",
+    "document": "poster",
+    "title": "海報：研究摘要與三條線索",
+    "section": "Introduction / Results",
+    "page": 1,
+    "figure": "Figs. 1–4",
+    "poster_sections": [
+      "intro",
+      "clue1",
+      "clue2",
+      "clue3"
+    ],
+    "kind": "海報導覽摘要",
+    "version": "user-supplied 2026-10-29",
+    "text": "海報以三條線索說明花紋：Clue 1 活化者與抑制者交互作用生成週期斑點；Clue 2 自我活化增加讓斑點變大，降解減少促進融合；Clue 3 HORT1 的空間不均勻分布重現品種特有的大融合斑塊與銳利紫白邊界。模型是 PeMYB11 activator 與 PeMYBx inhibitor 的 Gierer–Meinhardt 系統。海報作者 Ti-Wen Lu、Yu-Chen Shu，國立成功大學。",
+    "original_excerpt": "INTRODUCTION\nHarlequin Phalaenopsis orchids display a remarkable diversity of \nfloral pigmentation, from scattered big purple spots to large fused \npatches and nearly uniform red-purple coloration.\nDiverse Pigmentation\nKnown Molecular Players Underlying the Large \nFused Patches\nResearch Question\nHow do the interactions among molecules produce \nthe large fused patches and furthermore, the diverse \npigmentations patterning?\n\nClue 1 | The Formation of Spots\nActivator-inhibitor interactions generate periodic spot patterns.\nFigure 2. The standard periodic spot patterns were generated on a 100x100 uniform grid (A) and a petal-shaped domain  (B).  \n(A)\n(B)\n\nClue 2 | From Spots to Fused Patches\nIncreased self-activation enlarges spots, and reduced degradation promotes fusion. \nCombining increased Ga with reduced HA leads to fused, larger patches.\nFigure 3. Simulated patterns of PeMYB11 under the combined effects of HORT1 solo-LTR insertion and reduced miR858 \nexpression. (A) Simulated pattern at \n. (B) Contour map of (A) plotted at the 2 µM threshold. (C) \nSimulated pattern at \n. (D) Contour map of (C) plotted at the 2 µM threshold.\nGA = 0.66, μA = 0.01\nGA = 2.712, μA = 0.01\n\nClue 3 | Extensive Pigmentation of the Spots\nSpatial heterogeneity reproduces cultivar-specific patterns. Spatial heterogeneous \nactivation reproduces the large fused spots and sharp purple-white boundaries of \nYushan Little Pearl.\nFig. 4. Simulation of the P. Yushan Little Pearl floral pattern using piece-wise \n settings. Left: Floral pattern of harlequin \nPhalaenopsis Yushan Little Pearl. Right: Simulated pattern mimicking the heterogeneous distribution of full-length HORT1 \nand solo-LTR. The simulation successfully recapitulates key characteristic features, including sharp separation between \npurple and white regions, large anthocyanin spots, and high spot fusion. Parameters: \n \n,\n, \n, \n \n \n, \n.\nGA\nGA_pur = 7, GA_whi = 0.0296\nGH = 0.12 DA = 0.01 DH = 0.5, μA = 0.01, μH = 0.03 ρA = 0.01",
+    "locators": [
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "intro",
+        "rect": [
+          0.023,
+          0.21,
+          0.295,
+          0.615
+        ]
+      },
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "clue1",
+        "rect": [
+          0.304,
+          0.239,
+          0.694,
+          0.401
+        ]
+      },
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "clue2",
+        "rect": [
+          0.304,
+          0.406,
+          0.694,
+          0.723
+        ]
+      },
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "clue3",
+        "rect": [
+          0.304,
+          0.732,
+          0.694,
+          0.951
+        ]
+      }
+    ],
+    "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3"
+  },
+  {
+    "id": "S02",
+    "document": "poster",
+    "title": "海報方法：花瓣形區域的新增模擬",
+    "section": "Methods: Numerical Simulation",
+    "page": 1,
+    "figure": "Fig. 2",
+    "poster_sections": [
+      "methods",
+      "clue1"
+    ],
+    "kind": "海報新增數值模擬條件",
+    "version": "user-supplied 2026-10-29",
+    "text": "海報同時展示 (A) 100 × 100 uniform grid 的標準週期斑點與 (B) petal-shaped domain（花瓣形區域）。海報 Methods 寫方格採 rdsolver、VSIMEX、periodic boundary condition；另在花瓣形區域採 finite element method（FEM，有限元素法）與 Neumann boundary condition。海報說花瓣形與方格用相同標準參數：D_A = 0.01，D_H = 0.5，µ_A = µ_H = 0.03，G_A = 0.08，G_H = 0.12，ρ_A = 0.01，k = 0.001。此 FEM／Neumann 是海報內容，不能歸為原論文方法。",
+    "original_excerpt": "METHODS\n∂A\n∂t = GAA2\nH + k + ρA + DA∇2A −μAA\n∂H\n∂t = GHA2 + DH∇2H −μHH\nThe Gierer-Meinhardt Model\nSelf-activation rates\nDiffusion Coefficients\nDegradation rates\nBasic production rate\nSaturation constant\nGA, GH\nDA, DH\nμA, μH\nρA\nk\nModel Components\nNumerical Simulation\nPigmentation patterns were simulated on a \n \nuniform spatial grid using variable-step implicit–explicit \n(VSIMEX) time stepping with periodic boundary condition, \nimplemented in the `rdsolver` package. Simulations were also \nperformed on a petal-shaped domain using the finite element \nmethod with Neumann boundary condition using the same \nparameters as the uniform-grid simulations:\n100 × 100\nDA = 0.01, DH = 0.5, μA = 0.03, μH = 0.03,\nFigure 1. The PeMYB11-PeMYBx interaction model. PeMYB11 is the activator, and \nPeMYBx is the inhibitor of the system. PeMYB11 self-activates at the rate \n and \nactivates PEMYBx at the rate \n. On the other hand, PeMYBx inhibits PeMYB11 \nbiosynthesis. The activator and the inhibitor degrade with degradation rates \n \nrespectively. The activator diffuses with diffusivity \n and the inhibitor diffuses with \ndiffusivity \n, where \n guarantees the periodic pattern to form.\nGA\nGH\nμA, μH\nDA\nDH\nDA < DH\nGA = 0.08, GH = 0.12, ρA = 0.01, and k = 0.001",
+    "locators": [
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "methods",
+        "rect": [
+          0.023,
+          0.62,
+          0.295,
+          0.998
+        ]
+      }
+    ],
+    "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3"
+  },
+  {
+    "id": "S03",
+    "document": "poster",
+    "title": "海報 Clue 2 與圖說校註",
+    "section": "Clue 2: From Spots to Fused Patches",
+    "page": 1,
+    "figure": "Fig. 3",
+    "poster_sections": [
+      "clue2"
+    ],
+    "kind": "海報數值模擬與校註",
+    "version": "user-supplied 2026-10-29",
+    "text": "海報 Clue 2 結合增加 G_A 與降低 µ_A，生成較大融合斑塊。Fig. 3A、B 對應 G_A = 0.66、µ_A = 0.01；C、D 對應 G_A = 2.712、µ_A = 0.01，等高輪廓閾值為 2 µM。校註：Clue 2 文字排版中的 HA 應依圖說與模型讀為 µ_A（activator degradation），不是另一個新參數。",
+    "original_excerpt": "Clue 2 | From Spots to Fused Patches\nIncreased self-activation enlarges spots, and reduced degradation promotes fusion. \nCombining increased Ga with reduced HA leads to fused, larger patches.\nFigure 3. Simulated patterns of PeMYB11 under the combined effects of HORT1 solo-LTR insertion and reduced miR858 \nexpression. (A) Simulated pattern at \n. (B) Contour map of (A) plotted at the 2 µM threshold. (C) \nSimulated pattern at \n. (D) Contour map of (C) plotted at the 2 µM threshold.\nGA = 0.66, μA = 0.01\nGA = 2.712, μA = 0.01",
+    "locators": [
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "clue2",
+        "rect": [
+          0.304,
+          0.406,
+          0.694,
+          0.723
+        ]
+      }
+    ],
+    "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3"
+  },
+  {
+    "id": "S04",
+    "document": "poster",
+    "title": "海報 Clue 3 與研究限制",
+    "section": "Clue 3 / Discussion: Limitations",
+    "page": 1,
+    "figure": "Fig. 4",
+    "poster_sections": [
+      "clue3",
+      "discussion"
+    ],
+    "kind": "數值模擬預測與限制",
+    "version": "user-supplied 2026-10-29",
+    "text": "海報 Clue 3 以 piece-wise G_A 模擬 P. Yushan Little Pearl 特有融合斑與紫白邊界。Fig. 4 參數 G_A_pur = 7，G_A_whi = 0.0296，G_H = 0.12，D_A = 0.01，D_H = 0.5，µ_A = 0.01，µ_H = 0.03，ρ_A = 0.01。海報 Discussion 的限制：分子網路經簡化、參數取自文獻估計、預測仍需實驗驗證。不能宣稱已成功完成新品種育種或已在花瓣實測驗證 FEM。圖說左右文字與圖像位置有出入，導覽引用整個 Fig. 4，不指定左右。",
+    "original_excerpt": "Clue 3 | Extensive Pigmentation of the Spots\nSpatial heterogeneity reproduces cultivar-specific patterns. Spatial heterogeneous \nactivation reproduces the large fused spots and sharp purple-white boundaries of \nYushan Little Pearl.\nFig. 4. Simulation of the P. Yushan Little Pearl floral pattern using piece-wise \n settings. Left: Floral pattern of harlequin \nPhalaenopsis Yushan Little Pearl. Right: Simulated pattern mimicking the heterogeneous distribution of full-length HORT1 \nand solo-LTR. The simulation successfully recapitulates key characteristic features, including sharp separation between \npurple and white regions, large anthocyanin spots, and high spot fusion. Parameters: \n \n,\n, \n, \n \n \n, \n.\nGA\nGA_pur = 7, GA_whi = 0.0296\nGH = 0.12 DA = 0.01 DH = 0.5, μA = 0.01, μH = 0.03 ρA = 0.01\n\nDISCUSSION\nBiological Implications\nLinking Genes to Model\nLimitations\nGene regulation is translated into model parameters, \nproviding a mechanistic view of how molecular interactions \nshape spatial patterns.\nThe model supports the idea that the balance between \nactivation, inhibition, degradation, and spatial heterogeneity \ndrives pigmentation diversity.\n•\nSimplified molecular network. \n•\nParameter values are estimated from the literature. \n•\nPredictions require experimental validation.",
+    "locators": [
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "clue3",
+        "rect": [
+          0.304,
+          0.732,
+          0.694,
+          0.951
+        ]
+      },
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "discussion",
+        "rect": [
+          0.703,
+          0.209,
+          0.977,
+          0.384
+        ]
+      }
+    ],
+    "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3"
+  },
+  {
+    "id": "C01",
+    "document": "correction",
+    "title": "官方圖號更正",
+    "section": "Correction notice",
+    "page": null,
+    "figure": null,
+    "kind": "官方勘誤",
+    "version": "2024-08-17",
+    "text": "官方 2024-08-17 correction 指出因 Materials and Methods 移到文章末尾造成圖號錯誤。舊 Fig. 2 → 更正 Fig. 10；舊 Fig. 3 → 更正 Fig. 11；舊 Figs. 4–11 → 更正 Figs. 2–9。官方說原文已更正。本導覽依使用者提供的 corrected publication PDF 使用更正後圖號；海報有自己獨立的 Figs. 1–4，不套用論文圖號轉換。",
+    "original_excerpt": "Following publication of the original article [1], the authors identified errors in the numbering of figures due to the movement of Materials and Methods section at the end of the article. The current Figs. 2 and 3 need to be switched to the end of the article to be Figs. 10 and 11, and the correct Figs. 2, 3, 4, 5, 6, 7, 8 and 9 are the current Figs. 4, 5, 6, 7, 8, 9, 10 and 11.\n\nThe original article [1] has been corrected.",
+    "locators": [
+      {
+        "document": "correction",
+        "section": "Correction notice"
+      }
+    ]
+  },
+  {
+    "id": "P16",
+    "document": "paper",
+    "title": "聯絡研究團隊與證據缺口",
+    "section": "Correspondence / Conclusions",
+    "page": 1,
+    "figure": null,
+    "kind": "研究聯絡資訊",
+    "version": "2024 corrected publication",
+    "text": "論文列出的通訊作者：Yu-Chen Shu，ycshu@mail.ncku.edu.tw；Hong-Hwa Chen，hhchen@mail.ncku.edu.tw。超出來源、未做的實驗、實際育種成效與未提供的原始碼細節，應向研究團隊詢問。此導覽不會替訪客記錄、寄送問題，也不會宣稱已通知作者。",
+    "original_excerpt": "*Correspondence:\nYu‑Chen Shu\nycshu@mail.ncku.edu.tw\nHong‑Hwa Chen\nhhchen@mail.ncku.edu.tw\nFull list of author information is available at the end of the article",
+    "locators": [
+      {
+        "document": "paper",
+        "page": 1,
+        "rect": [
+          0.09524,
+          0.76246,
+          0.41681,
+          0.8301
+        ]
+      }
+    ],
+    "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9"
+  }
+]

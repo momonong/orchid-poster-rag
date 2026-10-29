@@ -1,0 +1,84 @@
+{
+  "title": "一朵蘭花，三條線索",
+  "subtitle": "從斑點到紫色斑塊，讀懂花紋背後的數學。",
+  "introduction": "蝴蝶蘭的紫色斑點為什麼會變大、相連，甚至幾乎覆蓋整片花瓣？這份研究把 PeMYB11 的活化、PeMYBx 的抑制，以及 HORT1、miR858 的影響寫進反應擴散模型。三條線索從規律斑點走向融合斑塊，再走向不均勻的紫白邊界。這些是基於既有生物資料的模擬預測，仍需實驗驗證。",
+  "introduction_sources": [
+    "P01",
+    "S01",
+    "S04"
+  ],
+  "contact": {
+    "name": "Yu-Chen Shu",
+    "email": "ycshu@mail.ncku.edu.tw",
+    "source": "P16"
+  },
+  "clues": [
+    {
+      "id": "clue1",
+      "number": "01",
+      "title": "斑點從哪裡來？",
+      "summary": "局部活化，遇上擴散較快的抑制。",
+      "detail": "PeMYB11 促進自己與 PeMYBx；PeMYBx 回過頭限制 PeMYB11。兩者的反應與不同擴散速度，可在模型中形成規律斑點。",
+      "sources": [
+        "P03",
+        "P07",
+        "S02"
+      ],
+      "question": "為什麼活化者與抑制者會在同一個斑點都比較高？",
+      "image": "clue1.webp"
+    },
+    {
+      "id": "clue2",
+      "number": "02",
+      "title": "斑點為何會相連？",
+      "summary": "長大還不夠，降解的平衡也要改變。",
+      "detail": "單獨提高 G_A 使斑點增大，但不足以重現玉山小珍珠程度的融合；合併降低 PeMYB11 降解率的設定則產生較大、融合的紫色斑塊。",
+      "sources": [
+        "P08",
+        "P10",
+        "P11",
+        "S03"
+      ],
+      "question": "提高 G_A 就能讓斑點融合嗎？miR858 又扮演什麼角色？",
+      "image": "clue2.webp"
+    },
+    {
+      "id": "clue3",
+      "number": "03",
+      "title": "紫白邊界如何形成？",
+      "summary": "把每個區域的活化強度分開設定。",
+      "detail": "以分段 G_A 表示 HORT1 分布造成的空間差異，可模擬玉山小珍珠的大融合斑與清楚紫白邊界；形態相似仍不等於分子機制已獲實驗證明。",
+      "sources": [
+        "P12",
+        "P13",
+        "S04"
+      ],
+      "question": "模型怎麼模擬玉山小珍珠的紫白邊界？",
+      "image": "clue3.webp"
+    }
+  ],
+  "documents": [
+    {
+      "id": "poster",
+      "title": "研究日海報",
+      "url": "/api/documents/poster",
+      "description": "使用者提供・單頁海報・圖 1–4",
+      "license": "使用者提供，保留原始著作權"
+    },
+    {
+      "id": "paper",
+      "title": "完整研究論文",
+      "url": "https://link.springer.com/article/10.1186/s12870-024-05305-z",
+      "local_url": "/api/documents/paper",
+      "description": "BMC Plant Biology 24, 681 (2024)・更正後版本",
+      "license": "Lu et al. 2024, CC BY 4.0；圖片裁切縮放"
+    },
+    {
+      "id": "correction",
+      "title": "官方圖號勘誤",
+      "url": "https://link.springer.com/article/10.1186/s12870-024-05475-w",
+      "description": "2024-08-17・論文與海報使用不同圖號",
+      "license": "CC BY 4.0"
+    }
+  ]
+}

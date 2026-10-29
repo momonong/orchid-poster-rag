@@ -218,3 +218,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Original research/user assets, local model/index/runtime and evaluation outputs
+*.pdf
+.cache/
+.orchid/
+.taste-skill/
+.tools/
+output/
+*.key
+.env
