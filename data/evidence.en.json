@@ -1,0 +1,91 @@
+{
+  "language": "en",
+  "kind": "reviewed_summary_translation",
+  "source_corpus_sha256": "a0729bf000598579fcba46d015b94c60c58ef8ae785d8002c2d77cc3a2760bb9",
+  "items": [
+    {
+      "id": "P01",
+      "text": "Research question: how do interactions among PeMYB11, PeMYBx, HORT1 and miR858 generate large purple spots, fused patches and nearly fully red-purple patterns in harlequin Phalaenopsis? This study is a reaction–diffusion mathematical model and in silico prediction based on existing experimental data, rather than a new round of experimental verification of breeding outcomes. The paper's authors are Ti-Wen Lu, Wen-Huei Chen, Pao-Yang Chen, Yu-Chen Shu and Hong-Hwa Chen."
+    },
+    {
+      "id": "P02",
+      "text": "The deep red-purple color of Phalaenopsis comes from high anthocyanin content. Previous studies found HORT1 fragments in white and purple regions; HORT1 solo-LTR occurs in purple regions and may act as an enhancer of the PeMYB11 promoter. P. Ever-spring Prince ‘Plum’ has large purple patches even without solo-LTR, having only full-length HORT1. This indicates that solo-LTR alone cannot explain all patterns."
+    },
+    {
+      "id": "P03",
+      "text": "PeMYB11 is activator A and PeMYBx is inhibitor H; A(t,r) and H(t,r) are concentrations at time t and position r, in µM. PeMYB11 self-activates with G_A and activates PeMYBx with G_H; PeMYBx inhibits PeMYB11 synthesis. They degrade with µ_A and µ_H, respectively, and diffuse with D_A and D_H. The model needs D_H > D_A: the inhibitor diffuses faster than the activator, together with the reaction kinetics forming periodic spots. This is a simplified activator–inhibitor model, not a complete molecular network. PeMYB11 and PeMYBx in the model represent overall processes including transcriptional, post-transcriptional and translational stages, rather than a single gene or protein itself. D_H > D_A is a necessary condition in the model settings, but it is not sufficient by itself to guarantee spot formation."
+    },
+    {
+      "id": "P04",
+      "text": "Gierer–Meinhardt model: ∂A/∂t = G_A·A²/(H+k) + ρ_A + D_A·∇²A − µ_A·A; ∂H/∂t = G_H·A² + D_H·∇²H − µ_H·H. G_A is the strength of A self-activation, and G_H is the strength of A activating H; D_A and D_H are diffusion coefficients; µ_A and µ_H are the degradation rates of A and H; ρ_A is the basal production rate; k is a constant in the denominator. These are model variables and parameters; µ_A should not be interpreted as miR858's own degradation rate."
+    },
+    {
+      "id": "P05",
+      "text": "Standard spotted-pattern parameters: D_A = 0.01, D_H = 0.5, µ_A = 0.03, µ_H = 0.03, G_A = 0.08, G_H = 0.12, ρ_A = 0.01 and k = 0.001. The values follow previous studies including Ding et al. (2020). The initial A concentration is randomly distributed from 0 to 1 on the model grid, and the initial H concentration is 0. These values are simulation settings, not newly measured parameters for individual cells or universal constants for all orchids."
+    },
+    {
+      "id": "P06",
+      "text": "The paper uses a two-dimensional 100 × 100 uniform spatial grid, L = 100, and periodic boundary conditions. Python rdsolver v0.1.5 uses variable time step implicit/explicit VSIMEX time stepping. Simulations were compared using Virtual Cell to check the results; Virtual Cell could not specify piece-wise G_A, so the authors wrote separate scripts to handle heterogeneous G_A. This description of the paper's method is not petal-shaped FEM with Neumann boundary conditions."
+    },
+    {
+      "id": "P07",
+      "text": "The standard parameters produce periodic spots. The spatial expression distributions of PeMYB11 and PeMYBx are in phase, with both higher in purple spots, agreeing with previous experimental results. Having higher inhibitor and activator at the same location is not contradictory: A also promotes H, while H limits A; H diffuses faster in the model. This does not mean that PeMYBx is an anthocyanin activator."
+    },
+    {
+      "id": "P08",
+      "text": "Increasing the PeMYB11 self-activation parameter G_A alone enlarges spots in the simulations, but is insufficient to reproduce the degree of fusion in Yushan Little Pearl. The authors compared G_A = 0.08, 0.1632, 0.66 and 2.712; Virtual Cell additionally compared 7 and 70. Enhanced transcription alone is insufficient to explain the large fused purple patches. This is a simulation result under this model's conditions, not a universal law for all biological systems."
+    },
+    {
+      "id": "P09",
+      "text": "Standard baseline: G_A = 0.08 is the standard simulation's self-activation parameter and the common calculation baseline for the following two estimation routes.\n\nPromoter-experiment estimation route: a previous dual luciferase promoter assay showed that solo-LTR insertion enhanced promoter activity approximately twofold. On this basis, the standard G_A = 0.08 was adjusted to 0.1632; accounting for tetraploidy then gives 0.1632 × 4 ≈ 0.66.\n\nBetween-cultivar expression estimation route (2.712): PeMYB11 expression in the purple region of P. Yushan Little Pearl is 33.9-fold higher than in P. OX Red Shoe ‘OX1408’. The authors multiplied this between-cultivar expression ratio by the standard baseline: G_A = 33.9 × 0.08 = 2.712. Annotation: 33.9 is the PeMYB11 expression ratio between these two cultivars, distinct from the approximately twofold estimate in the promoter assay above. 0.08 is the standard baseline, and 2.712 is the enhanced setting from this expression-ratio route; it is a model parameter, not a directly measured concentration.\n\nSimulation use: changing G_A alone compares spot sizes, with additional size comparisons at G_A = 7 and 70. Fused-patch simulations combining G_A adjustments with µ_A = 0.01 are described separately in P11; keep the data underlying parameter estimates separate from the combined simulation results."
+    },
+    {
+      "id": "P10",
+      "text": "miR858 targets PeMYB11 mRNA; previous observations found higher miR858 expression in white regions. The model represents reduced miR858 expression by lowering the degradation rate µ_A of the activator PeMYB11. The standard µ_A = 0.03 is lowered to 0.01; the resulting value 0.01 is less than 0.5 times the standard value. This disrupts the original spot formation and produces a nearly fully red pigmentation distribution. µ_A is not miR858's own degradation rate; reducing miR858 expression and reducing miR858's degradation rate are not synonymous."
+    },
+    {
+      "id": "P11",
+      "text": "Simulations combining increased G_A with decreased µ_A produce larger, fused purple patches: Fig. 7A uses G_A = 0.66 and µ_A = 0.01; Fig. 7C uses G_A = 2.712 and µ_A = 0.01; B and D show contour maps at a 2 µM threshold. This supports a model mechanism in which enhanced activation associated with HORT1 solo-LTR and reduced degradation of the activator PeMYB11, representing lower miR858 expression, jointly explain large fused patches."
+    },
+    {
+      "id": "P12",
+      "text": "To simulate the sharp purple–white boundaries, large spots and high fusion of P. Yushan Little Pearl, the authors used piece-wise G_A to represent heterogeneous transcriptional activity associated with full-length HORT1 and solo-LTR in different petal cell regions. Fig. 9 parameters: G_A_pur = 7, G_A_whi = 0.0296, G_H = 0.12, D_A = 0.01, D_H = 0.5, µ_A = 0.01, µ_H = 0.03 and ρ_A = 0.01. This simulation can reproduce morphology under specific conditions; it is not direct proof of the HORT1 distribution in each cell."
+    },
+    {
+      "id": "P13",
+      "text": "G_A_whi = 0.0296 = 0.08 × 0.37, estimated from the inhibitory effect of full-length HORT1 insertion on promoter activity in a previous dual luciferase assay. Although harlequin Phalaenopsis is tetraploid, PeMYB11 transcription is strongly inhibited in white regions, so the model still uses one-fold of 0.0296. The spatial assignment rule for piece-wise G_A is in Fig. 11 of the corrected paper."
+    },
+    {
+      "id": "P14",
+      "text": "The two-dimensional concentration solutions for PeMYB11 and PeMYBx are plotted as heatmaps using Matplotlib and seaborn. Simulations with uniform parameters use a 2 µM threshold to display patterns; with piece-wise G_A, an additional T > 2 µM is specified to plot a darker layer and simulate floral color gradients. The colors are a readout rule for model concentrations, not direct measurements of anthocyanin concentration; 2 µM is not a universal physiological threshold for all flowers."
+    },
+    {
+      "id": "P15",
+      "text": "Source annotation: the paper's Abstract uses the phrase decreased degradation rate of miR858; however, the Methods and model equations explicitly define µ_A as the degradation rate of PeMYB11 (activator A), with reduced µ_A representing reduced miR858 expression. Answers therefore follow the actual model definition to explain reduced PeMYB11 degradation, without silently rewriting the Abstract wording as an original quotation or interpreting it as reduced degradation of miR858 itself. The 2024-08-17 correction changes only figure numbering and does not resolve this wording conflict."
+    },
+    {
+      "id": "S01",
+      "text": "The poster explains patterns through three clues: Clue 1, activator–inhibitor interactions generate periodic spots; Clue 2, increased self-activation enlarges spots and reduced degradation promotes fusion; Clue 3, spatial heterogeneity of HORT1 reproduces cultivar-specific large fused patches and sharp purple–white boundaries. The model is a Gierer–Meinhardt system with PeMYB11 as activator and PeMYBx as inhibitor. The poster's authors are Ti-Wen Lu and Yu-Chen Shu, National Cheng Kung University."
+    },
+    {
+      "id": "S02",
+      "text": "The poster shows both (A) standard periodic spots on a 100 × 100 uniform grid and (B) a petal-shaped domain. The poster Methods specify rdsolver, VSIMEX and periodic boundary conditions for the grid; the petal-shaped domain instead uses the finite element method (FEM) and Neumann boundary conditions. The poster states that the petal-shaped domain and grid share the same standard parameters: D_A = 0.01, D_H = 0.5, µ_A = µ_H = 0.03, G_A = 0.08, G_H = 0.12, ρ_A = 0.01 and k = 0.001. FEM/Neumann is poster content and must not be attributed to the original paper's method."
+    },
+    {
+      "id": "S03",
+      "text": "Poster Clue 2 combines increased G_A with decreased µ_A to generate larger fused patches. Fig. 3A and B correspond to G_A = 0.66 and µ_A = 0.01; C and D correspond to G_A = 2.712 and µ_A = 0.01, with a 2 µM contour threshold. Annotation: HA in the typeset Clue 2 text should be read as µ_A (activator degradation), following the caption and model; it is not a new parameter."
+    },
+    {
+      "id": "S04",
+      "text": "Poster Clue 3 uses piece-wise G_A to simulate the characteristic fused spots and purple–white boundaries of P. Yushan Little Pearl. Fig. 4 parameters: G_A_pur = 7, G_A_whi = 0.0296, G_H = 0.12, D_A = 0.01, D_H = 0.5, µ_A = 0.01, µ_H = 0.03 and ρ_A = 0.01. Limitations in the poster Discussion: the molecular network is simplified, parameter values are estimated from the literature, and predictions still require experimental validation. Do not claim that new-cultivar breeding has been successfully completed or that FEM has been validated through measurements in petals. The caption's left/right wording conflicts with the image positions; the guide cites the whole Fig. 4 without assigning left and right."
+    },
+    {
+      "id": "C01",
+      "text": "The official 2024-08-17 correction states that figure-number errors arose when Materials and Methods was moved to the end of the article. Old Fig. 2 → corrected Fig. 10; old Fig. 3 → corrected Fig. 11; old Figs. 4–11 → corrected Figs. 2–9. The notice says the original article has been corrected. This guide uses corrected figure numbers from the corrected publication PDF supplied by the user; the poster has its own independent Figs. 1–4 and does not use the paper's figure-number mapping."
+    },
+    {
+      "id": "P16",
+      "text": "Corresponding authors listed in the paper: Yu-Chen Shu, ycshu@mail.ncku.edu.tw; Hong-Hwa Chen, hhchen@mail.ncku.edu.tw. Questions beyond the sources, experiments not performed, actual breeding outcomes and details of source code not provided should be addressed to the research team. This guide does not record or send questions for visitors and does not claim that the authors have been notified."
+    }
+  ]
+}

@@ -18,7 +18,7 @@ def _idle_ready(state):
             and isinstance(queue, dict) and queue.get('active') == 0 and queue.get('pending') == 0)
 
 
-async def run_live(cases, client, report, checkpoint):
+async def run_live(cases, client, report, checkpoint, language="zh-TW"):
     """Exercise the product API once per question, saving before and after each attempt."""
     rows = report['results']
     report['state'] = 'running'
@@ -39,13 +39,13 @@ async def run_live(cases, client, report, checkpoint):
 
     for case in cases:
         row = {'id': case['id'], 'question': case['question'], 'answerable': case['answerable'],
-               'status': 'in_progress', 'requires_human_review': True}
+               'status': 'in_progress', 'requires_human_review': True, 'language': language}
         rows.append(row)
         checkpoint()
         start = time.monotonic()
         try:
             response = await client.post('/api/chat', json={'question': case['question'],
-                                                          'history': case.get('history', [])})
+                                                          'history': case.get('history', []), 'language': language})
             row['http_status'] = response.status_code
             response.raise_for_status()
             product = response.json()
@@ -89,14 +89,16 @@ async def run_live(cases, client, report, checkpoint):
     checkpoint()
 
 
-def evaluate(settings, mode, limit):
+def evaluate(settings, mode, limit, language="zh-TW"):
     if limit < 1:
         raise ValueError('limit 必須大於 0')
+    if language not in {"en", "zh-TW"}:
+        raise ValueError('unsupported language')
     cases = json.loads((settings.data / 'golden.json').read_text(encoding='utf-8'))[:limit]
     output = settings.root / 'output'
     output.mkdir(exist_ok=True)
     rows = []
-    report = {'mode': mode, 'fixture': False, 'cases': 0, 'requested_cases': len(cases),
+    report = {'mode': mode, 'language': language, 'fixture': False, 'cases': 0, 'requested_cases': len(cases),
               'quality_acceptance': '未做人工語意驗收；檢索命中或字面匹配不等於回答正確', 'results': rows}
     latest = output / f'evaluation-{mode}.json'
 
@@ -122,7 +124,7 @@ def evaluate(settings, mode, limit):
         async def live():
             async with httpx.AsyncClient(base_url=base, timeout=httpx.Timeout(52, connect=3),
                                          trust_env=False, follow_redirects=False) as client:
-                await run_live(cases, client, report, checkpoint)
+                await run_live(cases, client, report, checkpoint, language)
         asyncio.run(live())
     else:
         from .retrieval import HybridIndex
@@ -131,7 +133,7 @@ def evaluate(settings, mode, limit):
             raise RuntimeError(index.reason)
         for case in cases:
             start = time.monotonic()
-            ids = [p['id'] for p in index.search(case['question'], case.get('history', []))]
+            ids = [p['id'] for p in index.search(case['question'], case.get('history', []), language=language)]
             rows.append({'id': case['id'], 'answerable': case['answerable'], 'retrieved': ids,
                          'retrieval_hit': bool({i.split('_')[0] for i in ids} & set(case['source_any']))
                          if case['answerable'] else None, 'seconds': round(time.monotonic() - start, 3)})

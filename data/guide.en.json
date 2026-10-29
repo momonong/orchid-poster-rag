@@ -1,0 +1,38 @@
+{
+  "title": "One orchid, three clues",
+  "subtitle": "From spots to purple patches: the mathematics behind flower patterns.",
+  "introduction": "Why do purple spots on Phalaenopsis orchids grow, join together, or cover almost an entire petal? This study uses a reaction–diffusion model to explore activation by PeMYB11, inhibition by PeMYBx, and the effects of HORT1 and miR858. Three clues lead from regular spots to fused patches and uneven purple–white boundaries. These simulations draw on existing biological data; their predictions still need experimental validation.",
+  "introduction_sources": ["P01", "S01", "S04"],
+  "contact": {"name": "Yu-Chen Shu", "email": "ycshu@mail.ncku.edu.tw", "source": "P16"},
+  "clues": [
+    {
+      "id": "clue1", "number": "01", "title": "Where do spots come from?",
+      "summary": "Local activation meets faster-spreading inhibition.",
+      "detail": "PeMYB11 promotes its own activity and PeMYBx; PeMYBx limits PeMYB11 in turn. Together, these reactions and different diffusion rates can form regular spots in the model.",
+      "sources": ["P03", "P07", "S02"],
+      "question": "Why are both the activator and inhibitor higher in the same spots?",
+      "image": "clue1.webp"
+    },
+    {
+      "id": "clue2", "number": "02", "title": "Why do spots join together?",
+      "summary": "Explore the balance between activation and degradation.",
+      "detail": "Increasing G_A alone enlarged spots, but did not reproduce the degree of fusion seen in Yushan Little Pearl. Combining increased G_A with reduced PeMYB11 degradation produced larger, fused purple patches under the simulated settings.",
+      "sources": ["P08", "P10", "P11", "S03"],
+      "question": "Can increasing G_A alone fuse the spots, and what role does miR858 play?",
+      "image": "clue2.webp"
+    },
+    {
+      "id": "clue3", "number": "03", "title": "How do purple–white edges form?",
+      "summary": "Assign different activation strengths to different regions.",
+      "detail": "Piece-wise G_A values represent spatial differences associated with HORT1 distribution. This can reproduce the large fused spots and sharp purple–white boundaries of Yushan Little Pearl in the model. Similar shapes do not establish the molecular mechanism experimentally.",
+      "sources": ["P12", "P13", "S04"],
+      "question": "How does the model simulate the purple–white boundaries of Yushan Little Pearl?",
+      "image": "clue3.webp"
+    }
+  ],
+  "documents": [
+    {"id": "poster", "title": "Research Day poster", "url": "/api/documents/poster", "description": "Provided by the user · one-page poster · Figures 1–4", "license": "Provided by the user; original copyright retained"},
+    {"id": "paper", "title": "Full research paper", "url": "https://link.springer.com/article/10.1186/s12870-024-05305-z", "local_url": "/api/documents/paper", "description": "BMC Plant Biology 24, 681 (2024) · corrected version", "license": "Lu et al. 2024, CC BY 4.0; images cropped and resized"},
+    {"id": "correction", "title": "Official figure-number correction", "url": "https://link.springer.com/article/10.1186/s12870-024-05475-w", "description": "2024-08-17 · paper and poster figure numbers differ", "license": "CC BY 4.0"}
+  ]
+}

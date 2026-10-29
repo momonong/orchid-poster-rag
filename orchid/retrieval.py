@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import shutil
 import tempfile
 from pathlib import Path
@@ -9,6 +10,26 @@ from rank_bm25 import BM25Okapi
 
 from .config import E5_MODEL, E5_REVISION
 from .corpus import corpus_hash, lexical_tokens, load_corpus, split_text, verify_sources
+
+# Query-only bilingual vocabulary bridge. No answers, source IDs or parameter values.
+# The stored corpus, BM25 document tokens and vector index stay unchanged.
+ENGLISH_ALIASES = (
+    (r"\b(?:spot[- ]fusion|fused[- ](?:spots?|patches?|patterns?)|fusion)\b", "斑點融合 融合斑塊"),
+    (r"\balone\b", "單獨"),
+    (r"\bincreas(?:e|ed|ing)\b", "提高"),
+    (r"\bself[- ]activation\b", "自我活化"),
+    (r"\bdegradation\b", "降解"),
+    (r"\bmicromolar\b", "µM"),
+    (r"\banthocyanin\b", "花青素"),
+    (r"\bmeasurements?\b", "量測 實測"),
+    (r"\bthresholds?\b", "閾值"),
+    (r"\bconcentrations?\b", "濃度"),
+)
+
+
+def english_query_aliases(query):
+    aliases = [alias for pattern, alias in ENGLISH_ALIASES if re.search(pattern, query, re.IGNORECASE)]
+    return query + " " + " ".join(aliases) if aliases else query
 
 
 def encoder_path(settings):
@@ -84,7 +105,7 @@ class HybridIndex:
         except (OSError, ValueError, KeyError, ImportError):
             self.reason = "索引或 CPU embedding 模型缺少、過期或無法載入；請執行 orchid index"
 
-    def search(self, question, history=None, top_k=4):
+    def search(self, question, history=None, top_k=4, language="zh-TW"):
         if not self.ready:
             raise RuntimeError(self.reason)
         # History can disambiguate short follow-ups, but is never inserted as source evidence.
@@ -94,6 +115,11 @@ class HybridIndex:
             query = f"{previous[:200]} {question}"
         if len(self.encoder.tokenizer.encode("query: " + query, add_special_tokens=True)) > 512:
             raise ValueError("問題加上追問前文超過 embedding 長度限制，請縮短問題或清除對話後再問。")
+        if language == "en":
+            expanded = english_query_aliases(query)
+            # Optional aliases never truncate the original or make a valid query fail.
+            if len(self.encoder.tokenizer.encode("query: " + expanded, add_special_tokens=True)) <= 512:
+                query = expanded
         vector = self.encoder.encode(["query: " + query], normalize_embeddings=True, show_progress_bar=False)[0]
         dense = self.vectors @ vector
         sparse = self.bm25.get_scores(lexical_tokens(query))

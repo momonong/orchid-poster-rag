@@ -52,3 +52,24 @@ def test_ga_2712_expression_estimate_is_separate_from_promoter_assay():
     assert all(value in expression for value in ("33.9", "0.08", "2.712"))
     assert "33.9-fold" in item["original_excerpt"] and "dual luciferase" in item["original_excerpt"]
     assert any("P11" in part and "0.01" in part for part in parts)
+def test_inhibitor_self_activation_misstatement_is_rejected_without_rejecting_correct_activation():
+    from orchid.generation import validate_claim_scope
+    invalid = [
+        'PeMYBx 作為抑制者 H 透過 G_H 活化自身並抑制 A 的合成 [P03]。',
+        '抑制者 H 會自我活化 [P03]。',
+        'G_H 是抑制者的自我活化強度 [P04]。',
+        'PeMYBx self-activates in the model [P03].',
+        'PeMYBx 活化自身，但這不代表全部分子機制 [P03]。',
+    ]
+    valid = [
+        'PeMYB11 透過 G_A 自我活化，並以 G_H 活化 PeMYBx；PeMYBx 抑制 PeMYB11 [P03]。',
+        'PeMYB11 自我活化並促進抑制者 H，H 反過來抑制 PeMYB11 [P03]。',
+        'PeMYBx 並沒有自我活化；G_H 是 A 活化 H 的強度 [P04]。',
+        'G_H 不是 PeMYBx 自我活化，而是 A 活化 H 的強度 [P04]。',
+        'PeMYBx 抑制 PeMYB11 的自我活化 [P03]。',
+        'PeMYBx does not self-activate [P03].',
+    ]
+    for text in invalid:
+        assert not validate_claim_scope(text), text
+    for text in valid:
+        assert validate_claim_scope(text), text

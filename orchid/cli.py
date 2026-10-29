@@ -202,6 +202,8 @@ def main():
     p = sub.add_parser("eval")
     p.add_argument("--mode", choices=["retrieval", "live"], default="retrieval")
     p.add_argument("--limit", type=int, default=21)
+    p.add_argument("--language", choices=["en", "zh-TW"], default="zh-TW",
+                   help="回答語言；既有中文 golden 題組預設 zh-TW")
     p = sub.add_parser("qr")
     p.add_argument("--url")
     p.add_argument("--output", default="output/guide-qr.png")
@@ -241,7 +243,7 @@ def main():
             print(f"QR 已產生：{path.resolve()}；內容：{url}（可達性須另外核對）")
         elif args.command == "eval":
             from .evaluation import evaluate
-            evaluate(settings, args.mode, args.limit)
+            evaluate(settings, args.mode, args.limit, args.language)
     except (ValueError, OSError, RuntimeError) as exc:
         print(f"未完成：{exc}", file=sys.stderr)
         raise SystemExit(1)

@@ -29,7 +29,7 @@ async def test_unknown_transport_is_quarantined_until_finite_idle_probe(tmp_path
         raise httpx.ReadTimeout("fixture transport timed out")
     model = ModelClient(Settings(root=tmp_path, key_file=str(key)), httpx.MockTransport(handle), len)
     with pytest.raises(UnknownResult):
-        await model.generate("fixture", [], [])
+        await model.generate("fixture", [], [], "zh-TW")
     assert model.quarantined
     assert not await model.probe()
     assert len(posts) == 1
@@ -51,7 +51,7 @@ async def test_undeclared_context_is_not_assumed(tmp_path):
     assert not await model.probe()
     assert "CONTEXT" in model.reason
     with pytest.raises(Unavailable):
-        await model.generate("fixture", [], [])
+        await model.generate("fixture", [], [], "zh-TW")
     await model.close()
 
 
@@ -70,7 +70,7 @@ async def test_nonobject_generation_output_fails_closed(tmp_path, output):
             "content": json.dumps(output)}}]})
     model = ModelClient(Settings(root=tmp_path, key_file=str(key)), httpx.MockTransport(handle), len)
     with pytest.raises(UnknownResult):
-        await model.generate("fixture", [], [])
+        await model.generate("fixture", [], [], "zh-TW")
     await model.close()
 
 
@@ -92,7 +92,7 @@ async def test_duplicate_json_keys_and_missing_status_never_count_as_success(tmp
         return httpx.Response(200, json={"choices": [{"finish_reason": "stop", "message": {"content": raw}}]})
     model = ModelClient(Settings(root=tmp_path, key_file=str(key)), httpx.MockTransport(handle), len)
     with pytest.raises(UnknownResult):
-        await model.generate("fixture", [], [])
+        await model.generate("fixture", [], [], "zh-TW")
     await model.close()
 
 
@@ -110,6 +110,6 @@ async def test_malformed_gateway_error_always_quarantines(tmp_path, output):
         return httpx.Response(502, content=json.dumps(output), headers={"Content-Type": "application/json"})
     model = ModelClient(Settings(root=tmp_path, key_file=str(key)), httpx.MockTransport(handle), len)
     with pytest.raises(UnknownResult):
-        await model.generate("fixture", [], [])
+        await model.generate("fixture", [], [], "zh-TW")
     assert model.quarantined
     await model.close()

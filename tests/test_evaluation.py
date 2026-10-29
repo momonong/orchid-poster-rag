@@ -30,11 +30,27 @@ async def test_live_evaluation_records_product_validated_response():
     async with httpx.AsyncClient(base_url="http://127.0.0.1:8000", transport=httpx.MockTransport(handle)) as client:
         await evaluation.run_live([case("one")], client, report,
                                   lambda: snapshots.append(json.loads(json.dumps(report))))
-    assert posts == [{"question": "one", "history": []}]
+    assert posts == [{"question": "one", "history": [], "language": "zh-TW"}]
+    assert report["results"][0]["language"] == "zh-TW"
     assert report["results"][0]["product_response"] == product
     assert report["results"][0]["status"] == "unknown"
     assert report["state"] == "complete"
     assert snapshots[-1]["results"][0]["product_response"] == product
+
+
+@pytest.mark.asyncio
+async def test_live_evaluation_can_explicitly_request_english():
+    posts = []
+    def handle(request):
+        if request.url.path == "/api/health":
+            return httpx.Response(200, json=READY)
+        posts.append(json.loads(request.content))
+        return httpx.Response(200, json={"status": "answered", "answer": "A simulation [P01]"})
+    report = {"results": []}
+    async with httpx.AsyncClient(base_url="http://127.0.0.1:8000", transport=httpx.MockTransport(handle)) as client:
+        await evaluation.run_live([case("one")], client, report, lambda: None, language="en")
+    assert posts == [{"question": "one", "history": [], "language": "en"}]
+    assert report["results"][0]["language"] == "en"
 
 
 @pytest.mark.asyncio

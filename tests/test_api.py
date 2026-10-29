@@ -11,7 +11,7 @@ from orchid.generation import ModelClient, UnknownResult
 
 class FixtureIndex:
     ready, reason = True, "fixture index"
-    def search(self, question, history):
+    def search(self, question, history, language="zh-TW"):
         return [{"id": "P01", "text": "G_A 增大只讓斑點變大。", "title": "fixture",
                  "document": "paper", "section": "Results", "kind": "模擬", "page": 4}]
 
@@ -23,7 +23,7 @@ class FixtureModel:
         self.calls = []
     async def probe(self):
         return True
-    async def generate(self, question, history, passages):
+    async def generate(self, question, history, passages, language="en"):
         self.calls.append((question, history))
         return {"status": "answered", "answer": self.answer}
     async def close(self):
@@ -84,7 +84,7 @@ async def test_model_uses_ready_and_actual_id_without_unsupported_parameters(tmp
         return httpx.Response(200, json={"choices": [{"finish_reason": "stop", "message": {
             "content": '{"status":"answered","answer":"fixture [P01]"}'}}]})
     model = ModelClient(Settings(root=tmp_path, key_file=str(key)), httpx.MockTransport(handle), len)
-    result = await model.generate("測試", [], [{"id": "P01", "text": "fixture", "kind": "test", "section": "test"}])
+    result = await model.generate("測試", [], [{"id": "P01", "text": "fixture", "kind": "test", "section": "test"}], "zh-TW")
     assert result["answer"] == "fixture [P01]"
     assert calls == ["/health/ready", "/v1/models", "/v1/chat/completions"]
     await model.close()
@@ -110,13 +110,25 @@ async def test_bounded_queue_rejects_fourth_request():
 async def test_completed_format_error_is_not_presented_as_timeout(tmp_path):
     from orchid.app import create_app
     class FormatFailureModel(FixtureModel):
-        async def generate(self, question, history, passages):
+        async def generate(self, question, history, passages, language="en"):
             raise UnknownResult("模型回覆未完整或格式不符，未顯示未驗證內容")
     app = create_app(Settings(root=tmp_path), FixtureIndex(), FormatFailureModel(""))
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
-        response = await client.post("/api/chat", json={"question": "格式問題"})
+        response = await client.post("/api/chat", json={"question": "格式問題", "language": "zh-TW"})
     body = response.json()
     assert body["status"] == "unknown"
     assert "格式不符" in body["answer"]
     assert "逾時" not in body["answer"]
     assert "仍可能在處理" not in body["answer"]
+
+
+@pytest.mark.asyncio
+async def test_inhibitor_self_activation_is_not_returned_as_an_answer(tmp_path):
+    from orchid.app import create_app
+    model = FixtureModel("PeMYBx 作為抑制者 H 透過 G_H 活化自身並抑制 A 的合成 [P01]。")
+    app = create_app(Settings(root=tmp_path), FixtureIndex(), model)
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+        response = await client.post("/api/chat", json={"question": "如何產生斑點？", "language": "zh-TW"})
+    body = response.json()
+    assert body["status"] == "unknown" and body["citations"] == []
+    assert "活化自身" not in body["answer"]

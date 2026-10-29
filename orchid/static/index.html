@@ -1,65 +1,72 @@
 <!doctype html>
-<html lang="zh-Hant-TW">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f6f3f5">
-  <meta name="description" content="蘭花研究日海報導覽。從三條線索理解反應擴散模型，並透過有來源的本機問答探索花紋。">
-  <title>蘭花花紋研究｜一朵蘭花，三條線索</title>
+  <meta name="description" content="Explore orchid pigmentation through three clues, source-linked questions and a local voice guide.">
+  <title>Orchid patterns | One orchid, three clues</title>
   <link rel="stylesheet" href="/style.css">
+  <script src="/locale.js" defer></script>
+  <script src="/speech.js" defer></script>
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <a class="skip" href="#question">直接提問</a>
+  <a class="skip" href="#question" data-i18n="skip">Ask a question</a>
   <header class="site-header">
-    <a href="/" class="wordmark"><span class="mark" aria-hidden="true">∴</span><span>蘭花花紋研究<small>成功大學・研究日海報導覽</small></span></a>
-    <nav aria-label="研究資料"><button type="button" id="poster-open">看海報<span aria-hidden="true"> ↗</span></button><a href="https://link.springer.com/article/10.1186/s12870-024-05305-z" target="_blank" rel="noopener noreferrer">讀論文<span aria-hidden="true"> ↗</span></a></nav>
+    <a href="/" class="wordmark"><span class="mark" aria-hidden="true">∴</span><span><span data-i18n="brand">Orchid patterns</span><small data-i18n="institution">NCKU · Research Day guide</small></span></a>
+    <div class="header-actions">
+      <div class="language-switch" role="group" aria-label="Language / 語言"><button type="button" data-language="en" aria-pressed="true" lang="en">English</button><button type="button" data-language="zh-TW" aria-pressed="false" lang="zh-Hant-TW">繁體中文</button></div>
+      <nav data-i18n-aria="researchNav" aria-label="Research sources"><button type="button" id="poster-open" data-i18n="posterOpen">View poster ↗</button><a href="https://link.springer.com/article/10.1186/s12870-024-05305-z" target="_blank" rel="noopener noreferrer" data-i18n="paperOpen">Read paper ↗</a></nav>
+    </div>
   </header>
   <main class="canvas">
-    <div class="heading-row"><div><p class="eyebrow">花紋，是怎麼長出來的？</p><h1>一朵蘭花，三條線索</h1><p class="subtitle">從斑點到紫色斑塊，讀懂花紋背後的數學。</p></div><span class="research-tag">數值模擬研究</span></div>
+    <div class="heading-row"><div><p class="eyebrow" data-i18n="eyebrow">How does a flower grow its pattern?</p><h1 data-i18n="title">One orchid, three clues</h1><p class="subtitle" data-i18n="subtitle">From spots to purple patches: the mathematics behind flower patterns.</p></div><span class="research-tag" data-i18n="researchTag">Simulation study</span></div>
+    <section class="speech-controls" data-i18n-aria="speechLabel" aria-label="Voice guide">
+      <div><p id="speech-status" role="status" aria-live="polite">Checking voice service…</p><p class="speech-policy" data-i18n="speechPolicy">English and Traditional Chinese audio are prepared by this site’s local service. No microphone or automatic playback.</p></div>
+      <div class="speech-actions"><button type="button" id="play-intro" class="play-button" data-play="intro" data-i18n="playIntro" disabled>Play introduction</button><button id="speech-pause" type="button" data-i18n="pause" disabled>Pause</button><button id="speech-stop" type="button" data-i18n="stop" disabled>Stop</button></div>
+    </section>
     <div class="workspace">
       <section class="field-guide" aria-labelledby="guide-heading">
-        <figure class="flower-plate"><img src="/assets/flowers.webp" alt="原研究海報中的八種蝴蝶蘭花紋：從離散紫斑到大片紫色斑塊" width="964" height="480"><figcaption>不同的花紋，可能來自不同的調控平衡。<span>原研究海報・Introduction</span></figcaption></figure>
-        <div class="intro-row"><h2 id="guide-heading">先用一分鐘，認識這份研究</h2><button type="button" id="intro-toggle" aria-expanded="false" aria-controls="intro-detail">展開導覽 <span aria-hidden="true">＋</span></button></div>
-        <div id="intro-detail" class="intro-detail" hidden><p id="intro-text">這份研究以反應擴散模型探索蝴蝶蘭花紋，預測仍需實驗驗證。</p><div id="intro-sources" class="source-row"></div></div>
-        <div class="clue-tabs" role="tablist" aria-label="研究的三條線索">
-          <button role="tab" id="tab-clue1" aria-controls="clue-panel" aria-selected="true" data-clue="0">01 斑點</button>
-          <button role="tab" id="tab-clue2" aria-controls="clue-panel" aria-selected="false" data-clue="1" tabindex="-1">02 融合</button>
-          <button role="tab" id="tab-clue3" aria-controls="clue-panel" aria-selected="false" data-clue="2" tabindex="-1">03 邊界</button>
+        <figure class="flower-plate"><img src="/assets/flowers.webp" data-i18n-alt="flowerAlt" alt="Eight Phalaenopsis patterns from the research poster: separate purple spots through extensive purple patches" width="964" height="480"><figcaption><span class="flower-caption" data-i18n="flowerCaption">Different patterns may reflect different regulatory balances.</span><span data-i18n="flowerCredit">Original research poster · Introduction</span></figcaption></figure>
+        <div class="intro-row"><h2 id="guide-heading" data-i18n="guideHeading">Meet the study in one minute</h2><button type="button" id="intro-toggle" aria-expanded="false" aria-controls="intro-detail">Open guide ＋</button></div>
+        <div id="intro-detail" class="intro-detail" hidden><p id="intro-text">This study explores Phalaenopsis patterns with a reaction–diffusion model. Predictions still need experimental validation.</p><div id="intro-sources" class="source-row"></div></div>
+        <div class="clue-tabs" role="tablist" data-i18n-aria="clueTabs" aria-label="Three research clues">
+          <button role="tab" id="tab-clue1" aria-controls="clue-panel" aria-selected="true" data-clue="0">01 Spots</button>
+          <button role="tab" id="tab-clue2" aria-controls="clue-panel" aria-selected="false" data-clue="1" tabindex="-1">02 Fusion</button>
+          <button role="tab" id="tab-clue3" aria-controls="clue-panel" aria-selected="false" data-clue="2" tabindex="-1">03 Edges</button>
         </div>
         <article id="clue-panel" role="tabpanel" aria-labelledby="tab-clue1" class="clue-panel">
-          <div class="clue-heading"><span id="clue-number">01</span><div><h2 id="clue-title">斑點從哪裡來？</h2><p id="clue-summary">局部活化，遇上擴散較快的抑制。</p></div></div>
-          <figure class="clue-figure"><img id="clue-image" src="/assets/clue1.webp" alt="海報 Clue 1：方格與花瓣形區域的反應擴散模擬" width="1400" height="430" loading="lazy"><figcaption id="clue-caption">海報圖 2・模型模擬</figcaption></figure>
-          <p id="clue-detail">PeMYB11 促進自己與 PeMYBx；PeMYBx 回過頭限制 PeMYB11。兩者的反應與不同擴散速度，可在模型中形成規律斑點。</p>
+          <div class="clue-heading"><span id="clue-number">01</span><div><h2 id="clue-title">Where do spots come from?</h2><p id="clue-summary">Local activation meets faster-spreading inhibition.</p></div></div>
+          <figure class="clue-figure"><img id="clue-image" src="/assets/clue1.webp" alt="Poster simulation: regular spots" width="1400" height="430" loading="lazy"><figcaption id="clue-caption">Poster Figure 2 · model simulation</figcaption></figure>
+          <p id="clue-detail">PeMYB11 promotes its own activity and PeMYBx; PeMYBx limits PeMYB11 in turn. Together, these reactions and different diffusion rates can form regular spots in the model.</p>
+          <button type="button" id="play-clue" class="play-button" data-play="clue" data-i18n="playClue" disabled>Play this clue</button>
           <div id="clue-sources" class="source-row"></div>
-          <button type="button" class="ask-clue" id="ask-clue">問問這條線索 <span aria-hidden="true">→</span></button>
+          <button type="button" class="ask-clue" id="ask-clue" data-i18n="askClue">Ask about this clue →</button>
+          <div class="clue-navigation"><button type="button" id="previous-clue" data-i18n="previous">← Previous clue</button><button type="button" id="next-clue" data-i18n="next">Next clue →</button></div>
         </article>
-        <p class="evidence-note">模擬能提出機制與預測；研究仍需實驗驗證。</p>
+        <p class="evidence-note" data-i18n="evidenceNote">Simulations propose mechanisms and predictions; experimental validation is still needed.</p>
       </section>
       <section class="conversation" aria-labelledby="chat-heading">
-        <div class="chat-title"><div><p class="eyebrow">把好奇，接著問下去</p><h2 id="chat-heading">和研究對話</h2></div><button type="button" id="clear-chat">清除對話</button></div>
-        <p id="health" class="health" role="status">正在確認研究資料與問答服務…</p>
-        <div id="messages" class="messages" role="log" aria-label="問答內容" aria-live="polite">
-          <div class="welcome"><p>從你看見的花紋開始。</p><p>可以問研究在做什麼、參數代表什麼，或模擬和實驗有什麼不同。回答會附上可展開的來源。</p></div>
+        <div class="chat-title"><div><p class="eyebrow" data-i18n="chatEyebrow">Follow your curiosity</p><h2 id="chat-heading" data-i18n="chatHeading">Ask about the study</h2></div><button type="button" id="clear-chat" data-i18n="clear">Clear conversation</button></div>
+        <p id="health" class="health" role="status" data-i18n="checking">Checking research data and question service…</p>
+        <div id="messages" class="messages" role="log" data-i18n-aria="messagesLabel" aria-label="Questions and answers" aria-live="polite">
+          <div class="welcome"><p data-i18n="welcomeTitle">Start with the patterns you see.</p><p data-i18n="welcomeBody">Ask about the study, its parameters, or the difference between simulation and experiment. Replies include sources you can open.</p></div>
         </div>
-        <div id="suggestions" class="suggestions" aria-label="建議問題">
-          <button type="button" data-question="用簡單的方式介紹這份研究在做什麼。">這份研究在做什麼？</button>
-          <button type="button" data-question="miR858 在模型中扮演什麼角色？">miR858 的角色是什麼？</button>
-          <button type="button" data-question="這些花紋已經經過生物實驗驗證了嗎？">這是模擬，還是實驗？</button>
-        </div>
+        <div id="suggestions" class="suggestions" data-i18n-aria="suggestionsLabel" aria-label="Suggested questions"></div>
         <form id="chat-form">
-          <label for="question">你的問題</label>
-          <textarea id="question" name="question" rows="2" maxlength="600" placeholder="例如：為什麼斑點會融合？" required></textarea>
-          <div class="composer-bottom"><span id="input-help">Shift + Enter 換行・最多 600 字</span><button type="submit" id="send">送出問題 <span aria-hidden="true">↗</span></button></div>
+          <label for="question" data-i18n="questionLabel">Your question</label>
+          <textarea id="question" name="question" rows="2" maxlength="600" placeholder="For example: why do spots fuse?" required aria-describedby="input-help"></textarea>
+          <div class="composer-bottom"><span id="input-help" data-i18n="inputHelp">Shift + Enter: new line · up to 600 characters</span><button type="submit" id="send">Send question ↗</button></div>
           <p id="form-error" class="form-error" role="alert" hidden></p>
         </form>
-        <p class="privacy">對話只留在此頁面。清除或重整後不保留；不會代為寄送問題。</p>
+        <p class="privacy" data-i18n="privacy">Conversation stays on this page and is lost when cleared or refreshed. Questions are not sent on your behalf. Only your language preference is saved.</p>
       </section>
     </div>
-    <footer><p>研究資料：Lu et al. (2024), BMC Plant Biology 24, 681。</p><div><a href="https://link.springer.com/article/10.1186/s12870-024-05475-w" target="_blank" rel="noopener noreferrer">圖號勘誤</a><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">論文 CC BY 4.0</a><button type="button" data-source="P16">聯絡研究團隊</button></div><p class="credit">圖材裁切自使用者提供海報；原始影像與模擬圖保留研究脈絡。導覽摘要經人工校對，並非逐字引文。</p></footer>
+    <footer><p data-i18n="footerSource">Research: Lu et al. (2024), BMC Plant Biology 24, 681.</p><div><a href="https://link.springer.com/article/10.1186/s12870-024-05475-w" target="_blank" rel="noopener noreferrer" data-i18n="correction">Figure correction</a><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" data-i18n="license">Paper: CC BY 4.0</a><button type="button" data-source="P16" data-i18n="contact">Contact the researchers</button></div><p class="credit" data-i18n="credit">Images cropped from the supplied poster; original biological and simulation context retained. Reviewed summaries are not verbatim quotations.</p></footer>
   </main>
-  <dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-head"><h2 id="source-title">來源資料</h2><button type="button" data-close="source-dialog" aria-label="關閉來源">關閉 ×</button></div><div id="source-content"></div></dialog>
-  <dialog id="poster-dialog" class="poster-dialog" aria-labelledby="poster-title"><div class="dialog-head"><h2 id="poster-title">研究日海報</h2><button type="button" data-close="poster-dialog" aria-label="關閉海報">關閉 ×</button></div><p>海報圖 1–4 與論文圖號獨立。<a href="/api/documents/poster" target="_blank" rel="noopener noreferrer">開啟原始 PDF ↗</a></p><div class="poster-zoom"><img src="/assets/poster.png" alt="完整研究日海報：Introduction、Methods、三條線索與研究限制" width="1192" height="1684" loading="lazy"></div></dialog>
-  <noscript><div class="noscript">三條線索的完整互動與問答需要 JavaScript。你仍可<a href="/api/documents/poster">閱讀完整研究海報 PDF</a>。</div></noscript>
+  <dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-head"><h2 id="source-title" data-i18n="sourceTitle">Source information</h2><button type="button" data-close="source-dialog" data-i18n="close" data-i18n-aria="sourceClose" aria-label="Close source">Close ×</button></div><div id="source-content"></div></dialog>
+  <dialog id="poster-dialog" class="poster-dialog" aria-labelledby="poster-title"><div class="dialog-head"><h2 id="poster-title" data-i18n="posterTitle">Research Day poster</h2><button type="button" data-close="poster-dialog" data-i18n="close" data-i18n-aria="posterClose" aria-label="Close poster">Close ×</button></div><p><span data-i18n="posterNote">Poster Figures 1–4 use their own numbering, separate from the paper.</span> <a href="/api/documents/poster" target="_blank" rel="noopener noreferrer" data-i18n="posterPdf">Open original PDF ↗</a></p><div class="poster-zoom"><img src="/assets/poster.png" data-i18n-alt="posterAlt" alt="Complete research poster: Introduction, Methods, three clues and study limitations" width="1192" height="1684" loading="lazy"></div></dialog>
+  <noscript><div class="noscript">Interactive clues and questions need JavaScript. <a href="/api/documents/poster">Read the original poster PDF / 閱讀研究海報</a>.</div></noscript>
 </body>
 </html>
