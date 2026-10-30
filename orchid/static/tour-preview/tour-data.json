@@ -1,0 +1,529 @@
+{
+  "schema": 1,
+  "order": [
+    "intro",
+    "methods",
+    "clue1",
+    "clue2",
+    "clue3",
+    "discussion",
+    "references",
+    "supplementary"
+  ],
+  "planned_duration": "2–3 min",
+  "documents": [
+    {
+      "id": "poster",
+      "url": "/api/documents/poster"
+    },
+    {
+      "id": "paper",
+      "url": "/api/documents/paper",
+      "publication_url": "https://link.springer.com/article/10.1186/s12870-024-05305-z"
+    },
+    {
+      "id": "correction",
+      "url": "https://link.springer.com/article/10.1186/s12870-024-05475-w"
+    }
+  ],
+  "sections": [
+    {
+      "id": "intro",
+      "position": "INTRODUCTION",
+      "context_title": "Introduction",
+      "sources": [
+        "P01",
+        "S01",
+        "S04",
+        "P02"
+      ],
+      "en": {
+        "title": "Introduction",
+        "summary": "The question behind orchid patterns.",
+        "narration": "Why do purple spots on Phalaenopsis orchids grow, join together, or cover almost an entire petal? This study uses a reaction–diffusion model to explore activation by PeMYB11, inhibition by PeMYBx, and the effects of HORT1 and miR858. Three clues lead from regular spots to fused patches and uneven purple–white boundaries. These simulations draw on existing biological data; their predictions still need experimental validation.",
+        "detail": "The paper discusses purple patches in cultivars with different HORT1 configurations. Solo-LTR insertion alone cannot explain all patterns. The model therefore considers HORT1 together with PeMYB11, PeMYBx and miR858.",
+        "nav_title": "Introduction",
+        "map_label": "Intro"
+      },
+      "zh-TW": {
+        "title": "研究簡介",
+        "summary": "蘭花花紋背後的研究問題。",
+        "narration": "蝴蝶蘭的紫色斑點為什麼會變大、相連，甚至幾乎覆蓋整片花瓣？這份研究把 PeMYB11 的活化、PeMYBx 的抑制，以及 HORT1、miR858 的影響寫進反應擴散模型。三條線索從規律斑點走向融合斑塊，再走向不均勻的紫白邊界。這些是基於既有生物資料的模擬預測，仍需實驗驗證。",
+        "detail": "論文討論具有不同 HORT1 組態的品種所呈現的紫色斑塊。單靠 solo-LTR 插入無法解釋所有花紋，因此模型也一併考慮 PeMYB11、PeMYBx 與 miR858 的交互作用。",
+        "nav_title": "研究簡介",
+        "map_label": "簡介"
+      },
+      "detail_sources": [
+        "P01",
+        "P02"
+      ]
+    },
+    {
+      "id": "methods",
+      "position": "METHODS",
+      "context_title": "Methods",
+      "sources": [
+        "P03",
+        "P06",
+        "S02",
+        "P05"
+      ],
+      "en": {
+        "title": "Methods",
+        "summary": "A mathematical model and numerical simulations.",
+        "narration": "The study represents PeMYB11 as an activator and PeMYBx as an inhibitor in a simplified reaction–diffusion model. The paper uses a two-dimensional grid with periodic boundary conditions. The poster also shows a petal-shaped domain with a finite-element method and Neumann boundary conditions. That extension belongs to the poster and should not be attributed to the paper's grid simulations.",
+        "detail": "PeMYB11 self-activation, inhibition by PeMYBx, degradation and diffusion are separate model terms. The inhibitor diffuses faster under the model settings, but this condition alone does not guarantee spots. Parameter values are simulation settings estimated from previous work, rather than universal constants for orchids.",
+        "nav_title": "Methods",
+        "map_label": "Methods"
+      },
+      "zh-TW": {
+        "title": "研究方法",
+        "summary": "以數學模型與數值模擬探索花紋。",
+        "narration": "研究在簡化的反應擴散模型中，以 PeMYB11 表示活化者、PeMYBx 表示抑制者。論文使用二維網格與週期邊界條件。海報另外展示花瓣形狀的區域，採用有限元素法與 Neumann 邊界條件。這項延伸屬於海報內容，不能歸為原論文網格模擬的方法。",
+        "detail": "PeMYB11 的自我活化、PeMYBx 的抑制、降解與擴散，在模型中是不同的項。抑制者在模型設定下擴散較快，但僅有這個條件並不保證產生斑點。參數值依先前研究估計，是模擬設定，並非所有蘭花通用的常數。",
+        "nav_title": "研究方法",
+        "map_label": "方法"
+      },
+      "detail_sources": [
+        "P03",
+        "P04",
+        "P05"
+      ]
+    },
+    {
+      "id": "clue1",
+      "position": "RESULTS → Clue 1",
+      "context_title": "Clue 1: formation of spots",
+      "sources": [
+        "P03",
+        "P07",
+        "S02"
+      ],
+      "en": {
+        "title": "Clue 1 · Where do spots come from?",
+        "summary": "Local activation meets faster-spreading inhibition.",
+        "narration": "PeMYB11 promotes its own activity and PeMYBx; PeMYBx limits PeMYB11 in turn. Together, these reactions and different diffusion rates can form regular spots in the model.",
+        "detail": "Both activator and inhibitor can be higher in the same spots because the activator also promotes the inhibitor. Their opposing effects are consistent with the model. This does not make PeMYBx an anthocyanin activator.",
+        "nav_title": "Clue 1 · Spots",
+        "map_label": "Clue 1"
+      },
+      "zh-TW": {
+        "title": "Clue 1・斑點從哪裡來？",
+        "summary": "局部活化，遇上擴散較快的抑制。",
+        "narration": "PeMYB11 促進自己與 PeMYBx；PeMYBx 回過頭限制 PeMYB11。兩者的反應與不同擴散速度，可在模型中形成規律斑點。",
+        "detail": "活化者與抑制者可以在同一個斑點都比較高，因為活化者也會促進抑制者。兩者的相反作用與模型並不矛盾，但這不表示 PeMYBx 是花青素的活化者。",
+        "nav_title": "Clue 1・斑點",
+        "map_label": "線索1"
+      },
+      "detail_sources": [
+        "P03",
+        "P07"
+      ]
+    },
+    {
+      "id": "clue2",
+      "position": "RESULTS → Clue 2",
+      "context_title": "Clue 2: fused patches",
+      "sources": [
+        "P08",
+        "P10",
+        "P11",
+        "S03"
+      ],
+      "en": {
+        "title": "Clue 2 · Why do spots join together?",
+        "summary": "Explore the balance between activation and degradation.",
+        "narration": "Increasing G_A alone enlarged spots, but did not reproduce the degree of fusion seen in Yushan Little Pearl. Combining increased G_A with reduced PeMYB11 degradation produced larger, fused purple patches under the simulated settings.",
+        "detail": "Here G_A controls the self-activation of PeMYB11, while μ_A is the degradation rate of the activator, not the degradation rate of miR858 itself. Lower miR858 expression is represented by reducing PeMYB11 degradation. The colored panels display model concentrations and thresholded patterns; they are not direct measurements of anthocyanin in a petal.",
+        "nav_title": "Clue 2 · Fusion",
+        "map_label": "Clue 2"
+      },
+      "zh-TW": {
+        "title": "Clue 2・斑點為何會相連？",
+        "summary": "長大還不夠，降解的平衡也要改變。",
+        "narration": "單獨提高 G_A 使斑點增大，但不足以重現玉山小珍珠程度的融合；合併降低 PeMYB11 降解率的設定則產生較大、融合的紫色斑塊。",
+        "detail": "這裡的 G_A 控制 PeMYB11 的自我活化，μ_A 則是活化者的降解率，不是 miR858 自身的降解率。模型以降低 PeMYB11 降解來表示較低的 miR858 表現量。彩色圖呈現模型濃度與經閾值轉換的花紋，並非直接量測花瓣中的花青素。",
+        "nav_title": "Clue 2・融合",
+        "map_label": "線索2"
+      },
+      "detail_sources": [
+        "P04",
+        "P10",
+        "P11",
+        "P14",
+        "P15",
+        "S03"
+      ]
+    },
+    {
+      "id": "clue3",
+      "position": "RESULTS → Clue 3",
+      "context_title": "Clue 3: purple-white boundaries",
+      "sources": [
+        "P12",
+        "P13",
+        "S04"
+      ],
+      "en": {
+        "title": "Clue 3 · How do purple–white edges form?",
+        "summary": "Assign different activation strengths to different regions.",
+        "narration": "Piece-wise G_A values represent spatial differences associated with HORT1 distribution. This can reproduce the large fused spots and sharp purple–white boundaries of Yushan Little Pearl in the model. Similar shapes do not establish the molecular mechanism experimentally.",
+        "detail": "Piece-wise G_A is an assignment used to explore how spatial differences could affect pigmentation. A similar purple–white boundary does not directly establish HORT1 distribution in each cell. The paper and poster use different figure numbers, so the source links identify the document as well as the figure.",
+        "nav_title": "Clue 3 · Edges",
+        "map_label": "Clue 3"
+      },
+      "zh-TW": {
+        "title": "Clue 3・紫白邊界如何形成？",
+        "summary": "把每個區域的活化強度分開設定。",
+        "narration": "以分段 G_A 表示 HORT1 分布造成的空間差異，可模擬玉山小珍珠的大融合斑與清楚紫白邊界；形態相似仍不等於分子機制已獲實驗證明。",
+        "detail": "分段 G_A 是用來探索空間差異如何影響色素分布的設定。模擬出相似的紫白邊界，並不直接證明每個細胞的 HORT1 分布。論文與海報使用不同圖號，因此來源連結會同時標明文件與圖號。",
+        "nav_title": "Clue 3・邊界",
+        "map_label": "線索3"
+      },
+      "detail_sources": [
+        "P12",
+        "P13",
+        "S04",
+        "C01"
+      ]
+    },
+    {
+      "id": "discussion",
+      "position": "DISCUSSION → CONCLUSIONS",
+      "context_title": "Discussion and conclusions",
+      "sources": [
+        "S04",
+        "P01",
+        "P15"
+      ],
+      "en": {
+        "title": "Discussion & conclusions",
+        "summary": "What the model can explain, and what remains untested.",
+        "narration": "This model links changes in activation, inhibition, degradation and spatial heterogeneity to different pigmentation patterns. It is a simplified molecular network, and its parameters are estimated from earlier literature. Reproducing a pattern is not direct experimental proof of the molecular mechanism, and it does not show that a new breeding outcome has been experimentally achieved. The predictions need experimental validation.",
+        "detail": "Some wording in the paper abstract conflicts with how activator degradation is defined in the equations. This guide follows the actual model definition and distinguishes that interpretation from an original quotation. The official correction concerns figure numbering; it does not resolve that wording.",
+        "nav_title": "Discussion",
+        "map_label": "Discuss"
+      },
+      "zh-TW": {
+        "title": "討論與結論",
+        "summary": "模型能解釋什麼，以及哪些推論仍待驗證。",
+        "narration": "模型把活化、抑制、降解與空間異質性的變化，連結到不同的色素分布。它使用簡化的分子網絡，參數也依據既有文獻估計。重現花紋並不直接證明分子機制，也不表示新的育種成果已經實驗驗證。這些預測仍需實驗檢驗。",
+        "detail": "論文摘要中的部分措辭，與方程式對活化者降解的定義有衝突。這份導覽依實際模型定義解說，並將解讀與原文引句分開。官方勘誤處理的是圖號，沒有解決這項措辭衝突。",
+        "nav_title": "討論與結論",
+        "map_label": "討論"
+      },
+      "detail_sources": [
+        "S04",
+        "P15",
+        "C01"
+      ]
+    },
+    {
+      "id": "references",
+      "position": "REFERENCE",
+      "context_title": "References",
+      "bounds": [
+        0.703,
+        0.559,
+        0.977,
+        0.64
+      ],
+      "sources": [
+        "P01",
+        "C01"
+      ],
+      "detail_sources": [
+        "P01",
+        "C01"
+      ],
+      "source_locators": [
+        {
+          "document": "poster",
+          "page": 1,
+          "section": "Reference",
+          "rect": [
+            0.703,
+            0.559,
+            0.977,
+            0.64
+          ],
+          "coordinate_system": "normalized_top_left",
+          "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3",
+          "role": "direct_source"
+        },
+        {
+          "document": "paper",
+          "page": 1,
+          "section": "Article title, authors and DOI",
+          "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+          "role": "related_paper_context",
+          "rect": [
+            0.095,
+            0.14,
+            0.9,
+            0.315
+          ]
+        },
+        {
+          "document": "correction",
+          "section": "Correction notice",
+          "url": "https://link.springer.com/article/10.1186/s12870-024-05475-w",
+          "role": "related_correction_context",
+          "verification": "Existing locally stored C01 original_excerpt; not fetched again in this audit."
+        }
+      ],
+      "source_roles": {
+        "P01": "Related paper identity and scope; not a locator for the poster Reference block.",
+        "C01": "Related official figure-number correction; not a poster Reference entry."
+      },
+      "en": {
+        "title": "References",
+        "summary": "The paper behind this poster.",
+        "narration": "This poster cites Lu and colleagues’ 2024 study in BMC Plant Biology, volume 24, article 681. Open the paper to read the full model, results and methods. The journal correction updates the paper’s figure numbering; the poster keeps its own Figures 1–4.",
+        "detail": "The paper is titled “Perturbation of periodic spot-generation balance leads to diversified pigmentation patterning of harlequin Phalaenopsis orchids: in silico prediction”; DOI: 10.1186/s12870-024-05305-z. The correction maps old Figure 2 to Figure 10, old Figure 3 to Figure 11, and old Figures 4–11 to Figures 2–9. These changes concern the main paper, not supplementary Figures S1–S5.",
+        "nav_title": "References",
+        "map_label": "Refs"
+      },
+      "zh-TW": {
+        "title": "參考文獻",
+        "summary": "海報背後的完整研究論文。",
+        "narration": "海報引用 Lu 等人於2024年刊登在 BMC Plant Biology 的研究，第24卷、文章編號681。可開啟論文閱讀完整模型、結果與方法。官方勘誤修正的是期刊論文的圖號，海報自己的圖1到圖4維持獨立編號。",
+        "detail": "論文題名為「Perturbation of periodic spot-generation balance leads to diversified pigmentation patterning of harlequin Phalaenopsis orchids: in silico prediction」，DOI為10.1186/s12870-024-05305-z。勘誤將舊圖2改為圖10、舊圖3改為圖11、舊圖4到圖11改為圖2到圖9；這些更正適用於主論文，不套用到期刊補圖S1到S5。",
+        "nav_title": "參考文獻",
+        "map_label": "文獻"
+      },
+      "source_label": {
+        "en": "Related sources",
+        "zh-TW": "相關來源"
+      }
+    },
+    {
+      "id": "supplementary",
+      "position": "SUPPLEMENTARY",
+      "context_title": "Poster supplementary illustrations",
+      "bounds": [
+        0.703,
+        0.644,
+        0.977,
+        1.0
+      ],
+      "sources": [
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "S02"
+      ],
+      "detail_sources": [
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "S02"
+      ],
+      "source_locators": [
+        {
+          "document": "poster",
+          "page": 1,
+          "section": "Supplementary",
+          "rect": [
+            0.703,
+            0.644,
+            0.977,
+            1.0
+          ],
+          "coordinate_system": "normalized_top_left",
+          "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3",
+          "role": "direct_source"
+        },
+        {
+          "document": "poster",
+          "page": 1,
+          "section": "Supplementary: HORT1 illustration",
+          "rect": [
+            0.703,
+            0.673,
+            0.977,
+            0.827
+          ],
+          "coordinate_system": "normalized_top_left",
+          "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3",
+          "role": "direct_source"
+        },
+        {
+          "document": "poster",
+          "page": 1,
+          "section": "Supplementary: dimensional analysis and cell-to-cell coupling",
+          "rect": [
+            0.703,
+            0.829,
+            0.977,
+            1.0
+          ],
+          "coordinate_system": "normalized_top_left",
+          "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3",
+          "role": "direct_source"
+        },
+        {
+          "document": "paper",
+          "page": 2,
+          "section": "Introduction: HORT1, solo-LTR and P. Ever-spring Prince Plum",
+          "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+          "role": "related_paper_context"
+        },
+        {
+          "document": "paper",
+          "page": 9,
+          "section": "Methods: meanings of PeMYB11 and PeMYBx",
+          "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+          "role": "related_paper_context"
+        },
+        {
+          "document": "paper",
+          "page": 10,
+          "section": "Model equations, diffusivities and standard simulation parameters",
+          "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+          "role": "related_paper_context"
+        },
+        {
+          "document": "paper",
+          "page": 12,
+          "section": "Supplementary Information",
+          "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9",
+          "role": "related_paper_context",
+          "rect": [
+            0.095,
+            0.107,
+            0.493,
+            0.177
+          ]
+        }
+      ],
+      "source_roles": {
+        "P02": "Related paper p2 context for HORT1/solo-LTR and the Plum counterexample.",
+        "P03": "Related paper pp9–10 model scope and diffusivity definitions; does not establish the new poster coupling diagram.",
+        "P04": "Related paper p10 equations; units can be checked dimensionally against these equations.",
+        "P05": "Related paper p10 baseline parameter values.",
+        "S02": "Related poster Methods region only, for comparing the baseline parameter values; not a source for Supplementary illustrations."
+      },
+      "en": {
+        "title": "Poster supplement",
+        "summary": "Genetic context, model units and a coupling sketch.",
+        "narration": "The poster adds two supplementary illustrations. One connects HORT1 and PeMYB11 to pigmentation and shows that solo-LTR alone does not explain every purple patch. The other explains model units and a cell-to-cell coupling sketch. These are poster supplementary notes, separate from the journal’s supplementary material.",
+        "detail": "In the lower illustration, diffusion rates have units of length squared per time, and degradation rates have units of inverse time. Its apparent diffusion sketch is a model interpretation, not a transport experiment. Related paper excerpts explain the underlying equations and standard settings; the original poster is the direct source for these illustrations.",
+        "nav_title": "Supplementary",
+        "map_label": "Suppl."
+      },
+      "zh-TW": {
+        "title": "海報補充說明",
+        "summary": "遺傳背景、模型量綱與細胞間耦合示意。",
+        "narration": "海報另附兩張補充示意圖：一張連結 HORT1、PeMYB11 與色素分布，並以反例說明 solo-LTR 不能單獨解釋所有紫色斑塊；另一張說明模型量綱與細胞間耦合。這些是海報補充說明，與期刊的獨立補充資料分開。",
+        "detail": "下方示意中，擴散率的單位是長度平方除以時間，降解率的單位是時間的倒數。「表觀擴散」是模型詮釋，不是運輸實驗的證明。相關論文節錄提供方程式與標準設定背景，這些補充圖則以原海報為直接來源。",
+        "nav_title": "海報補充",
+        "map_label": "補充"
+      },
+      "source_label": {
+        "en": "Related sources",
+        "zh-TW": "相關來源"
+      }
+    }
+  ],
+  "tour_order": [
+    "intro",
+    "methods",
+    "clue1",
+    "clue2",
+    "clue3",
+    "discussion"
+  ],
+  "source_labels": {
+    "C01": {
+      "en": "Official figure-number correction",
+      "zh-TW": "官方圖號更正"
+    },
+    "P01": {
+      "en": "Research question and study scope",
+      "zh-TW": "研究問題與研究類型"
+    },
+    "P02": {
+      "en": "Biological background: anthocyanin and HORT1",
+      "zh-TW": "花青素與 HORT1 背景觀察"
+    },
+    "P03": {
+      "en": "Model roles: local activation and faster-spreading inhibition",
+      "zh-TW": "模型角色：局部活化與較快擴散抑制"
+    },
+    "P04": {
+      "en": "Gierer–Meinhardt reaction–diffusion equations",
+      "zh-TW": "Gierer–Meinhardt 反應擴散方程"
+    },
+    "P05": {
+      "en": "Standard simulation parameters",
+      "zh-TW": "標準模擬參數"
+    },
+    "P06": {
+      "en": "Paper: numerical methods and boundary conditions",
+      "zh-TW": "論文數值方法與邊界條件"
+    },
+    "P07": {
+      "en": "Clue 1: activator and inhibitor are in phase",
+      "zh-TW": "Clue 1：活化者與抑制者同相"
+    },
+    "P08": {
+      "en": "Clue 2: increased self-activation enlarges spots",
+      "zh-TW": "Clue 2：提高自我活化只讓斑點變大"
+    },
+    "P10": {
+      "en": "Reduced miR858 expression represented by reduced PeMYB11 degradation",
+      "zh-TW": "miR858 下降以降低 PeMYB11 降解率表示"
+    },
+    "P11": {
+      "en": "Clue 2: combined settings produce larger fused purple patches",
+      "zh-TW": "Clue 2：兩因素合併產生較大融合紫斑"
+    },
+    "P12": {
+      "en": "Clue 3: spatially heterogeneous HORT1 distribution",
+      "zh-TW": "Clue 3：空間不均勻的 HORT1 分布"
+    },
+    "P13": {
+      "en": "Estimating G_A_whi in white regions",
+      "zh-TW": "白區 G_A_whi 的估計"
+    },
+    "P14": {
+      "en": "Visualization thresholds and concentrations",
+      "zh-TW": "視覺化閾值與濃度"
+    },
+    "P15": {
+      "en": "Wording discrepancy between the Abstract and Methods",
+      "zh-TW": "摘要與 Methods 的用詞衝突"
+    },
+    "S01": {
+      "en": "Poster: study overview and three clues",
+      "zh-TW": "海報：研究摘要與三條線索"
+    },
+    "S02": {
+      "en": "Poster methods: additional petal-shaped simulations",
+      "zh-TW": "海報方法：花瓣形區域的新增模擬"
+    },
+    "S03": {
+      "en": "Poster Clue 2 and caption annotation",
+      "zh-TW": "海報 Clue 2 與圖說校註"
+    },
+    "S04": {
+      "en": "Poster Clue 3 and research limitations",
+      "zh-TW": "海報 Clue 3 與研究限制"
+    }
+  },
+  "journal_supplement": {
+    "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1186%2Fs12870-024-05305-z/MediaObjects/12870_2024_5305_MOESM1_ESM.pdf",
+    "sha256": "a1612a32a5d464160787143bff68a655590c0262863a26bc45643d6564efd4b5",
+    "en": {
+      "label": "Journal supplement · PDF",
+      "description": "A separate 5-page journal supplement, Figures S1–S5: Plum pigmentation, parameter comparisons, purple-spot contours, HORT1 structure, and differences among flowers on one plant."
+    },
+    "zh-TW": {
+      "label": "期刊補充資料 · PDF",
+      "description": "期刊另附5頁補充資料，補圖S1–S5涵蓋Plum花色、參數組合模擬、紫斑輪廓、HORT1結構與同株花朵差異。"
+    }
+  }
+}

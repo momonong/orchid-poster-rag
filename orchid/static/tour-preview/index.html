@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#143f59">
+  <title>Orchid poster tour</title>
+  <link rel="stylesheet" href="./tour.css">
+  <script src="/speech.js" defer></script>
+  <script src="./tour.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#reading" data-i18n="skip">Skip to the guide text</a>
+  <header class="site-header">
+    <a class="brand" href="#overview" data-i18n="brand">Orchid guide</a>
+    <nav class="language-switch" aria-label="Language">
+      <button type="button" data-language="en" aria-pressed="true">English</button>
+      <button type="button" data-language="zh-TW" aria-pressed="false">繁體中文</button>
+    </nav>
+  </header>
+  <main class="page">
+    <a id="back-overview" class="back-link link-button" href="#overview" data-i18n="back" hidden>Back to entire poster</a>
+    <div class="title-row">
+      <div><h1 id="view-title">Entire poster tour</h1><p id="view-location" class="secondary">A guide to the whole study</p></div>
+      <button id="text-size" type="button" aria-label="Larger text">A+</button>
+    </div>
+    <p id="duration-note" class="small secondary" data-i18n="duration">Read the whole poster, or listen to the guide.</p>
+    <section class="audio-panel" aria-label="Guide audio">
+      <div class="audio-controls"><button id="play-guide" class="primary" type="button" disabled>Play full tour</button><button id="stop-guide" type="button" disabled data-i18n="stop">Stop</button></div>
+      <div class="audio-shortcuts"><button id="read-along" class="secondary-button" type="button" data-i18n="readAlong">Read guide</button><button id="quick-question" class="secondary-button ask-shortcut" type="button" data-i18n="quickQuestion">Ask a question</button></div>
+      <p id="audio-status" class="small" role="status" aria-live="polite">Checking audio availability…</p>
+      <p id="listening-location" class="small secondary" hidden></p>
+      <button id="check-services" class="secondary-button" type="button" data-i18n="checkServices" hidden>Check availability again</button>
+    </section>
+    <p id="asset-error" class="error" role="alert" hidden></p>
+    <div class="tour-layout">
+      <section class="visual-column" aria-label="Research poster">
+        <p id="poster-hint" class="map-instruction" data-i18n="exploreHint">Tap a framed section to explore</p>
+        <figure id="poster-figure">
+          <div class="poster-frame">
+            <img id="poster-image" alt="Original English research poster" decoding="async" fetchpriority="high">
+            <div id="poster-hotspots" aria-label="Poster sections"></div>
+          </div>
+          <figcaption id="image-caption" class="small secondary">Original English poster</figcaption>
+        </figure>
+        <div class="figure-actions"><button id="open-image" class="secondary-button" type="button" data-i18n="enlarge">Enlarge image</button><a class="link-button" href="/api/documents/poster" target="_blank" rel="noopener noreferrer" data-i18n="posterPDF">Original poster PDF</a></div>
+        <nav id="section-links" class="section-links" aria-label="Poster sections"></nav>
+        <details id="poster-text"><summary data-i18n="posterText">Selectable English poster text</summary><p id="poster-text-content" class="reading-copy" lang="en"></p></details>
+      </section>
+      <section id="reading" class="reading-column" aria-labelledby="reading-title">
+        <h2 id="reading-title" data-i18n="readingTitle">Read along</h2>
+        <p class="small secondary" data-i18n="readingHint">The text is always available. Audio is optional.</p>
+        <div id="narration"></div>
+        <p class="evidence-note" data-i18n="evidence">These are model predictions, not experimental proof.</p>
+        <button id="open-question" class="ask-button" type="button">Ask about the study</button>
+        <p class="small secondary" id="question-scope"></p>
+        <div class="document-links"><a class="link-button" href="/api/documents/paper" target="_blank" rel="noopener noreferrer" data-i18n="paperPDF">Full paper PDF</a><a class="link-button" href="https://link.springer.com/article/10.1186/s12870-024-05305-z" target="_blank" rel="noopener noreferrer" data-i18n="publication">Publication</a></div>
+      </section>
+    </div>
+    <noscript>The original poster and paper links remain available. Enable JavaScript to use the bilingual guide, section images, audio and questions.</noscript>
+  </main>
+  <dialog id="image-dialog" aria-labelledby="image-title">
+    <div class="dialog-header"><h2 id="image-title">Poster image</h2><button type="button" data-close="image-dialog" data-i18n="close">Close</button></div>
+    <div class="figure-actions"><button id="image-scale" type="button" data-i18n="actualPixels">View full resolution</button><p class="small secondary" data-i18n="zoomHint">Use browser zoom, or view full resolution and pan the image.</p></div>
+    <div class="image-pan"><img id="zoom-image" alt="Enlarged original English poster" decoding="async"></div>
+    <p class="small secondary" data-i18n="imageLimit">Higher-resolution PDF text remains sharp. Scientific raster figures retain the detail of their original embedded images.</p>
+  </dialog>
+  <dialog id="question-dialog" aria-labelledby="question-title">
+    <div class="dialog-header"><h2 id="question-title">Ask about the study</h2><button type="button" data-close="question-dialog" data-i18n="returnGuide">Return to guide</button></div>
+    <p id="chat-context"></p>
+    <p class="small secondary" data-i18n="historyHint">Only the last four short messages are used as context. This conversation is not saved.</p>
+    <div id="messages" role="log" aria-live="polite"></div>
+    <form id="chat-form">
+      <label for="question" data-i18n="questionLabel">Your question</label>
+      <textarea id="question" rows="3" required aria-describedby="question-budget"></textarea>
+      <p id="question-budget" class="small secondary"></p>
+      <p id="chat-error" class="error" role="alert" hidden></p>
+      <div class="chat-actions"><button id="send-question" class="primary" type="submit" data-i18n="send">Send question</button><button id="clear-chat" type="button" data-i18n="clear">Clear conversation</button></div>
+      <p id="chat-status" class="small" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+  <dialog id="source-dialog" aria-labelledby="source-title">
+    <div class="dialog-header"><h2 id="source-title">Research source</h2><button type="button" data-close="source-dialog" data-i18n="close">Close</button></div>
+    <div id="source-content"></div>
+  </dialog>
+</body>
+</html>

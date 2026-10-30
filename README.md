@@ -6,13 +6,27 @@
 
 介紹、目前線索及通過來源檢查的回答可手動朗讀，共用暫停／繼續及停止控制。語音由同一 FastAPI 內的固定 Kokoro 模型在本機 CPU 合成，瀏覽器以 HTMLAudio 播放 WAV；不依賴已安裝的 OS 語音。靜態導覽預錄快取，回答音訊只短暫保留記憶體。切換語言／線索、清除對話或離頁會停止播放；一次只播一段，旁讀略過來源 ID，畫面保留引用。瀏覽器若阻擋非同步播放，可再按 Play 直接播放已備妥音訊。沒有麥克風、語音辨識、雲端 TTS 或自動重送。安裝、授權與實測見[本機雙語音訊](docs/local-speech.md)。
 
+## 完整海報導覽 `/tour-preview/`
+
+既有首頁 `/` 保留；`/tour-preview/` 提供完整英文海報 → 八個完整區塊 → 閱讀、聆聽與有來源提問。介面預設英文，可切換繁體中文；正文 18px，A+ 可切換 20／22px。八區探索的 `order` 與六段完整導覽的 `tour_order` 分開，既有十二段預製 WAV 約為英文 1:53、中文 1:56。使用者已於 2026-10-31 確認本輪 UI 並授權合併與推送；Git 完成狀態由實際整合結果另行核對。
+
+在已安裝專案依賴的環境，先放入 `data/sources.json` 登錄且 SHA 相符的原海報 PDF，再從專案根目錄建置圖片：
+
+```powershell
+uv run --locked --offline python -B scripts/build_tour_assets.py
+# 重建六段 × 兩語音訊：須已有語音服務就緒，且當次已授權語音生成；不會啟動服務。
+uv run --locked --offline python -B scripts/build_tour_audio.py --base-url http://127.0.0.1:8000
+```
+
+衍生圖片、manifest 與 WAV 位於 `.orchid/assets/tour-preview/`，連同原 PDF、模型及索引都不入 Git；新 checkout 必須準備原素材並重建。References／海報補充說明新增的是閱讀與來源入口，沒有加入 RAG evidence 或索引，不保證所有補充細節都可問答。操作、解析度上限、音訊重建與驗證界線見[海報網頁試作](docs/poster-web-preview.md)及[按鈕與八區調整](docs/poster-visual-polish.md)。
+
 ## 目前交付與驗證界線
 
 - 官方更正後論文、2024-08-17 correction 與研究日海報已整理成 21 筆校對摘要及可回溯原文，CPU 索引為 **33 chunks**；原始 PDF、模型、向量與程序狀態排除 Git。
-- 雙語音訊版工程驗證為 **103 pytest tests、21 Node tests 通過**，涵蓋語言契約、英文抽取式選段、譯文完整性／過期拒用、兩語錯誤／科學主張保護、英文術語檢索、音訊容量／ASGI 斷線取消／私密快取、播放器事件及跨語言舊回答播放。Node 中 1 項實際 Edge 回歸需已有 Playwright 與瀏覽器；其餘使用 Node 內建測試。整合發現的「H 自我活化」錯述另加拒絕保護，不更動生成 prompt 或英文選段。先前雙語科學版為 92 pytest、7 Node；中文單語版基線是 41 tests。詳細界線見[雙語驗證紀錄](docs/bilingual-validation.md)與[本機音訊實測](docs/local-speech.md)。
+- 原雙語音訊版的歷史工程驗證為 **103 pytest tests、21 Node tests 通過**，涵蓋語言契約、英文抽取式選段、譯文完整性／過期拒用、兩語錯誤／科學主張保護、英文術語檢索、音訊容量／ASGI 斷線取消／私密快取、播放器事件及跨語言舊回答播放。Node 中 1 項實際 Edge 回歸需已有 Playwright 與瀏覽器；其餘使用 Node 內建測試。整合發現的「H 自我活化」錯述另加拒絕保護，不更動生成 prompt 或英文選段。先前雙語科學版為 92 pytest、7 Node；中文單語版基線是 41 tests。詳細界線見[雙語驗證紀錄](docs/bilingual-validation.md)與[本機音訊實測](docs/local-speech.md)。
 - RTX 5090 Laptop 實際 API 固定題組：英文抽取式 **17/17 可答題通過**，繁中 **16/17（94.1%）**；兩語各 **4/4 正確拒答**。繁中 G07 保守拒答仍計未通過。英文自由轉述的失敗歷史、最後審查與繁中原版輸入相同的證據見[雙語驗證紀錄](docs/bilingual-validation.md)。
 - 暖機後單人序列 API 等待：英文 **0.55–1.75 秒，中位數 1.02 秒**；繁中 **3.203–8.737 秒，中位數 4.867 秒**。固定題組及代理審查不是研究作者／使用者人工接受，也不保證其他問題或負載相同。
-- 模型未就緒仍可讀導覽與來源。公開 HTTPS、語言切換、來源開啟與窄螢幕已核對；英中本機 CPU WAV 與瀏覽器播放控制已實測。人工聽感、實體手機行動網路掃碼及展場長時間穩定性仍待驗收。
+- 模型未就緒仍可讀導覽與來源。公開 HTTPS、語言切換、來源開啟與窄螢幕已核對；英中本機 CPU WAV 與瀏覽器播放控制已實測。使用者已確認手機操作與本輪 UI；音訊人工聽感、實體手機行動網路掃碼及展場長時間穩定性仍待驗收。2026-10-31 發布前離線檢查為 **103 Python tests、29 Node tests 通過，0 skip**；新增建置腳本語法與 Ruff 通過。這輪未重跑真實模型／語音評估。
 
 ## 安裝與啟動（Windows PowerShell）
 
@@ -35,7 +49,7 @@ uv run --locked orchid index --download
 
 # 模型服務由既有 selfhost-models 的擁有者準備。
 $env:SELFHOST_MODEL_BASE_URL = 'http://127.0.0.1:18080'
-$env:SELFHOST_MODEL_API_KEY_FILE = 'D:\projects\selfhost-models\.state\api-key'
+$env:SELFHOST_MODEL_API_KEY_FILE = '<依 selfhost-models 契約核對的 API key 檔案完整路徑>'
 $env:SELFHOST_MODEL_EXPECTED_ID = 'Qwen/Qwen3.5-4B'
 # 只有部署者已核對 context 為 8192，但 /v1/models 未宣告時才設定：
 $env:SELFHOST_MODEL_CONTEXT_TOKENS = '8192'
@@ -133,9 +147,12 @@ uv run --locked ruff check orchid tests
 node --check orchid/static/app.js
 node --check orchid/static/locale.js
 node --check orchid/static/speech.js
+node --check orchid/static/tour-preview/tour.js
 node --test tests/speech.test.cjs tests/locale.test.cjs
 # 已有Playwright及Chromium/Edge時，可另跑真實瀏覽器的跨語言回答播放回歸：
 node --test tests/app.browser.test.cjs
+# 完整 Node suite：先依上節建置圖片素材，並具備 Playwright + Chromium/Edge：
+node --test tests/app.browser.test.cjs tests/locale.test.cjs tests/speech.test.cjs tests/tour-preview.test.cjs
 uv run --locked orchid eval --mode retrieval
 # app、索引與既有模型都已就緒，且當次允許推論時；序列執行，不與手動生成並行：
 uv run --locked orchid eval --mode live --language zh-TW
@@ -147,6 +164,8 @@ uv run --locked python scripts/evaluate_bilingual.py --language en
 $env:ORCHID_APP_BASE_URL = 'http://127.0.0.1:8000'
 uv run --locked orchid eval --mode live --limit 6
 ```
+
+`speech.test.cjs` 與 `locale.test.cjs` 是不需圖片或模型的純 Node 測試。完整 suite 的兩項瀏覽器測試使用離線 API fixtures，但仍須能 resolve 已安裝的 Playwright、啟動 Chromium／Edge，且 `tour-preview.test.cjs` 會讀取本機 `.orchid/assets/tour-preview/` 圖片與 manifest。已裝 Playwright 而缺素材時會失敗；fresh clone 並非零素材即可重現完整 suite。2026-10-31 發布檢查的 GPU 停用設定、命令及原始結果保留於本機 `output/release-poster-tour-check.txt`。
 
 `data/golden.json` 有 21 題：17 題可回答、4 題證據不足／注入／不存在的寄信操作／無關餐廳推薦。retrieval 模式是真實 CPU 檢索；live 模式先檢查產品 health，再序列呼叫實際 `/api/chat`，完整經過與 UI 相同的引用／數字／佇列／unknown 驗證。每題只送一次，遇 transport 結果未知、busy、unavailable，或 unknown 後無法確認服務 idle 即停止，沒有 fixture fallback 或自動重送。
 
