@@ -33,29 +33,29 @@
       "context_title": "Introduction",
       "sources": [
         "P01",
-        "S01",
-        "S04",
-        "P02"
+        "P02",
+        "S01"
       ],
       "en": {
         "title": "Introduction",
-        "summary": "The question behind orchid patterns.",
-        "narration": "Why do purple spots on Phalaenopsis orchids grow, join together, or cover almost an entire petal? This study uses a reaction–diffusion model to explore activation by PeMYB11, inhibition by PeMYBx, and the effects of HORT1 and miR858. Three clues lead from regular spots to fused patches and uneven purple–white boundaries. These simulations draw on existing biological data; their predictions still need experimental validation.",
-        "detail": "The paper discusses purple patches in cultivars with different HORT1 configurations. Solo-LTR insertion alone cannot explain all patterns. The model therefore considers HORT1 together with PeMYB11, PeMYBx and miR858.",
+        "summary": "Meet the four actors behind the diversity of orchid patterns.",
+        "narration": "Why do some Phalaenopsis flowers have separate purple spots, while others have broad patches or almost fully colored petals? Their deep purple color comes from anthocyanin. This study brings together four actors: PeMYB11 promotes pigmentation, PeMYBx provides inhibition, HORT1 affects PeMYB11 activation, and miR858 targets its messenger RNA. A mathematical model explores how their interactions create different patterns. Follow three clues: how spots form, how they join, and how purple–white boundaries emerge.",
+        "detail": "Start with the orchid photographs in the Introduction. They show a range from separate spots to large purple areas. This diversity raises a question about how pigmentation is organized across a petal, as well as how much pigment accumulates.\n\nPeMYB11 promotes anthocyanin production, while PeMYBx acts as a repressor. HORT1 configurations influence PeMYB11 promoter activity, and miR858 targets PeMYB11 messenger RNA. The model combines these relationships into a system whose activation, inhibition and degradation can be varied.\n\nThe three Results sections follow this system from regular spots to fused patches and region-specific boundaries. Together they ask how several regulatory changes can produce the variety seen in the photographs.",
         "nav_title": "Introduction",
         "map_label": "Intro"
       },
       "zh-TW": {
         "title": "研究簡介",
-        "summary": "蘭花花紋背後的研究問題。",
-        "narration": "蝴蝶蘭的紫色斑點為什麼會變大、相連，甚至幾乎覆蓋整片花瓣？這份研究把 PeMYB11 的活化、PeMYBx 的抑制，以及 HORT1、miR858 的影響寫進反應擴散模型。三條線索從規律斑點走向融合斑塊，再走向不均勻的紫白邊界。這些是基於既有生物資料的模擬預測，仍需實驗驗證。",
-        "detail": "論文討論具有不同 HORT1 組態的品種所呈現的紫色斑塊。單靠 solo-LTR 插入無法解釋所有花紋，因此模型也一併考慮 PeMYB11、PeMYBx 與 miR858 的交互作用。",
+        "summary": "從花紋的多樣性，認識背後的四個調控角色。",
+        "narration": "蝴蝶蘭的紫斑，為什麼有的彼此分離，有的連成大片？紫色來自花青素。研究把四個角色放進模型：PeMYB11 是活化者 A，PeMYBx 是抑制者 H；HORT1 影響活化，miR858 靶向活化者的信使 RNA。接下來沿三條線索，看看斑點如何形成、融合，以及紫白邊界如何出現。",
+        "detail": "先看 Introduction 的蘭花照片：有的斑點彼此分離，有的形成大片紫色區域。這些差異不只涉及色素多寡，也帶出另一個問題：色素如何在花瓣上形成特定的空間分布？\n\nPeMYB11 促進花青素生成，PeMYBx 則扮演抑制角色。HORT1 的不同組態會影響 PeMYB11 啟動子的活性；miR858 則靶向 PeMYB11 的信使 RNA。模型把這些關係組合起來，讓活化、抑制與降解的影響可以逐一比較。\n\n三個 Results 區塊會從規律斑點出發，接著看融合斑塊與區域性的紫白邊界，探索多項調控變化如何共同連結照片中的花紋多樣性。",
         "nav_title": "研究簡介",
         "map_label": "簡介"
       },
       "detail_sources": [
-        "P01",
-        "P02"
+        "P02",
+        "P03",
+        "P10"
       ]
     },
     {
@@ -64,30 +64,32 @@
       "context_title": "Methods",
       "sources": [
         "P03",
+        "P04",
         "P06",
-        "S02",
-        "P05"
+        "S02"
       ],
       "en": {
         "title": "Methods",
-        "summary": "A mathematical model and numerical simulations.",
-        "narration": "The study represents PeMYB11 as an activator and PeMYBx as an inhibitor in a simplified reaction–diffusion model. The paper uses a two-dimensional grid with periodic boundary conditions. The poster also shows a petal-shaped domain with a finite-element method and Neumann boundary conditions. That extension belongs to the poster and should not be attributed to the paper's grid simulations.",
-        "detail": "PeMYB11 self-activation, inhibition by PeMYBx, degradation and diffusion are separate model terms. The inhibitor diffuses faster under the model settings, but this condition alone does not guarantee spots. Parameter values are simulation settings estimated from previous work, rather than universal constants for orchids.",
+        "summary": "Translate biological regulation into reaction, diffusion and numerical simulations.",
+        "narration": "The researchers use a Gierer–Meinhardt reaction–diffusion model, with PeMYB11 represented by activator A and PeMYBx by inhibitor H. A promotes itself and H; H feeds back to limit A. Production, degradation and diffusion together determine how their concentrations change across space and time. The paper solves the equations on a two-dimensional periodic grid. The poster also explores a petal-shaped domain using finite elements and Neumann boundary conditions. These computations let us compare the resulting patterns.",
+        "detail": "Follow the interaction diagram: A promotes its own activity and the production of H, while H limits A production. Here A and H summarize linked biological processes, including transcription, post-transcriptional regulation and translation.\n\nIn the equations, G_A controls A self-activation and G_H controls production of H driven by A. The degradation rates μ_A and μ_H describe removal; D_A and D_H describe spatial diffusion. Basal production also supplies A. Changing these terms lets the researchers connect biological regulation to pattern formation.\n\nThe paper uses a 100 × 100 grid with periodic boundaries, solves it with rdsolver, and compares simulations with Virtual Cell. The poster extends the numerical exploration to a petal-shaped domain with a finite-element method and Neumann boundaries. Its standard-parameter examples show how the same reaction system can be explored on these two domains.",
         "nav_title": "Methods",
         "map_label": "Methods"
       },
       "zh-TW": {
         "title": "研究方法",
-        "summary": "以數學模型與數值模擬探索花紋。",
-        "narration": "研究在簡化的反應擴散模型中，以 PeMYB11 表示活化者、PeMYBx 表示抑制者。論文使用二維網格與週期邊界條件。海報另外展示花瓣形狀的區域，採用有限元素法與 Neumann 邊界條件。這項延伸屬於海報內容，不能歸為原論文網格模擬的方法。",
-        "detail": "PeMYB11 的自我活化、PeMYBx 的抑制、降解與擴散，在模型中是不同的項。抑制者在模型設定下擴散較快，但僅有這個條件並不保證產生斑點。參數值依先前研究估計，是模擬設定，並非所有蘭花通用的常數。",
+        "summary": "把生物調控寫成反應、擴散與可計算的數值模型。",
+        "narration": "研究用反應擴散方程描述 A、H：A 促進自己與 H，H 再限制 A；生成、降解和擴散共同改變空間濃度。論文在二維週期網格求解，海報則另外以有限元素法與 Neumann 邊界，探索花瓣形區域。透過計算，就能比較不同設定的花紋。",
+        "detail": "沿著互動示意圖看：A 促進自身活性，也促進 H 生成；H 則限制 A 生成。這裡的 A、H 概括了轉錄、轉錄後調控與轉譯等相連的生物過程。\n\n方程式中的 G_A 控制 A 的自我活化，G_H 控制 A 驅動 H 生成的強度；μ_A、μ_H 描述降解，D_A、D_H 描述空間擴散，另有 A 的基本產生項。調整這些項，就能把生物調控的變化連結到花紋形成。\n\n論文使用 100 × 100 網格與週期邊界，以 rdsolver 求解，並用 Virtual Cell 比較模擬。海報進一步在花瓣形區域採用有限元素法與 Neumann 邊界條件；使用相同標準參數的範例，讓我們比較這套反應系統在兩種區域上的花紋。",
         "nav_title": "研究方法",
         "map_label": "方法"
       },
       "detail_sources": [
         "P03",
         "P04",
-        "P05"
+        "P05",
+        "P06",
+        "S02"
       ]
     },
     {
@@ -101,22 +103,24 @@
       ],
       "en": {
         "title": "Clue 1 · Where do spots come from?",
-        "summary": "Local activation meets faster-spreading inhibition.",
-        "narration": "PeMYB11 promotes its own activity and PeMYBx; PeMYBx limits PeMYB11 in turn. Together, these reactions and different diffusion rates can form regular spots in the model.",
-        "detail": "Both activator and inhibitor can be higher in the same spots because the activator also promotes the inhibitor. Their opposing effects are consistent with the model. This does not make PeMYBx an anthocyanin activator.",
+        "summary": "Local activation and wider inhibition organize separate, regular spots.",
+        "narration": "The first clue is a field of regular, separate spots. Local self-activation strengthens A, while faster-spreading H carries inhibition farther into the surrounding region. Under the standard settings, their coupled dynamics organize the spotted pattern. A and H can peak at the same locations because A also stimulates H. This in-phase pattern agrees with earlier expression observations and gives a mechanism to explore before asking why spots become larger.",
+        "detail": "Look at the standard spot simulations in Clue 1. Starting from random initial variation in A, the reaction and diffusion terms organize a regular pattern. Local activation reinforces a spot, while the wider reach of H helps establish its spatial separation from neighboring spots.\n\nThe concentrations of A and H rise together at the spots. This follows naturally from their coupling: A stimulates H, and H feeds back on A. Their matching spatial peaks connect the model to earlier observations of higher PeMYB11 and PeMYBx expression in purple regions, while their different diffusion rates shape the surrounding pattern.",
         "nav_title": "Clue 1 · Spots",
         "map_label": "Clue 1"
       },
       "zh-TW": {
         "title": "Clue 1・斑點從哪裡來？",
-        "summary": "局部活化，遇上擴散較快的抑制。",
-        "narration": "PeMYB11 促進自己與 PeMYBx；PeMYBx 回過頭限制 PeMYB11。兩者的反應與不同擴散速度，可在模型中形成規律斑點。",
-        "detail": "活化者與抑制者可以在同一個斑點都比較高，因為活化者也會促進抑制者。兩者的相反作用與模型並不矛盾，但這不表示 PeMYBx 是花青素的活化者。",
+        "summary": "局部活化與較廣的抑制範圍，共同排列出規律獨立斑點。",
+        "narration": "第一條線索是規律、彼此分離的斑點。局部自我活化讓 A 增強，擴散較快的 H 則把抑制作用帶向周圍，兩者在模型中共同排列花紋。A 也會促進 H，因此它們能在同一個斑點一起升高，與先前的表達觀察相符。有了這個機制，再看斑點怎麼長大。",
+        "detail": "看 Clue 1 的標準斑點模擬：從 A 的隨機初始濃度出發，經過反應與擴散，逐漸排列成規律花紋。局部活化強化一個斑點，H 較廣的作用範圍則協助建立它與鄰近斑點之間的間隔。\n\n在斑點位置，A、H 的濃度一起升高。這是耦合關係的自然結果：A 促進 H，H 再回饋調節 A。兩者相符的空間高峰，連結到先前在紫區觀察到 PeMYB11、PeMYBx 表達都較高的現象；不同的擴散速度則參與塑造周圍的花紋。",
         "nav_title": "Clue 1・斑點",
         "map_label": "線索1"
       },
       "detail_sources": [
         "P03",
+        "P04",
+        "P05",
         "P07"
       ]
     },
@@ -132,26 +136,26 @@
       ],
       "en": {
         "title": "Clue 2 · Why do spots join together?",
-        "summary": "Explore the balance between activation and degradation.",
-        "narration": "Increasing G_A alone enlarged spots, but did not reproduce the degree of fusion seen in Yushan Little Pearl. Combining increased G_A with reduced PeMYB11 degradation produced larger, fused purple patches under the simulated settings.",
-        "detail": "Here G_A controls the self-activation of PeMYB11, while μ_A is the degradation rate of the activator, not the degradation rate of miR858 itself. Lower miR858 expression is represented by reducing PeMYB11 degradation. The colored panels display model concentrations and thresholded patterns; they are not direct measurements of anthocyanin in a petal.",
+        "summary": "Stronger activation enlarges spots; combining it with slower degradation promotes fusion.",
+        "narration": "The second clue connects spot size with fusion. HORT1 solo-LTR can enhance PeMYB11 activation, represented by higher G_A, which enlarges spots. miR858 targets PeMYB11 messenger RNA; reducing its expression is represented by lowering the activator degradation rate μ_A. Lowering μ_A alone shifts the standard pattern toward almost full pigmentation. Combining stronger activation with slower degradation produces larger, fused purple patches under the studied settings, resembling Yushan Little Pearl. The concentration panels and purple-pattern maps let us follow that change.",
+        "detail": "HORT1 solo-LTR in the PeMYB11 promoter provides a biological basis for increasing G_A. The simulations show a stronger effect on spot size than on fusion when G_A changes alone. These comparisons separate two features: how large a spot grows, and how far neighboring spots merge.\n\nmiR858 targets PeMYB11 messenger RNA. Lower miR858 expression is represented by slower PeMYB11 degradation: in the separate degradation comparison, μ_A changes from 0.03 to 0.01 while the other standard settings are retained. That shift produces almost fully colored patterning, showing a route toward broad pigmentation.\n\nThe combined settings bring higher G_A together with μ_A = 0.01. In poster Figure 3, panels A and C show activator concentration; B and D convert those fields into patterns using a 2 µM contour threshold. Read each concentration map alongside its pattern map to see how enlarged regions connect into the fused purple patches.",
         "nav_title": "Clue 2 · Fusion",
         "map_label": "Clue 2"
       },
       "zh-TW": {
         "title": "Clue 2・斑點為何會相連？",
-        "summary": "長大還不夠，降解的平衡也要改變。",
-        "narration": "單獨提高 G_A 使斑點增大，但不足以重現玉山小珍珠程度的融合；合併降低 PeMYB11 降解率的設定則產生較大、融合的紫色斑塊。",
-        "detail": "這裡的 G_A 控制 PeMYB11 的自我活化，μ_A 則是活化者的降解率，不是 miR858 自身的降解率。模型以降低 PeMYB11 降解來表示較低的 miR858 表現量。彩色圖呈現模型濃度與經閾值轉換的花紋，並非直接量測花瓣中的花青素。",
+        "summary": "活化增強讓斑點長大，與降解減弱合調則促進融合。",
+        "narration": "第二條線索比較大小與融合。HORT1 的 solo-LTR 增強活化，單獨調高 G_A 讓斑點變大；miR858 減少，則以降低活化者降解率 μ_A 表示。單獨降低降解率，標準花紋走向近乎全面著色；合併增強活化和減緩降解，在研究設定下產生類似玉山小珍珠的大融合紫斑。對照濃度與花紋圖，就能看見差異。",
+        "detail": "PeMYB11 啟動子中的 HORT1 solo-LTR，提供了提高 G_A 的生物背景。單獨改變 G_A 時，模擬中斑點尺寸的變化比融合更明顯。這組比較把兩個特徵分開：一個斑點能長多大，以及鄰近斑點能融合到什麼程度。\n\nmiR858 靶向 PeMYB11 的信使 RNA，較低的 miR858 表達以較慢的 PeMYB11 降解表示。在單獨比較降解的模擬中，μ_A 從 0.03 改為 0.01，其餘標準設定維持相同；花紋因而走向近乎全面著色，呈現大片色素區域的一條形成路徑。\n\n聯合設定則把較高的 G_A 與 μ_A = 0.01 放在一起。海報圖3的 A、C 面板呈現活化者濃度，B、D 面板用 2 µM 的等高輪廓閾值轉成花紋。把每張濃度圖和對應花紋一起看，就能觀察擴大的區域如何相連，形成融合的紫色斑塊。",
         "nav_title": "Clue 2・融合",
         "map_label": "線索2"
       },
       "detail_sources": [
         "P04",
+        "P09",
         "P10",
         "P11",
         "P14",
-        "P15",
         "S03"
       ]
     },
@@ -166,25 +170,25 @@
       ],
       "en": {
         "title": "Clue 3 · How do purple–white edges form?",
-        "summary": "Assign different activation strengths to different regions.",
-        "narration": "Piece-wise G_A values represent spatial differences associated with HORT1 distribution. This can reproduce the large fused spots and sharp purple–white boundaries of Yushan Little Pearl in the model. Similar shapes do not establish the molecular mechanism experimentally.",
-        "detail": "Piece-wise G_A is an assignment used to explore how spatial differences could affect pigmentation. A similar purple–white boundary does not directly establish HORT1 distribution in each cell. The paper and poster use different figure numbers, so the source links identify the document as well as the figure.",
+        "summary": "Regional activation differences shape large patches and a distinct purple–white boundary.",
+        "narration": "The third clue asks where purple regions form. Full-length HORT1 and its solo-LTR have different effects on PeMYB11 promoter activity. The model represents this spatial heterogeneity with piece-wise G_A values: stronger activation in some regions and weaker activation in others. Together with reduced degradation, this setting recreates large fused spots and a sharp purple–white boundary resembling Yushan Little Pearl. The arrangement of regulatory activity becomes another part of the pattern-forming mechanism.",
+        "detail": "The biological motivation is the different promoter activity associated with full-length HORT1 and its solo-LTR. Full-length HORT1 is associated with reduced PeMYB11 promoter activity, while solo-LTR enhances it. Assigning different G_A values to different regions lets the model explore how that heterogeneity shapes pigmentation.\n\nIn the illustrated simulation, G_A_pur = 7 and G_A_whi = 0.0296, with μ_A = 0.01. These are the settings for this example; the linked sources list the complete reaction and diffusion parameters. Strong regional activation supports large pigmented areas, alongside regions with much lower activation.\n\nCompare the cultivar photograph with the simulation in Clue 3: large spots merge within the purple region, while a distinct boundary separates purple and white. The color layers come from concentration thresholds used to display the simulated pattern. This completes the progression from spot formation, through fusion, to the spatial organization of the whole pattern.",
         "nav_title": "Clue 3 · Edges",
         "map_label": "Clue 3"
       },
       "zh-TW": {
         "title": "Clue 3・紫白邊界如何形成？",
-        "summary": "把每個區域的活化強度分開設定。",
-        "narration": "以分段 G_A 表示 HORT1 分布造成的空間差異，可模擬玉山小珍珠的大融合斑與清楚紫白邊界；形態相似仍不等於分子機制已獲實驗證明。",
-        "detail": "分段 G_A 是用來探索空間差異如何影響色素分布的設定。模擬出相似的紫白邊界，並不直接證明每個細胞的 HORT1 分布。論文與海報使用不同圖號，因此來源連結會同時標明文件與圖號。",
+        "summary": "不同區域的活化強度，塑造大斑塊與清楚的紫白邊界。",
+        "narration": "第三條線索看空間位置。完整 HORT1 與 solo-LTR 對活化有不同影響，模型用分段 G_A 表示這種異質性：有些區域活化強，有些弱。搭配較低降解，便在這組模擬中形成大融合斑與清楚紫白邊界，類似玉山小珍珠。這告訴我們，調控活性如何排列，也是花紋形成的一部分。",
+        "detail": "生物背景來自完整 HORT1 與 solo-LTR 所對應的啟動子活性差異：完整 HORT1 與較低的 PeMYB11 啟動子活性相關，solo-LTR 則會增強活性。把不同 G_A 指定到不同區域，就能探索這種異質性如何塑造色素分布。\n\n圖示這組模擬使用 G_A_pur = 7、G_A_whi = 0.0296，並設定 μ_A = 0.01。這些是此範例的模擬條件，完整反應與擴散參數可從來源查看。區域性的強活化支持大片著色區，也與活化程度低得多的區域並存。\n\n對照 Clue 3 的品種照片與模擬：紫區裡的大斑點相互融合，紫色與白色之間則有清楚邊界。圖中的深淺色層，是用濃度閾值呈現模擬花紋。至此，三條線索串起了斑點生成、斑點融合，以及整體花紋的空間組織。",
         "nav_title": "Clue 3・邊界",
         "map_label": "線索3"
       },
       "detail_sources": [
         "P12",
         "P13",
-        "S04",
-        "C01"
+        "P14",
+        "S04"
       ]
     },
     {
@@ -192,30 +196,37 @@
       "position": "DISCUSSION → CONCLUSIONS",
       "context_title": "Discussion and conclusions",
       "sources": [
-        "S04",
         "P01",
-        "P15"
+        "P07",
+        "P08",
+        "P10",
+        "P11",
+        "P12",
+        "S04"
       ],
       "en": {
         "title": "Discussion & conclusions",
-        "summary": "What the model can explain, and what remains untested.",
-        "narration": "This model links changes in activation, inhibition, degradation and spatial heterogeneity to different pigmentation patterns. It is a simplified molecular network, and its parameters are estimated from earlier literature. Reproducing a pattern is not direct experimental proof of the molecular mechanism, and it does not show that a new breeding outcome has been experimentally achieved. The predictions need experimental validation.",
-        "detail": "Some wording in the paper abstract conflicts with how activator degradation is defined in the equations. This guide follows the actual model definition and distinguishes that interpretation from an original quotation. The official correction concerns figure numbering; it does not resolve that wording.",
+        "summary": "One framework connects regular spots, fused patches and regional boundaries.",
+        "narration": "The three clues now come together: activation and inhibition organize regular spots; activation and degradation change their size and fusion; spatial heterogeneity shapes regional boundaries. By translating gene regulation into mathematical parameters, one framework connects diverse orchid patterns. It also helps explain how similar-looking pigmentation can arise through different regulatory changes. This offers a foundation for future experimental design and possible molecular-breeding strategies. The model provides predictions that subsequent experiments can test.",
+        "detail": "Return to the three Results sections. PeMYB11 and PeMYBx provide the interacting activation–inhibition system. HORT1-related promoter activity enters through G_A, miR858-related regulation enters through activator degradation, and regional G_A values describe spatial differences. These links make the biological interpretation and mathematical changes readable together.\n\nA broad purple area can arise through different routes in the model. Reduced degradation shifts standard spots toward extensive pigmentation; combining enhanced activation with reduced degradation promotes fusion of large spots. Spatial heterogeneity then helps reproduce the distinctive purple–white organization of Yushan Little Pearl.\n\nThe contribution is a common computational framework for comparing mechanisms behind similar appearances. As a potential application, it can help organize questions for future experiments and explore regulatory changes relevant to molecular breeding. The balance among activation, inhibition, degradation and spatial heterogeneity gives those comparisons a shared language.",
         "nav_title": "Discussion",
         "map_label": "Discuss"
       },
       "zh-TW": {
         "title": "討論與結論",
-        "summary": "模型能解釋什麼，以及哪些推論仍待驗證。",
-        "narration": "模型把活化、抑制、降解與空間異質性的變化，連結到不同的色素分布。它使用簡化的分子網絡，參數也依據既有文獻估計。重現花紋並不直接證明分子機制，也不表示新的育種成果已經實驗驗證。這些預測仍需實驗檢驗。",
-        "detail": "論文摘要中的部分措辭，與方程式對活化者降解的定義有衝突。這份導覽依實際模型定義解說，並將解讀與原文引句分開。官方勘誤處理的是圖號，沒有解決這項措辭衝突。",
+        "summary": "用同一套框架，串起規律斑點、融合斑塊與區域邊界。",
+        "narration": "三條線索合起來：活化與抑制排列斑點，活化與降解改變大小和融合，空間異質性塑造區域邊界。同一框架把基因調控連到數學參數，也解釋相似外觀可能來自不同機制。這能作為未來實驗設計與潛在分子育種的研究基礎；模型提出的預測，可由後續實驗檢驗。",
+        "detail": "回到三個 Results 區塊：PeMYB11、PeMYBx 組成活化與抑制的互動系統；HORT1 相關的啟動子活性透過 G_A 表示，miR858 相關的調控透過活化者降解表示，區域性的 G_A 則描述空間差異。這些連結讓生物意義與數學變化可以一起閱讀。\n\n模型中的大片紫色區域可以有不同形成路徑：降解減弱讓標準斑點走向廣泛著色，活化增強與降解減弱合調則促進大斑點融合，再加入空間異質性，就能重現玉山小珍珠鮮明的紫白空間組織。\n\n這項研究的貢獻，是用共同的計算框架比較相似外觀背後的機制。潛在應用包括整理未來實驗的問題，以及探索與分子育種相關的調控變化；活化、抑制、降解與空間異質性的平衡，為這些比較提供了一套共同語言。",
         "nav_title": "討論與結論",
         "map_label": "討論"
       },
       "detail_sources": [
-        "S04",
-        "P15",
-        "C01"
+        "P03",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "S04"
       ]
     },
     {
@@ -248,7 +259,7 @@
             0.64
           ],
           "coordinate_system": "normalized_top_left",
-          "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3",
+          "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107",
           "role": "direct_source"
         },
         {
@@ -308,14 +319,13 @@
         1.0
       ],
       "sources": [
-        "P02",
-        "P03",
-        "P04",
-        "P05",
-        "S02"
+        "S05",
+        "S06",
+        "P02"
       ],
       "detail_sources": [
-        "P02",
+        "S05",
+        "S06",
         "P03",
         "P04",
         "P05",
@@ -333,7 +343,7 @@
             1.0
           ],
           "coordinate_system": "normalized_top_left",
-          "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3",
+          "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107",
           "role": "direct_source"
         },
         {
@@ -341,13 +351,13 @@
           "page": 1,
           "section": "Supplementary: HORT1 illustration",
           "rect": [
-            0.703,
-            0.673,
-            0.977,
+            0.71,
+            0.682,
+            0.93,
             0.827
           ],
           "coordinate_system": "normalized_top_left",
-          "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3",
+          "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107",
           "role": "direct_source"
         },
         {
@@ -355,13 +365,13 @@
           "page": 1,
           "section": "Supplementary: dimensional analysis and cell-to-cell coupling",
           "rect": [
-            0.703,
-            0.829,
-            0.977,
-            1.0
+            0.710323,
+            0.837909,
+            0.929176,
+            0.998729
           ],
           "coordinate_system": "normalized_top_left",
-          "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3",
+          "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107",
           "role": "direct_source"
         },
         {
@@ -404,21 +414,23 @@
         "P03": "Related paper pp9–10 model scope and diffusivity definitions; does not establish the new poster coupling diagram.",
         "P04": "Related paper p10 equations; units can be checked dimensionally against these equations.",
         "P05": "Related paper p10 baseline parameter values.",
-        "S02": "Related poster Methods region only, for comparing the baseline parameter values; not a source for Supplementary illustrations."
+        "S02": "Related poster Methods region only, for comparing the baseline parameter values; not a source for Supplementary illustrations.",
+        "S05": "Direct source: visually transcribed revised poster dimensional-analysis table, with the same concentration unit C for A and H.",
+        "S06": "Direct source: visually transcribed poster cell-to-cell coupling sketch; an interpretation, not a transport experiment."
       },
       "en": {
         "title": "Poster supplement",
         "summary": "Genetic context, model units and a coupling sketch.",
-        "narration": "The poster adds two supplementary illustrations. One connects HORT1 and PeMYB11 to pigmentation and shows that solo-LTR alone does not explain every purple patch. The other explains model units and a cell-to-cell coupling sketch. These are poster supplementary notes, separate from the journal’s supplementary material.",
-        "detail": "In the lower illustration, diffusion rates have units of length squared per time, and degradation rates have units of inverse time. Its apparent diffusion sketch is a model interpretation, not a transport experiment. Related paper excerpts explain the underlying equations and standard settings; the original poster is the direct source for these illustrations.",
+        "narration": "The poster adds two supplementary illustrations. One connects HORT1 and PeMYB11 to pigmentation. The revised lower illustration uses the same concentration unit C for A and H and explains the parameter dimensions. It also sketches cell-to-cell coupling: H moves between cells, while A has no direct flux. The apparent diffusion of A is a model interpretation. These poster notes are separate from the journal’s supplementary material.",
+        "detail": "In the dimensional-analysis table, C means concentration, L means length and T means time. A, H and k have units C; the basal production rate ρ_A has units C/T; D_A and D_H have units L²/T. G_A and the degradation rates μ_A and μ_H have units 1/T, while G_H has units 1/(C·T). The lifetime 1/μ gives the time scale of an isolated first-order degradation term.\n\nThe coupling sketch follows neighboring cells: H moves between them, changing local inhibition and therefore each cell’s A level. The A pathway is labeled “no A flux”; the spatial response produced through H motivates the label “apparent (effective) D_A.” This is a model interpretation of indirect cell-to-cell coupling. The paper represents spatial dynamics with reaction–diffusion equations that include D_A∇²A.",
         "nav_title": "Supplementary",
         "map_label": "Suppl."
       },
       "zh-TW": {
         "title": "海報補充說明",
         "summary": "遺傳背景、模型量綱與細胞間耦合示意。",
-        "narration": "海報另附兩張補充示意圖：一張連結 HORT1、PeMYB11 與色素分布，並以反例說明 solo-LTR 不能單獨解釋所有紫色斑塊；另一張說明模型量綱與細胞間耦合。這些是海報補充說明，與期刊的獨立補充資料分開。",
-        "detail": "下方示意中，擴散率的單位是長度平方除以時間，降解率的單位是時間的倒數。「表觀擴散」是模型詮釋，不是運輸實驗的證明。相關論文節錄提供方程式與標準設定背景，這些補充圖則以原海報為直接來源。",
+        "narration": "海報另附兩張補充示意圖：一張連結 HORT1、PeMYB11 與色素分布。新版下方的量綱表把 A、H 統一使用濃度單位 C，並說明各參數的單位。細胞間耦合圖則畫出 H 會跨細胞移動，而 A 沒有直接通量；A 的表觀擴散是模型詮釋。這些海報說明與期刊的獨立補充資料分開。",
+        "detail": "量綱表以 C 代表濃度、L 代表長度、T 代表時間。A、H 與 k 的單位皆為 C；基本產生率 ρ_A 為 C/T；D_A、D_H 為 L²/T。G_A 與降解率 μ_A、μ_H 的單位為 1/T，而 G_H 為 1/(C·T)。lifetime = 1/μ 則給出單獨一階降解項的時間尺度。\n\n細胞間耦合圖沿著相鄰細胞來看：H 在細胞間移動，改變局部抑制作用，因而影響各細胞的 A 濃度。A 的路徑標為「no A flux」；透過 H 產生的 A 空間反應，便是圖中「表觀、有效 D_A」的意涵。這是間接細胞耦合的模型詮釋；論文則以含 D_A∇²A 的反應擴散方程描述空間動態。",
         "nav_title": "海報補充",
         "map_label": "補充"
       },
@@ -512,6 +524,14 @@
     "S04": {
       "en": "Poster Clue 3 and research limitations",
       "zh-TW": "海報 Clue 3 與研究限制"
+    },
+    "S05": {
+      "en": "Revised poster: parameter dimensions",
+      "zh-TW": "新版海報：共同濃度單位與參數量綱"
+    },
+    "S06": {
+      "en": "Poster: cell-to-cell coupling interpretation",
+      "zh-TW": "海報：細胞間耦合與表觀擴散詮釋"
     }
   },
   "journal_supplement": {

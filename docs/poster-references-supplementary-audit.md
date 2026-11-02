@@ -1,5 +1,7 @@
 # 海報 References 與 Supplementary 核對
 
+2026-10-31 更新：海報已更換為 `盧提文_理學院研究日.pdf`（SHA-256 `b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107`）。下文保留初次 2026-10-30 的查核歷史；「圖二」量綱表已依新版重核，S05／S06 現已納入 RAG。期刊獨立附件仍未入庫。完整更新與本輪驗證見[版本紀錄](poster-update-20261031.md)。
+
 日期：2026-10-30。範圍：CPU、本地 PDF、既有 corpus；初次只新增本文件與 `.orchid/tour-extra-sections.json` 內容提案。後續獲授權從官方論文頁查核期刊補充PDF與程式入口，只更新本audit，沒有改正在整合的proposal。沒有改 frontend、data/evidence、索引、服務、模型或 GPU，沒有送出 `/api/chat`、生成或 embedding 請求。本文件不是問答能力驗收。
 
 ## 來源與定位
@@ -50,20 +52,20 @@ C01記載的圖號更正：舊Fig.2 → Fig.10；舊Fig.3 → Fig.11；舊Figs.4
 
 ### 圖二：量綱表與細胞間耦合示意
 
-- xref36：1426 × 1481px，放置框`[1725.703,2822.079,2256.317,3373.158]`pt。
-- 表列A、H為PeMYB11/PeMYBx層級的活化者／抑制者濃度，分別以C_A、C_H表示濃度量綱；T為時間、L為長度。
+- 新版量綱／耦合圖：1426 × 1481px，放置框`[1692.699,2822.079,2214.226,3363.720]`pt；與學姊提供的截圖逐項一致。舊版位置與濃度符號已被本節新版取代。
+- 新版表列A、H為PeMYB11/PeMYBx層級的活化者／抑制者濃度，共同使用濃度量綱C；表尾明載「C: concentration (same unit for A and H), L: length, T: time」。T為時間、L為長度。
 
 | 參數 | 圖中單位 | 核對含義 |
 |---|---|---|
-| A | C_A | activator concentration |
-| H | C_H | repressor concentration |
-| ρ_A | C_A / T | A基本產生率 |
+| A | C | activator concentration |
+| H | C | repressor concentration |
+| ρ_A | C / T | A基本產生率 |
 | D_A | L² / T | 圖中註apparent, via H的A擴散尺度 |
 | D_H | L² / T | H細胞間擴散尺度 |
 | μ_A, μ_H | 1 / T | A/H降解率；圖上寫lifetime=1/μ，應限於單獨一階降解時間尺度 |
-| G_A | C_H / (C_A · T) | 受H抑制的A自我活化強度 |
-| G_H | C_H / (C_A² · T) | A²驅動H生成的強度 |
-| k | C_H | 固定A時，相對H=0使活化項減半的H濃度尺度 |
+| G_A | 1 / T | 受H抑制的A自我活化強度 |
+| G_H | 1 / (C · T) | A²驅動H生成的強度 |
+| k | C | 固定A時，相對H=0使活化項減半的H濃度尺度 |
 
 以上量綱與論文第10頁方程式一致；這是代數上的單位檢核，不是模型已經校準到實際細胞長度／時間的證據。A與H在論文第9頁表示包含轉錄、轉錄後及翻譯的整體過程，不宜把表格讀成單一純蛋白濃度的直接實測。
 

@@ -1,7 +1,7 @@
 {
   "language": "en",
   "kind": "reviewed_summary_translation",
-  "source_corpus_sha256": "a0729bf000598579fcba46d015b94c60c58ef8ae785d8002c2d77cc3a2760bb9",
+  "source_corpus_sha256": "35f9e8f0da1b4de6737d89b263a05d9485793373a335020e831dff4cf54ff09f",
   "items": [
     {
       "id": "P01",
@@ -85,7 +85,15 @@
     },
     {
       "id": "P16",
-      "text": "Corresponding authors listed in the paper: Yu-Chen Shu, ycshu@mail.ncku.edu.tw; Hong-Hwa Chen, hhchen@mail.ncku.edu.tw. Questions beyond the sources, experiments not performed, actual breeding outcomes and details of source code not provided should be addressed to the research team. This guide does not record or send questions for visitors and does not claim that the authors have been notified."
+      "text": "Corresponding authors listed in the paper: Yu-Chen Shu, ycshu@mail.ncku.edu.tw; Hong-Hwa Chen, hhchen@mail.ncku.edu.tw. Questions beyond the sources, experiments not performed, actual breeding outcomes and details of source code not provided should be addressed to the research team. This guide does not contact the authors or send questions on visitors’ behalf and does not claim that the authors have been notified."
+    },
+    {
+      "id": "S05",
+      "text": "The revised poster Supplementary Dimensional analysis table uses the same concentration unit C for A (PeMYB11 activator) and H (PeMYBx repressor); L denotes length and T denotes time. A, H and k have units C; ρ_A has units C/T; D_A and D_H have units L²/T; µ_A, µ_H and G_A have units 1/T; G_H has units 1/(C·T). G_A is the strength of A autocatalysis repressed by H, and G_H is the strength of A²-driven H production. This is the revised poster convention of a shared concentration unit C, not a specification of seconds, micrometres or other physical time/length units, and not new measured parameter values. The table’s lifetime = 1/µ is the timescale of the isolated first-order degradation term."
+    },
+    {
+      "id": "S06",
+      "text": "The poster Supplementary Cell-to-cell coupling sketch represents three cells with A = PeMYB11 (activator) and H = PeMYBx (repressor). The A path is labelled no A flux, while bidirectional D_H arrows show H diffusing between cells; darker shading means higher A. The caption says A is not transported between cells, but H diffuses, so H_i and A_i differ between cells, making A appear to diffuse: an apparent (effective) D_A. This is the poster’s model interpretation of cell-to-cell coupling, not a completed transport experiment or a mathematical derivation of equivalence to a fixed D_A. The paper’s reaction–diffusion equation still contains D_A∇²A; no A flux in the sketch is not a proven condition for deleting that term."
     }
   ]
 }

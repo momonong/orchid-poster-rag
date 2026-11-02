@@ -20,7 +20,9 @@
     "S02": "Poster methods: additional petal-shaped simulations",
     "S03": "Poster Clue 2 and caption annotation",
     "S04": "Poster Clue 3 and research limitations",
-    "C01": "Official figure-number correction"
+    "C01": "Official figure-number correction",
+    "S05": "Revised poster supplement: shared concentration unit and parameter dimensions",
+    "S06": "Poster supplement: no A flux and apparent diffusion interpretation"
   },
   "kinds": {
     "研究範圍": "Study scope",
@@ -39,6 +41,8 @@
     "海報數值模擬與校註": "Poster simulation and annotation",
     "數值模擬預測與限制": "Simulation predictions and limitations",
     "官方勘誤": "Official correction",
-    "研究聯絡資訊": "Research contact information"
+    "研究聯絡資訊": "Research contact information",
+    "海報量綱說明": "Poster dimensional-analysis convention",
+    "海報模型詮釋": "Poster model interpretation"
   }
 }

@@ -31,7 +31,7 @@ b78e1ac42b852e839cceaafbe88f66806bf5860992d1d7b9a3f2ad1198427aed
 
 斷線監聽在 FastAPI 已消耗完整 JSON body 後直接等待 ASGI `http.disconnect`。整合發現 `Request.is_disconnected()` 的立即取消探測在現行 BaseHTTPMiddleware receive checkpoint 前就被取消，導致 CPU 收不到斷線信號；已修復並用原路由／中介層及可控 worker 回歸確認取消可達、完成後釋放名額及不留回答快取。這不代表原生 C++ 可以立即中止，仍以真實 callback／worker 結束為準。
 
-靜態導覽由已核對原文合成，按模型／runtime／語言／旁讀文字 hash 保存 `.cache/speech/*.wav`。回答只保存記憶體音訊，最多六筆及 24 MB，120 秒自行到期清除；不保存問題、對話、回答文字或回答音檔至磁碟。忽略目錄中的驗證 WAV 僅使用明確指定的公開研究文本。
+靜態導覽由已核對原文合成，按模型／runtime／語言／旁讀文字 hash 保存 `.cache/speech/*.wav`。回答只保存記憶體音訊，最多六筆及 24 MB，120 秒自行到期清除；語音子系統不保存問題、對話、回答文字或回答音檔至磁碟。2026-11-01 新增的[問答紀錄](visitor-records.md)則獨立保存問題與產品回答文字；不保存回答音檔。忽略目錄中的驗證 WAV 僅使用明確指定的公開研究文本。
 
 播放器準備中可 Stop、不可 Pause。非同步 fetch 完成後若 `audio.play()` 被瀏覽器阻擋，顯示再次點 Play；同一段使用已備妥 blob，不重新合成。停止／新播放／切語言／清除對話會中止 fetch、使舊回覆與媒體事件失效並釋放 blob URL。播放中的緊湊控制列保持頂部可見；歷史回答用其原語言播放，不切換整頁語言或寫入偏好。
 

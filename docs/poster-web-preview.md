@@ -1,5 +1,7 @@
 # 獨立海報導覽試作
 
+2026-10-31 海報來源已更新；新版量綱與耦合說明、RAG 及驗證範圍見[版本紀錄](poster-update-20261031.md)。下列先前各階段的結果保留原日期。
+
 入口為既有 FastAPI 的 `/tour-preview/`，不是 `/static/tour-preview/`。這個獨立試作新增導覽頁、素材建置腳本與 focused tests；首頁、backend、共用 `speech.js` 和既有資料契約均保留。2026-10-30 試作階段未提交、合併或推送；2026-10-31 使用者已確認本輪 UI 並授權合併與推送，實際 Git 結果另行核對，不由此文件預先宣稱完成。
 
 ## 內容與手機操作
@@ -35,7 +37,7 @@ uv run --locked --offline python -B scripts/build_tour_audio.py --base-url http:
 
 前端用 manifest 的 language/id/textSHA 對照目前 narration，精確匹配才由既有 speech controller 的 fetch adapter 讀取準備好的 WAV。static 音檔失敗不退回 API 重送。detail 的 narration＋深入說明仍由現有 API 按需產生，會明示準備狀態；沒有新增音訊 queue。訪客頁只顯示約 2 分鐘與 manifest 計算的實際錄音長度。
 
-本輪預製錄音為英文 112.5866 秒（顯示 1:53）、中文 116.4474 秒（顯示 1:56）。兩者略短於最初 2–3 分鐘目標下限；這是開發驗收註記，不放在訪客頁。時長不包含段落之間的載入／停頓，也不代表人工聆聽接受。
+2026-10-30 初稿預製錄音為英文 112.5866 秒（顯示 1:53）、中文 116.4474 秒（顯示 1:56）。兩者略短於最初 2–3 分鐘目標下限；這是開發驗收註記，不放在訪客頁。時長不包含段落之間的載入／停頓，也不代表人工聆聽接受。
 
 ## 問答與來源界線
 
@@ -72,3 +74,43 @@ Read along 以鍵盤 Enter 觸發後，閱讀內容頂緣約 149.8 CSS px、stic
 完整四檔 Node suite：29 passed、0 failed、0 skipped；兩個 Edge browser tests 均實際執行，GPU disabled，API 由 fixture 攔截。四支網站 JS 和四支 CJS 語法檢查、兩支建置腳本 AST 語法及 Ruff 均通過。原目標對話另執行既有 Python fixtures：103 passed in 2.68s，`ruff check orchid tests` 通過，未載入模型權重。
 
 design-taste app lint 為 0 FAIL、2 WARN，仍是 SHA bytes 與時長格式必要的 `padStart`；原 inspector 的四項 WARN 保留在視覺紀錄，未宣稱全部無警告。命令與精簡原始結果存本機 `output/release-poster-tour-check.txt`；不入 Git。這輪只更新交付文件，未更動使用者接受後的 runtime 程式，亦未重跑真實問答或語音。
+
+## 導覽敘事修正（2026-11-01）
+
+依手機試用回饋，六個核心區改以「現象 → 機制 → 模擬發現 → 意義」串成完整研究摘要。Discussion 原本偏向限制與摘要措辭校註的內容，在 `2979f10` 已存在；本次修正不歸因於更新海報。P15 校註、官方圖號勘誤與後端科學守則仍保留在來源庫，核心導覽不再預設以它們作結。
+
+定稿 overview 六段英文共 438 個空白分隔詞；中文共 572 個漢字，另含基因名稱與模型符號。英文錄音實測 177.6123 秒（2:58），中文 159.3503 秒（2:39），落在約 2–3 分鐘的目標內。每區 detail 為 2–3 個實際 HTML 段落；narration 加 detail 在兩語皆小於 4000 Unicode 字元。頁面固定標示改為中性的「以反應擴散模型探索花紋形成」。
+
+| 區域 | 解說重點 | 主要來源 |
+| --- | --- | --- |
+| Introduction | 花青素、花紋多樣性與四個調控角色 | P01、P02、P03、P10、S01 |
+| Methods | A/H 反應與擴散、論文週期網格、海報花瓣 FEM／Neumann | P03–P06、S02 |
+| Clue 1 | 規律斑點、較快擴散的抑制與 A/H 同相 | P03–P05、P07、S02 |
+| Clue 2 | solo-LTR／G_A、miR858／PeMYB11 降解、單獨與合調結果、圖3濃度與閾值花紋 | P04、P08–P11、P14、S03 |
+| Clue 3 | 分段 G_A、7／0.0296 與 μ_A = 0.01 的範例設定、紫白邊界 | P12–P14、S04 |
+| Discussion | 收束三條線索、相似外觀的不同形成路徑、未來實驗及分子育種的潛在用途 | P01、P03、P07、P08、P10–P13、S04 |
+
+海報補充區仍標明表觀 D_A 是細胞間間接耦合的模型詮釋，改以圖中 H 移動如何影響 A 的空間反應正面解說。References 與直接來源入口保留；未修改 evidence、索引、backend、SQLite、legacy guide、原 PDF 或圖片。
+
+原目標對話已逐段核對雙語稿、圖3 A–D 與設定來源，並要求凍結 narration 後序列重建十二段 CPU 音訊。本次文案修改使舊音訊 textSHA 不再匹配；既有 adapter 會拒用不匹配的舊片段。已透過既有 CPU 語音服務序列重建十二段錄音，逐一核對目前文字 textSHA、音檔 SHA、非空 24kHz／mono／PCM16 WAV 與 manifest 時長；未重建教學截圖。上述 2026-10-30 初稿秒數屬歷史版本。四檔 Node 檢查的原始結果保留於本機 `output/tour-narration-revision-node-check.txt`；不以 fixture 回歸替代新音訊或人工聆聽驗收。
+
+2026-11-01 音訊實測促成精簡：第一輪中文六段為 214.270 秒（3:34），因此只將中文 overview narration 從 753 縮至 572 個漢字，並在 Intro 定義後以 A／H、活化者／抑制者減少重讀基因全名；英文維持 438 words 同稿，summary、detail 與來源不變；重新建置後的最終時長如上。
+
+
+本輪驗證：四檔 Node 全套 32 passed／0 failed／0 skipped（10.194s），包含 detail 實際分段的瀏覽器檢查；網站 JS 與測試語法通過。六核心區與海報補充區兩語的來源 ID、數值依據及 4000 字元音訊上限均已核對。canonical evidence、文件 registry 與後端 generation 規則的 SHA 維持不變；未重建索引或改動訪客 SQLite。
+
+既有 ngrok HTTPS 已確認英文／繁中切換、Discussion 的研究總結與三段詳細說明，以及兩語完整導覽的開始播放／停止。沒有重播全部六段到結束，沒有重新評估 Qwen 問答、真人發音聽感或實體手機；這些不由 WAV 格式或 fixture 通過替代。本輪沒有啟停模型／ngrok、提交、合併或推送。
+
+主專案 `output/tour-copy-20261101/audio-verification.json` 保存十二片核對收據，`discussion-en.jpg` 為實際 HTTPS 更新畫面；開發 worktree 同名 output 目錄保留更新前的講稿與錄音備份。原稿位於 `orchid/static/tour-preview/tour-data.json`，語音重建沿用本文件既有命令。
+
+## Menu 正式整合（2026-11-02）
+
+移除海報外重複的研究全標題，動態「完整海報導覽／區塊名稱」與 48px 三橫線 Menu／選單在同一列垂直置中。區塊標題採既有導覽短名，完整問題與研究解說仍在閱讀內容中。A+、返回總覽、Play／Read／Ask、來源與首次使用卡均保留。語言、使用說明與回饋收進右對齊、不推動頁面的不透明 popover；閱讀區底部的回饋入口也保留。
+
+Menu 使用原生 disclosure 按鈕、aria-expanded／aria-controls 與語言 aria-pressed。Escape、點外部或 Tab 離開可關閉；選單內轉移焦點保持開啟，避免 native focusout 先關掉面板而吞掉語言 click。由選單開啟說明／回饋後，關閉 dialog 回到 Menu 觸發鈕；不回到隱藏的選單項目。切換語言停止舊音訊並開始新的問答會話，回饋草稿保留，未更動 SQLite、backend、研究文案或預製音訊。
+
+六張教學圖已用 `node scripts/build_help_screenshots.cjs --base-url http://127.0.0.1:8000` 重建。guide 圖現在包含標題、Menu、播放／閱讀操作及海報框線；question／feedback 仍是未送出的公開例題與評價示例。只 GET 既有網站及真實預製音訊 manifest；health 是畫面 fixture，所有非 GET 被封鎖，本次 submitted_requests = 0。衍生六圖與 manifest 繼續位於 ignored 的 `.orchid/assets/tour-preview/help/`。
+
+受影響驗證：四檔 Node suite 32/32 通過、0 skipped（8.369s），三支相關 JS／CJS 語法檢查通過。fixture 涵蓋 Menu 開關、Escape／外點／Tab、說明與回饋的焦點返回、兩語與音訊邊界、320／360／390／430px／桌面及 DPR 1／2／3；標題與 48px Menu 的中心差小於 0.6px。原目標對話以真實 HTTPS 的 390px 畫面核對 EN → 繁中 → EN、關閉回饋回到 Menu、中心差約 0.34px，無頁面水平溢出；沒有送出訪客資料或播放音訊。
+
+原始 Node／lint 結果保留於本機 `output/tour-menu-node-check.txt`、`output/tour-menu-lint.txt`。app lint 為 0 FAIL、3 WARN：真實浮出選單的陰影，以及 SHA bytes／時長格式的兩處 padStart；不宣稱零警告。主專案 `output/release-20261102/overview-mobile-en.jpg` 為本輪真實 HTTPS 手機寬度畫面。此次 Menu 的真人手機操作仍可再試用；本輪沒有重跑 Python／RAG／TTS 評估，也沒有提交、推送或重啟服務。

@@ -551,7 +551,7 @@
       "clue3"
     ],
     "kind": "海報導覽摘要",
-    "version": "user-supplied 2026-10-29",
+    "version": "user-supplied 2026-10-31; Supplementary dimensional-analysis revision",
     "text": "海報以三條線索說明花紋：Clue 1 活化者與抑制者交互作用生成週期斑點；Clue 2 自我活化增加讓斑點變大，降解減少促進融合；Clue 3 HORT1 的空間不均勻分布重現品種特有的大融合斑塊與銳利紫白邊界。模型是 PeMYB11 activator 與 PeMYBx inhibitor 的 Gierer–Meinhardt 系統。海報作者 Ti-Wen Lu、Yu-Chen Shu，國立成功大學。",
     "original_excerpt": "INTRODUCTION\nHarlequin Phalaenopsis orchids display a remarkable diversity of \nfloral pigmentation, from scattered big purple spots to large fused \npatches and nearly uniform red-purple coloration.\nDiverse Pigmentation\nKnown Molecular Players Underlying the Large \nFused Patches\nResearch Question\nHow do the interactions among molecules produce \nthe large fused patches and furthermore, the diverse \npigmentations patterning?\n\nClue 1 | The Formation of Spots\nActivator-inhibitor interactions generate periodic spot patterns.\nFigure 2. The standard periodic spot patterns were generated on a 100x100 uniform grid (A) and a petal-shaped domain  (B).  \n(A)\n(B)\n\nClue 2 | From Spots to Fused Patches\nIncreased self-activation enlarges spots, and reduced degradation promotes fusion. \nCombining increased Ga with reduced HA leads to fused, larger patches.\nFigure 3. Simulated patterns of PeMYB11 under the combined effects of HORT1 solo-LTR insertion and reduced miR858 \nexpression. (A) Simulated pattern at \n. (B) Contour map of (A) plotted at the 2 µM threshold. (C) \nSimulated pattern at \n. (D) Contour map of (C) plotted at the 2 µM threshold.\nGA = 0.66, μA = 0.01\nGA = 2.712, μA = 0.01\n\nClue 3 | Extensive Pigmentation of the Spots\nSpatial heterogeneity reproduces cultivar-specific patterns. Spatial heterogeneous \nactivation reproduces the large fused spots and sharp purple-white boundaries of \nYushan Little Pearl.\nFig. 4. Simulation of the P. Yushan Little Pearl floral pattern using piece-wise \n settings. Left: Floral pattern of harlequin \nPhalaenopsis Yushan Little Pearl. Right: Simulated pattern mimicking the heterogeneous distribution of full-length HORT1 \nand solo-LTR. The simulation successfully recapitulates key characteristic features, including sharp separation between \npurple and white regions, large anthocyanin spots, and high spot fusion. Parameters: \n \n,\n, \n, \n \n \n, \n.\nGA\nGA_pur = 7, GA_whi = 0.0296\nGH = 0.12 DA = 0.01 DH = 0.5, μA = 0.01, μH = 0.03 ρA = 0.01",
     "locators": [
@@ -600,7 +600,7 @@
         ]
       }
     ],
-    "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3"
+    "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107"
   },
   {
     "id": "S02",
@@ -614,7 +614,7 @@
       "clue1"
     ],
     "kind": "海報新增數值模擬條件",
-    "version": "user-supplied 2026-10-29",
+    "version": "user-supplied 2026-10-31; Supplementary dimensional-analysis revision",
     "text": "海報同時展示 (A) 100 × 100 uniform grid 的標準週期斑點與 (B) petal-shaped domain（花瓣形區域）。海報 Methods 寫方格採 rdsolver、VSIMEX、periodic boundary condition；另在花瓣形區域採 finite element method（FEM，有限元素法）與 Neumann boundary condition。海報說花瓣形與方格用相同標準參數：D_A = 0.01，D_H = 0.5，µ_A = µ_H = 0.03，G_A = 0.08，G_H = 0.12，ρ_A = 0.01，k = 0.001。此 FEM／Neumann 是海報內容，不能歸為原論文方法。",
     "original_excerpt": "METHODS\n∂A\n∂t = GAA2\nH + k + ρA + DA∇2A −μAA\n∂H\n∂t = GHA2 + DH∇2H −μHH\nThe Gierer-Meinhardt Model\nSelf-activation rates\nDiffusion Coefficients\nDegradation rates\nBasic production rate\nSaturation constant\nGA, GH\nDA, DH\nμA, μH\nρA\nk\nModel Components\nNumerical Simulation\nPigmentation patterns were simulated on a \n \nuniform spatial grid using variable-step implicit–explicit \n(VSIMEX) time stepping with periodic boundary condition, \nimplemented in the `rdsolver` package. Simulations were also \nperformed on a petal-shaped domain using the finite element \nmethod with Neumann boundary condition using the same \nparameters as the uniform-grid simulations:\n100 × 100\nDA = 0.01, DH = 0.5, μA = 0.03, μH = 0.03,\nFigure 1. The PeMYB11-PeMYBx interaction model. PeMYB11 is the activator, and \nPeMYBx is the inhibitor of the system. PeMYB11 self-activates at the rate \n and \nactivates PEMYBx at the rate \n. On the other hand, PeMYBx inhibits PeMYB11 \nbiosynthesis. The activator and the inhibitor degrade with degradation rates \n \nrespectively. The activator diffuses with diffusivity \n and the inhibitor diffuses with \ndiffusivity \n, where \n guarantees the periodic pattern to form.\nGA\nGH\nμA, μH\nDA\nDH\nDA < DH\nGA = 0.08, GH = 0.12, ρA = 0.01, and k = 0.001",
     "locators": [
@@ -630,7 +630,7 @@
         ]
       }
     ],
-    "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3"
+    "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107"
   },
   {
     "id": "S03",
@@ -643,7 +643,7 @@
       "clue2"
     ],
     "kind": "海報數值模擬與校註",
-    "version": "user-supplied 2026-10-29",
+    "version": "user-supplied 2026-10-31; Supplementary dimensional-analysis revision",
     "text": "海報 Clue 2 結合增加 G_A 與降低 µ_A，生成較大融合斑塊。Fig. 3A、B 對應 G_A = 0.66、µ_A = 0.01；C、D 對應 G_A = 2.712、µ_A = 0.01，等高輪廓閾值為 2 µM。校註：Clue 2 文字排版中的 HA 應依圖說與模型讀為 µ_A（activator degradation），不是另一個新參數。",
     "original_excerpt": "Clue 2 | From Spots to Fused Patches\nIncreased self-activation enlarges spots, and reduced degradation promotes fusion. \nCombining increased Ga with reduced HA leads to fused, larger patches.\nFigure 3. Simulated patterns of PeMYB11 under the combined effects of HORT1 solo-LTR insertion and reduced miR858 \nexpression. (A) Simulated pattern at \n. (B) Contour map of (A) plotted at the 2 µM threshold. (C) \nSimulated pattern at \n. (D) Contour map of (C) plotted at the 2 µM threshold.\nGA = 0.66, μA = 0.01\nGA = 2.712, μA = 0.01",
     "locators": [
@@ -659,7 +659,7 @@
         ]
       }
     ],
-    "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3"
+    "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107"
   },
   {
     "id": "S04",
@@ -673,7 +673,7 @@
       "discussion"
     ],
     "kind": "數值模擬預測與限制",
-    "version": "user-supplied 2026-10-29",
+    "version": "user-supplied 2026-10-31; Supplementary dimensional-analysis revision",
     "text": "海報 Clue 3 以 piece-wise G_A 模擬 P. Yushan Little Pearl 特有融合斑與紫白邊界。Fig. 4 參數 G_A_pur = 7，G_A_whi = 0.0296，G_H = 0.12，D_A = 0.01，D_H = 0.5，µ_A = 0.01，µ_H = 0.03，ρ_A = 0.01。海報 Discussion 的限制：分子網路經簡化、參數取自文獻估計、預測仍需實驗驗證。不能宣稱已成功完成新品種育種或已在花瓣實測驗證 FEM。圖說左右文字與圖像位置有出入，導覽引用整個 Fig. 4，不指定左右。",
     "original_excerpt": "Clue 3 | Extensive Pigmentation of the Spots\nSpatial heterogeneity reproduces cultivar-specific patterns. Spatial heterogeneous \nactivation reproduces the large fused spots and sharp purple-white boundaries of \nYushan Little Pearl.\nFig. 4. Simulation of the P. Yushan Little Pearl floral pattern using piece-wise \n settings. Left: Floral pattern of harlequin \nPhalaenopsis Yushan Little Pearl. Right: Simulated pattern mimicking the heterogeneous distribution of full-length HORT1 \nand solo-LTR. The simulation successfully recapitulates key characteristic features, including sharp separation between \npurple and white regions, large anthocyanin spots, and high spot fusion. Parameters: \n \n,\n, \n, \n \n \n, \n.\nGA\nGA_pur = 7, GA_whi = 0.0296\nGH = 0.12 DA = 0.01 DH = 0.5, μA = 0.01, μH = 0.03 ρA = 0.01\n\nDISCUSSION\nBiological Implications\nLinking Genes to Model\nLimitations\nGene regulation is translated into model parameters, \nproviding a mechanistic view of how molecular interactions \nshape spatial patterns.\nThe model supports the idea that the balance between \nactivation, inhibition, degradation, and spatial heterogeneity \ndrives pigmentation diversity.\n•\nSimplified molecular network. \n•\nParameter values are estimated from the literature. \n•\nPredictions require experimental validation.",
     "locators": [
@@ -700,7 +700,7 @@
         ]
       }
     ],
-    "source_sha256": "69cc0c2c61fb2afd78b7468735bd43b52b73348aebc23d42c1d15f75d51bd3d3"
+    "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107"
   },
   {
     "id": "C01",
@@ -729,7 +729,7 @@
     "figure": null,
     "kind": "研究聯絡資訊",
     "version": "2024 corrected publication",
-    "text": "論文列出的通訊作者：Yu-Chen Shu，ycshu@mail.ncku.edu.tw；Hong-Hwa Chen，hhchen@mail.ncku.edu.tw。超出來源、未做的實驗、實際育種成效與未提供的原始碼細節，應向研究團隊詢問。此導覽不會替訪客記錄、寄送問題，也不會宣稱已通知作者。",
+    "text": "論文列出的通訊作者：Yu-Chen Shu，ycshu@mail.ncku.edu.tw；Hong-Hwa Chen，hhchen@mail.ncku.edu.tw。超出來源、未做的實驗、實際育種成效與未提供的原始碼細節，應向研究團隊詢問。此導覽不會替訪客聯絡作者或寄送問題，也不會宣稱已通知作者。",
     "original_excerpt": "*Correspondence:\nYu‑Chen Shu\nycshu@mail.ncku.edu.tw\nHong‑Hwa Chen\nhhchen@mail.ncku.edu.tw\nFull list of author information is available at the end of the article",
     "locators": [
       {
@@ -744,5 +744,65 @@
       }
     ],
     "source_sha256": "4e4e4ca4f3b4423f4928e92fed5d5dd6056014f943862aba7bab9979e45bcab9"
+  },
+  {
+    "document": "poster",
+    "page": 1,
+    "poster_sections": [
+      "supplementary"
+    ],
+    "version": "user-supplied 2026-10-31; Supplementary dimensional-analysis revision",
+    "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107",
+    "original_excerpt_method": "manual_transcription_of_embedded_image",
+    "id": "S05",
+    "title": "新版海報補充：共同濃度單位與參數量綱",
+    "section": "Supplementary: Dimensional analysis",
+    "figure": "Poster supplementary dimensional-analysis table",
+    "kind": "海報量綱說明",
+    "text": "新版海報 Supplementary 的 Dimensional analysis 表以共同濃度單位 C 表示 A（PeMYB11 活化者）與 H（PeMYBx 抑制者）；L 表示長度，T 表示時間。A、H 與 k 的單位皆為 C；ρ_A 為 C/T；D_A、D_H 為 L²/T；µ_A、µ_H 與 G_A 為 1/T；G_H 為 1/(C·T)。G_A 表示受 H 抑制的 A 自我活化強度，G_H 表示 A² 驅動 H 生成的強度。這是新版海報採 A、H 共用 C 的量綱慣例，不是指定秒、微米等實際時間或長度單位，也不是新的實測參數值。表中的 lifetime = 1/µ 是單獨一階降解項的時間尺度。",
+    "original_excerpt": "Dimensional analysis\nParameter | Units | Meaning\nA | C | PeMYB11 level (activator concentration)\nH | C | PeMYBx level (repressor concentration)\nρ_A | C / T | Basal production rate of A\nD_A | L² / T | Spread of A, area per time (apparent, via H)\nD_H | L² / T | Spread of H between cells, area per time\nµ_A | 1 / T | Decay rate of A (lifetime = 1 / µ)\nµ_H | 1 / T | Decay rate of H (lifetime = 1 / µ)\nG_A | 1 / T | Strength of A autocatalysis, repressed by H\nG_H | 1 / (C · T) | Strength of A²-driven H production\nk | C | H level giving half-maximal repression of A\nC: concentration (same unit for A and H), L: length, T: time",
+    "locators": [
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "supplementary",
+        "rect": [
+          0.710323,
+          0.837909,
+          0.929176,
+          0.998729
+        ]
+      }
+    ]
+  },
+  {
+    "document": "poster",
+    "page": 1,
+    "poster_sections": [
+      "supplementary"
+    ],
+    "version": "user-supplied 2026-10-31; Supplementary dimensional-analysis revision",
+    "source_sha256": "b1a8378e6a317fa4b3cd1ed2fe6f690038e60a580ac481376a53244be50a9107",
+    "original_excerpt_method": "manual_transcription_of_embedded_image",
+    "id": "S06",
+    "title": "海報補充：無 A 跨細胞通量與表觀擴散的詮釋",
+    "section": "Supplementary: Cell-to-cell coupling",
+    "figure": "Poster supplementary cell-to-cell coupling sketch",
+    "kind": "海報模型詮釋",
+    "text": "海報 Supplementary 的 Cell-to-cell coupling 示意以 A = PeMYB11（活化者）、H = PeMYBx（抑制者）表示三個細胞。A 的路徑標為 no A flux，H 以 D_H 雙向箭頭在細胞間擴散；較深的顏色表示較高的 A。圖中文字說 A 不在細胞間運輸，但 H 會擴散，因此各細胞的 H_i 與 A_i 不同，A 看起來像在擴散，並稱為 apparent (effective) D_A。這是海報的細胞間耦合模型詮釋，不是已完成的運輸實驗，也不是固定 D_A 等效性的數學推導。原論文反應擴散方程仍含 D_A∇²A，不應把圖中的 no A flux 當成已證明可刪除該項的條件。",
+    "original_excerpt": "Cell-to-cell coupling\nA = PeMYB11 (activator)\nH = PeMYBx (repressor)\nShading: darker = higher A\nCell 1\nA₁\nH₁\nno A flux\nD_H\nCell 2\nA₂\nH₂\nno A flux\nD_H\nCell 3\nA₃\nH₃\nA is not transported between cells, but H diffuses, so H_i and A_i differ from cell to cell.\nA therefore appears to diffuse: an apparent (effective) D_A",
+    "locators": [
+      {
+        "document": "poster",
+        "page": 1,
+        "section": "supplementary",
+        "rect": [
+          0.710323,
+          0.837909,
+          0.929176,
+          0.998729
+        ]
+      }
+    ]
   }
 ]

@@ -11,19 +11,23 @@
 </head>
 <body>
   <a class="skip-link" href="#reading" data-i18n="skip">Skip to the guide text</a>
-  <header class="site-header">
-    <a class="brand" href="#overview" data-i18n="brand">Orchid guide</a>
-    <nav class="language-switch" aria-label="Language">
-      <button type="button" data-language="en" aria-pressed="true">English</button>
-      <button type="button" data-language="zh-TW" aria-pressed="false">繁體中文</button>
-    </nav>
-  </header>
   <main class="page">
     <a id="back-overview" class="back-link link-button" href="#overview" data-i18n="back" hidden>Back to entire poster</a>
-    <div class="title-row">
-      <div><h1 id="view-title">Entire poster tour</h1><p id="view-location" class="secondary">A guide to the whole study</p></div>
-      <button id="text-size" type="button" aria-label="Larger text">A+</button>
-    </div>
+    <header class="tour-header">
+      <div class="title-row">
+        <h1 id="view-title">Entire poster tour</h1>
+        <div class="menu-wrap">
+          <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu"><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span><span data-i18n="menu">Menu</span></button>
+          <nav id="site-menu" class="site-menu" aria-label="Menu" hidden>
+            <p id="menu-language" data-i18n="menuLanguage">Language</p>
+            <div class="language-switch" role="group" aria-labelledby="menu-language"><button type="button" data-language="en" aria-pressed="true">English</button><button type="button" data-language="zh-TW" aria-pressed="false">繁體中文</button></div>
+            <button id="how-to-use" class="menu-action" type="button" data-i18n="howToUse">How to use</button>
+            <button id="open-feedback" class="menu-action" type="button" data-i18n="feedback">Feedback</button>
+          </nav>
+        </div>
+      </div>
+      <div class="header-context"><p id="view-location" class="secondary">A guide to the whole study</p><button id="text-size" type="button" aria-label="Larger text">A+</button></div>
+    </header>
     <p id="duration-note" class="small secondary" data-i18n="duration">Read the whole poster, or listen to the guide.</p>
     <section class="audio-panel" aria-label="Guide audio">
       <div class="audio-controls"><button id="play-guide" class="primary" type="button" disabled>Play full tour</button><button id="stop-guide" type="button" disabled data-i18n="stop">Stop</button></div>
@@ -51,14 +55,42 @@
         <h2 id="reading-title" data-i18n="readingTitle">Read along</h2>
         <p class="small secondary" data-i18n="readingHint">The text is always available. Audio is optional.</p>
         <div id="narration"></div>
-        <p class="evidence-note" data-i18n="evidence">These are model predictions, not experimental proof.</p>
+        <p class="evidence-note" data-i18n="evidence">Exploring orchid patterns with a reaction–diffusion model.</p>
         <button id="open-question" class="ask-button" type="button">Ask about the study</button>
         <p class="small secondary" id="question-scope"></p>
         <div class="document-links"><a class="link-button" href="/api/documents/paper" target="_blank" rel="noopener noreferrer" data-i18n="paperPDF">Full paper PDF</a><a class="link-button" href="https://link.springer.com/article/10.1186/s12870-024-05305-z" target="_blank" rel="noopener noreferrer" data-i18n="publication">Publication</a></div>
+        <section class="feedback-invitation" aria-labelledby="feedback-invitation-title"><h3 id="feedback-invitation-title" data-i18n="feedbackInvite">How was this guide?</h3><p data-i18n="feedbackInviteBody">Tell us what was clear or what could be better.</p><button id="reading-feedback" class="secondary-button" type="button" data-i18n="leaveFeedback">Leave feedback</button></section>
       </section>
     </div>
     <noscript>The original poster and paper links remain available. Enable JavaScript to use the bilingual guide, section images, audio and questions.</noscript>
   </main>
+  <dialog id="welcome-dialog" class="visitor-dialog" aria-labelledby="welcome-title" aria-describedby="welcome-notice">
+    <div class="welcome-scroll">
+    <h2 id="welcome-title" data-i18n="welcomeTitle">Start here</h2>
+    <p class="welcome-language-label" data-i18n="chooseLanguage">Choose your language</p>
+    <nav class="language-switch welcome-languages" aria-label="Language"><button type="button" data-language="en" aria-pressed="true">English</button><button type="button" data-language="zh-TW" aria-pressed="false">繁體中文</button></nav>
+    <ol class="welcome-steps"><li><strong data-i18n="welcomeExplore">Listen or read</strong><p data-i18n="welcomeExploreBody">Tap “Play full tour” to listen, or “Read guide” to read. Tap a framed section to zoom in.</p><button class="help-preview" type="button" data-help-image="guide"><img loading="lazy" decoding="async" alt=""><span data-i18n="viewHelpImage">View larger screenshot</span></button><p class="small secondary" data-help-fallback="guide" data-i18n="helpUnavailableBody" hidden>The screenshot is unavailable. You can continue with the instructions above.</p></li><li><strong data-i18n="welcomeAsk">Ask a question</strong><p data-i18n="welcomeAskBody">Tap “Ask a question” to ask about the study or the section you are viewing.</p><button class="help-preview" type="button" data-help-image="question"><img loading="lazy" decoding="async" alt=""><span data-i18n="viewHelpImage">View larger screenshot</span></button><p class="small secondary" data-help-fallback="question" data-i18n="helpUnavailableBody" hidden>The screenshot is unavailable. You can continue with the instructions above.</p></li><li><strong data-i18n="welcomeFeedback">Leave feedback</strong><p data-i18n="welcomeFeedbackBody">Share a rating or a comment to help improve the guide.</p><button class="help-preview" type="button" data-help-image="feedback"><img loading="lazy" decoding="async" alt=""><span data-i18n="viewHelpImage">View larger screenshot</span></button><p class="small secondary" data-help-fallback="feedback" data-i18n="helpUnavailableBody" hidden>The screenshot is unavailable. You can continue with the instructions above.</p></li></ol>
+    <p id="welcome-notice" class="recording-notice" data-i18n="recordingNotice">Questions, answers and feedback are saved locally on the exhibition computer for later review. Please do not enter personal information.</p>
+    </div>
+    <footer class="welcome-footer"><button id="start-exploring" class="primary" type="button" data-i18n="startExploring">Start exploring</button></footer>
+  </dialog>
+  <dialog id="help-image-dialog" aria-labelledby="help-image-title">
+    <div class="dialog-header"><h2 id="help-image-title">Guide screenshot</h2><button type="button" data-close="help-image-dialog" data-i18n="close">Close</button></div>
+    <button id="help-image-scale" class="secondary-button" type="button" data-i18n="actualPixels">View full resolution</button>
+    <p id="help-image-error" class="secondary" data-i18n="helpUnavailableBody" hidden>The screenshot is unavailable. You can continue with the instructions above.</p>
+    <div class="help-image-pan"><img id="help-full-image" alt=""></div>
+  </dialog>
+  <dialog id="feedback-dialog" class="visitor-dialog" aria-labelledby="feedback-title">
+    <div class="dialog-header"><h2 id="feedback-title" data-i18n="feedbackTitle">Your feedback</h2><button type="button" data-close="feedback-dialog" data-i18n="close">Close</button></div>
+    <p id="feedback-context" class="secondary"></p>
+    <p class="recording-notice" data-i18n="recordingNotice">Questions, answers and feedback are saved locally on the exhibition computer for later review. Please do not enter personal information.</p>
+    <form id="feedback-form">
+      <fieldset><legend data-i18n="clarityLabel">Was this guide clear? (optional)</legend><div class="clarity-options"><label for="clarity-clear"><input id="clarity-clear" type="radio" name="clarity" value="clear"><span data-i18n="clarityClear">Clear</span></label><label for="clarity-partly"><input id="clarity-partly" type="radio" name="clarity" value="partly"><span data-i18n="clarityPartly">Partly clear</span></label><label for="clarity-unclear"><input id="clarity-unclear" type="radio" name="clarity" value="unclear"><span data-i18n="clarityUnclear">Unclear</span></label></div></fieldset>
+      <label for="feedback-comment" data-i18n="commentLabel">Anything to add? (optional)</label><textarea id="feedback-comment" rows="3" aria-describedby="feedback-budget feedback-help"></textarea>
+      <p id="feedback-budget" class="small secondary"></p><p id="feedback-help" class="small secondary" data-i18n="feedbackHelp">Choose a rating or write a comment. No name or email is needed.</p>
+      <p id="feedback-error" class="error" role="alert" hidden></p><button id="submit-feedback" class="primary" type="submit" data-i18n="sendFeedback" disabled>Save feedback</button><p id="feedback-status" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
   <dialog id="image-dialog" aria-labelledby="image-title">
     <div class="dialog-header"><h2 id="image-title">Poster image</h2><button type="button" data-close="image-dialog" data-i18n="close">Close</button></div>
     <div class="figure-actions"><button id="image-scale" type="button" data-i18n="actualPixels">View full resolution</button><p class="small secondary" data-i18n="zoomHint">Use browser zoom, or view full resolution and pan the image.</p></div>
@@ -68,14 +100,15 @@
   <dialog id="question-dialog" aria-labelledby="question-title">
     <div class="dialog-header"><h2 id="question-title">Ask about the study</h2><button type="button" data-close="question-dialog" data-i18n="returnGuide">Return to guide</button></div>
     <p id="chat-context"></p>
-    <p class="small secondary" data-i18n="historyHint">Only the last four short messages are used as context. This conversation is not saved.</p>
+    <p class="small secondary" data-i18n="historyHint">Only the last four short messages are used as question context. Clearing removes this screen’s conversation, not saved records.</p>
+    <p class="recording-notice" data-i18n="recordingNotice">Questions, answers and feedback are saved locally on the exhibition computer for later review. Please do not enter personal information.</p>
     <div id="messages" role="log" aria-live="polite"></div>
     <form id="chat-form">
       <label for="question" data-i18n="questionLabel">Your question</label>
       <textarea id="question" rows="3" required aria-describedby="question-budget"></textarea>
       <p id="question-budget" class="small secondary"></p>
       <p id="chat-error" class="error" role="alert" hidden></p>
-      <div class="chat-actions"><button id="send-question" class="primary" type="submit" data-i18n="send">Send question</button><button id="clear-chat" type="button" data-i18n="clear">Clear conversation</button></div>
+      <div class="chat-actions"><button id="send-question" class="primary" type="submit" data-i18n="send">Send question</button><button id="clear-chat" type="button" data-i18n="clear">Clear this screen</button></div>
       <p id="chat-status" class="small" role="status" aria-live="polite"></p>
     </form>
   </dialog>

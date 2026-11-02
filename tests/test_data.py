@@ -20,7 +20,7 @@ def test_index_refuses_changed_source_pdf(tmp_path):
 def test_real_corpus_has_traceable_originals():
     from orchid.config import ROOT
     rows = json.loads((ROOT / "data/evidence.json").read_text(encoding="utf-8"))
-    assert len(rows) == 21
+    assert len(rows) == 23
     for item in rows:
         assert len(item["original_excerpt"]) > 50
         assert item["locators"]
@@ -69,3 +69,19 @@ def test_long_query_is_rejected_before_embedding():
     index.ready, index.encoder = True, Encoder()
     with pytest.raises(ValueError, match="縮短"):
         index.search("花" * 600)
+
+
+def test_prepare_defaults_follow_registered_document_versions(tmp_path, monkeypatch):
+    from orchid import cli
+    settings = Settings(root=tmp_path)
+    settings.data.mkdir()
+    (settings.data / "sources.json").write_text(json.dumps({
+        "poster": {"path": "reviewed-poster-v2.pdf"},
+        "paper": {"path": "corrected-paper.pdf"},
+    }), encoding="utf-8")
+    received = []
+    monkeypatch.setattr(cli, "Settings", lambda: settings)
+    monkeypatch.setattr(cli, "prepare", lambda settings, poster, paper, accept: received.append((poster, paper)))
+    monkeypatch.setattr("sys.argv", ["orchid", "prepare"])
+    cli.main()
+    assert received == [("reviewed-poster-v2.pdf", "corrected-paper.pdf")]

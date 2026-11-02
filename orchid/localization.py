@@ -3,8 +3,8 @@ from typing import Literal
 Language = Literal["en", "zh-TW"]
 
 UNKNOWN = {
-    "en": "I cannot provide an answer verified against this poster and paper. Please ask the researchers at the event or corresponding author Yu-Chen Shu (ycshu@mail.ncku.edu.tw). This page does not record or send questions on your behalf.",
-    "zh-TW": "目前無法根據這份海報與論文，提供通過來源核對的回答。可向現場研究人員，或通訊作者 Yu-Chen Shu（ycshu@mail.ncku.edu.tw）詢問；本頁不會代為記錄或寄送問題。",
+    "en": "I cannot provide an answer verified against this poster and paper. Please ask the researchers at the event or corresponding author Yu-Chen Shu (ycshu@mail.ncku.edu.tw). This page does not contact or notify the authors on your behalf.",
+    "zh-TW": "目前無法根據這份海報與論文，提供通過來源核對的回答。可向現場研究人員，或通訊作者 Yu-Chen Shu（ycshu@mail.ncku.edu.tw）詢問；本頁不會代為聯絡或通知作者。",
 }
 
 # Keep internal diagnostic messages intact; translate only known visitor-facing errors.

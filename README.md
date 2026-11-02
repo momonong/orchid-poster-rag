@@ -8,7 +8,7 @@
 
 ## 完整海報導覽 `/tour-preview/`
 
-既有首頁 `/` 保留；`/tour-preview/` 提供完整英文海報 → 八個完整區塊 → 閱讀、聆聽與有來源提問。介面預設英文，可切換繁體中文；正文 18px，A+ 可切換 20／22px。八區探索的 `order` 與六段完整導覽的 `tour_order` 分開，既有十二段預製 WAV 約為英文 1:53、中文 1:56。使用者已於 2026-10-31 確認本輪 UI 並授權合併與推送；Git 完成狀態由實際整合結果另行核對。
+既有首頁 `/` 保留；`/tour-preview/` 提供完整英文海報 → 八個完整區塊 → 閱讀、聆聽與有來源提問。介面預設英文，可切換繁體中文；正文 18px，A+ 可切換 20／22px。八區探索的 `order` 與六段完整導覽的 `tour_order` 分開，2026-11-01 更新六段雙語研究導覽，十二段預製 WAV 實測為英文 2:58、中文 2:39；Results 與 Discussion 以三條線索、模型機制與研究意義為主，詳見[敘事修正與驗證](docs/poster-web-preview.md#導覽敘事修正2026-11-01)。使用者已於 2026-10-31 確認本輪 UI 並授權合併與推送；Git 完成狀態由實際整合結果另行核對。
 
 在已安裝專案依賴的環境，先放入 `data/sources.json` 登錄且 SHA 相符的原海報 PDF，再從專案根目錄建置圖片：
 
@@ -18,11 +18,19 @@ uv run --locked --offline python -B scripts/build_tour_assets.py
 uv run --locked --offline python -B scripts/build_tour_audio.py --base-url http://127.0.0.1:8000
 ```
 
-衍生圖片、manifest 與 WAV 位於 `.orchid/assets/tour-preview/`，連同原 PDF、模型及索引都不入 Git；新 checkout 必須準備原素材並重建。References／海報補充說明新增的是閱讀與來源入口，沒有加入 RAG evidence 或索引，不保證所有補充細節都可問答。操作、解析度上限、音訊重建與驗證界線見[海報網頁試作](docs/poster-web-preview.md)及[按鈕與八區調整](docs/poster-visual-polish.md)。
+衍生圖片、manifest 與 WAV 位於 `.orchid/assets/tour-preview/`，連同原 PDF、模型及索引都不入 Git；新 checkout 必須準備原素材並重建。2026-10-31 已換成學姊提供的新版海報；海報補充量綱表與耦合圖已目視轉錄為 S05／S06 並納入 RAG，期刊獨立補充檔仍只有閱讀入口。新版 A、H 共用濃度單位 C，G_A 為 1/T、G_H 為 1/(C·T)、k 為 C；詳見[海報版本更新](docs/poster-update-20261031.md)。不保證所有補充細節都可問答。操作、解析度上限、音訊重建與驗證界線見[海報網頁試作](docs/poster-web-preview.md)及[按鈕與八區調整](docs/poster-visual-polish.md)。
+
+## 訪客紀錄與使用說明
+
+2026-11-01 新增本機 SQLite 保存問答／回饋，搭配首次使用說明卡與隨時可開啟的回饋入口。整合驗證為 123 項 Python、31 項 Node 通過，並已在既有 HTTPS 確認真實問答／回饋保存與 CSV／備份匯出。問答視窗明示保存用途；清除此畫面不會刪除已保存紀錄。部署者可用 `orchid export-records --output output/visitor-export-20261101` 匯出 CSV 與 SQLite 備份；使用持久 DB 路徑時須沿用 `ORCHID_RECORDS_FILE`。欄位、資料失敗行為、匯出與驗證見[訪客資料說明](docs/visitor-records.md)。
+
+使用說明另提供中英文各三張實際操作截圖，可點開放大；語言選項有清楚的深色外框及選取底色。截圖不包含訪客紀錄，透過 `node scripts/build_help_screenshots.cjs --base-url http://127.0.0.1:8000` 在已運行的網站重建；需既有 Node／Playwright／Edge，素材位於 ignored 的 `.orchid/assets/tour-preview/help/`。本次介面更新通過 32 項 Node 檢查（0 skipped），並核對既有 HTTPS 上的切語言與放大操作。詳見上述訪客資料說明中的重建方式與驗證界線。
 
 ## 目前交付與驗證界線
 
-- 官方更正後論文、2024-08-17 correction 與研究日海報已整理成 21 筆校對摘要及可回溯原文，CPU 索引為 **33 chunks**；原始 PDF、模型、向量與程序狀態排除 Git。
+2026-10-31 新版海報更新：104 Python tests、29 Node tests 通過；新版補充來源的中英文各兩題（共4題）實際問答與兩語導覽 WAV 已核對。既有完整題組的生成品質數字為下列歷史基線，本輪沒有重跑全部23題的模型生成。
+
+- 官方更正後論文、2024-08-17 correction 與研究日海報已整理成 23 筆校對摘要及可回溯原文，CPU 索引為 **35 chunks**；原始 PDF、模型、向量與程序狀態排除 Git。
 - 原雙語音訊版的歷史工程驗證為 **103 pytest tests、21 Node tests 通過**，涵蓋語言契約、英文抽取式選段、譯文完整性／過期拒用、兩語錯誤／科學主張保護、英文術語檢索、音訊容量／ASGI 斷線取消／私密快取、播放器事件及跨語言舊回答播放。Node 中 1 項實際 Edge 回歸需已有 Playwright 與瀏覽器；其餘使用 Node 內建測試。整合發現的「H 自我活化」錯述另加拒絕保護，不更動生成 prompt 或英文選段。先前雙語科學版為 92 pytest、7 Node；中文單語版基線是 41 tests。詳細界線見[雙語驗證紀錄](docs/bilingual-validation.md)與[本機音訊實測](docs/local-speech.md)。
 - RTX 5090 Laptop 實際 API 固定題組：英文抽取式 **17/17 可答題通過**，繁中 **16/17（94.1%）**；兩語各 **4/4 正確拒答**。繁中 G07 保守拒答仍計未通過。英文自由轉述的失敗歷史、最後審查與繁中原版輸入相同的證據見[雙語驗證紀錄](docs/bilingual-validation.md)。
 - 暖機後單人序列 API 等待：英文 **0.55–1.75 秒，中位數 1.02 秒**；繁中 **3.203–8.737 秒，中位數 4.867 秒**。固定題組及代理審查不是研究作者／使用者人工接受，也不保證其他問題或負載相同。
@@ -41,7 +49,7 @@ uv sync --locked
 uv run --locked python scripts/provision_speech.py --download --smoke
 
 # 原始 PDF 位於專案根目錄，不覆寫使用者檔案。
-uv run --locked orchid prepare --poster '理學院研究日.pdf' --paper 's12870-024-05305-z.pdf'
+uv run --locked orchid prepare --poster '盧提文_理學院研究日.pdf' --paper 's12870-024-05305-z.pdf'
 
 # 首次下載固定 revision 的官方 multilingual-e5-small；只使用 CPU。
 $env:HF_HUB_DISABLE_XET = '1'
@@ -101,11 +109,13 @@ Remove-Item -LiteralPath .orchid/ngrok.json
 - 論文：[Lu et al. 2024, BMC Plant Biology 24, 681](https://link.springer.com/article/10.1186/s12870-024-05305-z)，CC BY 4.0。
 - [官方圖號 correction](https://link.springer.com/article/10.1186/s12870-024-05475-w)：舊 2→新 10、舊 3→新 11、舊 4–11→新 2–9。海報圖 1–4 是獨立圖號。
 - `data/evidence.json`：中文導覽摘要、英文 PDF 原文擷取、證據種類、版本、頁碼／區域與來源 SHA-256；摘要不是逐字引文。
-- `data/evidence.en.json`：21 筆校對摘要的英文譯文，canonical IDs 與 `evidence.json` 一一對應，並綁定其 corpus SHA-256。它是已校對摘要譯文，不是作者逐字引文；只供英文生成，不改檢索語料或索引。缺少、重複／漏 ID、空白或原語料 hash 不符時，英文問答明確 unavailable，不回退至其他語言。
+- `data/evidence.en.json`：23 筆校對摘要的英文譯文，canonical IDs 與 `evidence.json` 一一對應，並綁定其 corpus SHA-256。它是已校對摘要譯文，不是作者逐字引文；只供英文生成，不改檢索語料或索引。缺少、重複／漏 ID、空白或原語料 hash 不符時，英文問答明確 unavailable，不回退至其他語言。
 - `data/excerpt-map.json`：目前更正後論文的頁碼與文字 block 索引。更換 PDF 後必須人工重新核對，不能假定 block 索引仍相同。
 - `data/sources.json`：原始 PDF 位置、SHA-256、海報裁切區域。`prepare` 只產出衍生資料，不改原始 PDF。
 - `data/guide.json`：導覽文案與來源連結。更新文案時也核對來源。
 - `data/guide.en.json`：英文導覽；`data/source-labels.en.json`：英文來源標題與證據種類標籤。這兩份僅供呈現，不取代研究語料或重建索引。英文來源視窗優先顯示原始英文擷取，中文校對摘要明確標為繁體中文；原始 PDF 保持原樣。
+
+省略 `prepare --poster/--paper` 時會沿用 `data/sources.json` 的已登錄檔案，避免意外選回舊版；首次登錄仍可明確指定路徑。
 
 更新步驟：保留原始檔 → 核對新版本與圖號 → 更新摘要、原文 block/region 對應與 golden cases → `orchid prepare --accept-reviewed` → `orchid index` → `orchid eval --mode retrieval` → 重新啟動 app 載入新索引 → 以 live 模型與手機核對。`--accept-reviewed` 代表操作人已完成校對，不會自動驗證科學語意。原始 PDF 指紋不符或語料變更時索引拒絕宣稱 ready。
 
@@ -129,15 +139,16 @@ CPU `intfloat/multilingual-e5-small` revision `614241f622f53c4eeff9890bdc4f31cfe
 
 ## API
 
-- `POST /api/chat`：`{"question":"What does miR858 do?","language":"en","history":[{"role":"user","content":"..."},{"role":"assistant","content":"..."}]}`。language 只接受 `en`／`zh-TW`，省略時為 `en`；指定語言位於 system prompt，問題、歷史與來源不能覆蓋。question 最多 600 字，history 最多 4 則、每則 1000 字，body 最多 16 KiB。回傳 `answer/status/language/citations/poster_sections/confidence`。
+- `POST /api/chat`：`{"question":"What does miR858 do?","language":"en","history":[{"role":"user","content":"..."},{"role":"assistant","content":"..."}]}`。language 只接受 `en`／`zh-TW`，省略時為 `en`；指定語言位於 system prompt，問題、歷史與來源不能覆蓋。question 最多 600 字，history 最多 4 則、每則 1000 字，body 最多 16 KiB。另可帶 UUID `request_id`／`conversation_id` 與 `section`。回傳 `answer/status/language/citations/poster_sections/confidence/request_id/record_saved`；先寫入 pending，完成保存才回 `record_saved: true`。寫入失敗回 503，重複進行中／不同內容／中斷 ID 回 409，不自動重送模型。
+- `POST /api/feedback`：保存最多 1500 字的回饋與可選清楚度評價；有 UUID 提交 ID 去重，失敗不假稱已保存。
 - `status`：`answered`（引用 ID 已驗證）、`unknown`（證據不足／格式不符／結果未知）、`busy`、`unavailable`。
-- `GET /api/health`：app／index／model readiness 與有限容量狀態，不含秘密。
+- `GET /api/health`：app／index／model readiness、recording readiness 與有限容量狀態，不含秘密。
 - `GET /api/guide?language=en`：導覽 manifest，預設英文，可選 `zh-TW`。
 - `POST /api/speech`：`{"language":"en","guide_id":"intro"}`（或 `clue1`／`clue2`／`clue3`），由後端取對應導覽原文；回答用 `{"language":"zh-TW","text":"完整回答"}`。只接受兩語、text 最多 4000 字，不截斷。成功回傳 `audio/wav`、`Cache-Control: no-store`；422 無效、429 忙碌、503 未就緒／失敗、504 逾時。詳見[音訊契約](docs/local-speech.md)。
 - `GET /api/sources/{id}?language=en`：摘要、英文原文、版本、頁碼與區域 metadata；語言切換只改呈現標籤，不翻譯原文或改研究內容。
 - `GET /api/documents/poster`、`/paper`：只提供已登錄、位於專案內的兩份 PDF，無任意檔案瀏覽。
 
-UI 以 `textContent` 顯示回答文字，無 Markdown／HTML 執行。無帳號、上傳管理、永久對話、雲端生成或自動網路檢索。公開入口不設使用者認證，僅適合授權展覽情境的 1–3 位訪客；若要大規模公開，另定存取與資源契約。
+UI 以 `textContent` 顯示回答文字，無 Markdown／HTML 執行。無帳號、上傳管理、雲端生成或自動網路檢索。問答與回饋由本機 SQLite 保存供展後檢視，不向訪客公開他人的紀錄。公開入口不設使用者認證，僅適合授權展覽情境的 1–3 位訪客；若要大規模公開，另定存取與資源契約。
 
 ## 驗證
 
@@ -167,7 +178,7 @@ uv run --locked orchid eval --mode live --limit 6
 
 `speech.test.cjs` 與 `locale.test.cjs` 是不需圖片或模型的純 Node 測試。完整 suite 的兩項瀏覽器測試使用離線 API fixtures，但仍須能 resolve 已安裝的 Playwright、啟動 Chromium／Edge，且 `tour-preview.test.cjs` 會讀取本機 `.orchid/assets/tour-preview/` 圖片與 manifest。已裝 Playwright 而缺素材時會失敗；fresh clone 並非零素材即可重現完整 suite。2026-10-31 發布檢查的 GPU 停用設定、命令及原始結果保留於本機 `output/release-poster-tour-check.txt`。
 
-`data/golden.json` 有 21 題：17 題可回答、4 題證據不足／注入／不存在的寄信操作／無關餐廳推薦。retrieval 模式是真實 CPU 檢索；live 模式先檢查產品 health，再序列呼叫實際 `/api/chat`，完整經過與 UI 相同的引用／數字／佇列／unknown 驗證。每題只送一次，遇 transport 結果未知、busy、unavailable，或 unknown 後無法確認服務 idle 即停止，沒有 fixture fallback 或自動重送。
+`data/golden.json` 有 23 題：19 題可回答（含新版海報量綱／耦合 2 題）、4 題證據不足／注入／不存在的寄信操作／無關餐廳推薦。retrieval 模式是真實 CPU 檢索；live 模式先檢查產品 health，再序列呼叫實際 `/api/chat`，完整經過與 UI 相同的引用／數字／佇列／unknown 驗證。每題只送一次，遇 transport 結果未知、busy、unavailable，或 unknown 後無法確認服務 idle 即停止，沒有 fixture fallback 或自動重送。
 
 評估工具預設明確傳 `language=zh-TW`，保留既有中文 golden 基線，不隨產品預設英文而改變。`--language en` 可檢查同題組英文回答，但題目與字面 key points 仍是原中文，需另行語意核對。每份報告與逐題結果記錄語言。工程測試及播放器事件不等於人工聽感驗收；基因名稱、公式發音、實體手機聲音仍需人工確認。
 

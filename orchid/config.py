@@ -40,3 +40,8 @@ class Settings:
     @property
     def index(self):
         return self.root / ".orchid" / "index"
+
+    @property
+    def records_file(self):
+        configured = Path(os.environ.get("ORCHID_RECORDS_FILE", self.root / ".orchid" / "visitor-records.sqlite3"))
+        return configured if configured.is_absolute() else self.root / configured

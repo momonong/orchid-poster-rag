@@ -193,25 +193,34 @@ def main():
     p = sub.add_parser("status")
     p.add_argument("--port", type=int, default=8000)
     p = sub.add_parser("prepare")
-    p.add_argument("--poster", default="理學院研究日.pdf")
-    p.add_argument("--paper", default="s12870-024-05305-z.pdf")
+    p.add_argument("--poster", help="來源 PDF；省略時沿用 data/sources.json 已登錄版本")
+    p.add_argument("--paper", help="來源 PDF；省略時沿用 data/sources.json 已登錄版本")
     p.add_argument("--accept-reviewed", action="store_true")
     p = sub.add_parser("index")
     p.add_argument("--download", action="store_true")
     p.add_argument("--tokenizer-dir", help="已核對為目標固定 revision 的本機 Qwen tokenizer 目錄")
     p = sub.add_parser("eval")
     p.add_argument("--mode", choices=["retrieval", "live"], default="retrieval")
-    p.add_argument("--limit", type=int, default=21)
+    p.add_argument("--limit", type=int, default=23)
     p.add_argument("--language", choices=["en", "zh-TW"], default="zh-TW",
                    help="回答語言；既有中文 golden 題組預設 zh-TW")
     p = sub.add_parser("qr")
     p.add_argument("--url")
     p.add_argument("--output", default="output/guide-qr.png")
+    p = sub.add_parser("export-records", help="僅在部署者本機匯出訪客紀錄與一致SQLite備份")
+    p.add_argument("--output", required=True, help="新的本機匯出資料夾；不覆寫既有目錄")
+    p.add_argument("--database", type=Path, help="SQLite來源；省略時使用Settings.records_file")
     args = parser.parse_args()
     settings = Settings()
     try:
-        if args.command == "prepare":
-            prepare(settings, args.poster, args.paper, args.accept_reviewed)
+        if args.command == "export-records":
+            from .records import export_records
+            destination = export_records(args.database or settings.records_file, Path(args.output))
+            print(f"訪客紀錄已匯出至：{destination}")
+        elif args.command == "prepare":
+            registered = json.loads((settings.data / "sources.json").read_text(encoding="utf-8")) if (settings.data / "sources.json").exists() else {}
+            prepare(settings, args.poster or registered.get("poster", {}).get("path", "理學院研究日.pdf"),
+                    args.paper or registered.get("paper", {}).get("path", "s12870-024-05305-z.pdf"), args.accept_reviewed)
         elif args.command == "index":
             from .retrieval import build_index
             from .token_budget import prepare_tokenizer

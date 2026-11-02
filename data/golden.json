@@ -306,5 +306,38 @@
       "推薦",
       "最好吃的是"
     ]
+  },
+  {
+    "id": "G22",
+    "question": "新版海報 Supplementary 的量綱表中，A、H、G_A、G_H 和 k 分別用什麼單位？",
+    "answerable": true,
+    "source_any": [
+      "S05"
+    ],
+    "key_points": [
+      "C",
+      "1/T",
+      "1/(C·T)"
+    ],
+    "forbidden": [
+      "G_A = C_H",
+      "G_H = C_H"
+    ]
+  },
+  {
+    "id": "G23",
+    "question": "海報 Supplementary 的 no A flux 與 apparent effective D_A 是什麼意思？這證明 A 在細胞間運輸嗎？",
+    "answerable": true,
+    "source_any": [
+      "S06"
+    ],
+    "key_points": [
+      "表觀",
+      "詮釋"
+    ],
+    "forbidden": [
+      "已證明 A 會跨細胞運輸",
+      "已完成運輸實驗"
+    ]
   }
 ]

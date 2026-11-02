@@ -1,8 +1,12 @@
 import asyncio
 import json
+import logging
 import re
+import time
 from contextlib import asynccontextmanager
 from pathlib import Path
+from typing import Literal
+from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, JSONResponse, Response
@@ -22,16 +26,27 @@ from .generation import (
     validate_numbers,
 )
 from .localization import UNKNOWN, Language, error_text
+from .records import RecordConflict, RecordingUnavailable, RecordStore, payload_hash
 from .retrieval import HybridIndex
 from .speech import MAX_TEXT_CHARS, SpeechService, SpeechTimeout
 
+logger = logging.getLogger(__name__)
+
+
+Section = Literal["overview", "intro", "methods", "clue1", "clue2", "clue3", "discussion", "references", "supplementary"]
+
 
 class Turn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     role: str = Field(pattern="^(user|assistant)$")
     content: str = Field(min_length=1, max_length=1000)
 
 
 class ChatRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    request_id: UUID | None = None
+    conversation_id: UUID | None = None
+    section: Section | None = "overview"
     question: str = Field(min_length=1, max_length=600)
     history: list[Turn] = Field(default_factory=list, max_length=4)
     language: Language = "en"
@@ -41,7 +56,36 @@ class ChatRequest(BaseModel):
     def nonempty(cls, value):
         if not value.strip():
             raise ValueError("請輸入問題")
-        return value.strip()
+        return value
+
+
+class FeedbackRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    submission_id: UUID
+    conversation_id: UUID | None = None
+    language: Language
+    section: Section
+    clarity: Literal["clear", "partly", "unclear"] | None = None
+    comment: str = Field(default="", max_length=1500)
+
+    @model_validator(mode="after")
+    def has_feedback(self):
+        if self.clarity is None and not self.comment.strip():
+            raise ValueError("Feedback requires a clarity rating or a comment.")
+        return self
+
+
+class ProtectedStaticFiles(StaticFiles):
+    def __init__(self, *args, records_file, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.records_file = Path(records_file).resolve()
+
+    async def get_response(self, path, scope):
+        target = (Path(self.directory) / path).resolve()
+        blocked = {str(self.records_file) + suffix for suffix in ("", "-wal", "-shm", "-journal")}
+        if str(target) in blocked or re.search(r"\.(?:sqlite3?|db)(?:-(?:wal|shm|journal))?$", target.name, re.IGNORECASE):
+            return Response(status_code=404)
+        return await super().get_response(path, scope)
 
 
 class SpeechRequest(BaseModel):
@@ -72,18 +116,24 @@ def create_app(settings=None, index=None, model=None, speech=None):
     queue = GenerationQueue(wait_seconds=settings.wait_seconds)
     model = model or ModelClient(settings)
     speech = speech or SpeechService(settings)
+    records = RecordStore(settings.records_file, recover_pending=True)
 
     @asynccontextmanager
     async def lifespan(app):
+        await asyncio.to_thread(records.ready)
         if app.state.index is None:
             app.state.index = await asyncio.to_thread(HybridIndex, settings)
         await model.probe()
         yield
+        if app.state.record_tasks:
+            await asyncio.gather(*list(app.state.record_tasks), return_exceptions=True)
         await model.close()
 
     app = FastAPI(title="Orchid research poster guide", lifespan=lifespan, docs_url=None, redoc_url=None,
                   openapi_url=None)
     app.state.index, app.state.queue, app.state.model, app.state.speech = index, queue, model, speech
+    app.state.records = records
+    app.state.record_tasks = set()
 
     @app.middleware("http")
     async def bounds_and_headers(request: Request, call_next):
@@ -117,6 +167,7 @@ def create_app(settings=None, index=None, model=None, speech=None):
             "model": {"ready": ready, "id": model.info.get("id") if model.info else None,
                       "message": model.reason, "result_unknown": model.quarantined},
             "speech": speech.health(),
+            "recording": {"ready": await asyncio.to_thread(records.ready)},
             "queue": {"active": max(queue.active, int(model.quarantined)), "pending": queue.pending,
                       "capacity": 3, "quarantined": model.quarantined}}
 
@@ -203,8 +254,7 @@ def create_app(settings=None, index=None, model=None, speech=None):
             raise HTTPException(404, "原始 PDF 無法取得")
         return FileResponse(target, media_type="application/pdf", filename=target.name, content_disposition_type="inline")
 
-    @app.post("/api/chat")
-    async def chat(body: ChatRequest):
+    async def answer_chat(body: ChatRequest):
         language = body.language
         def reply(status, answer, citations=None, sections=None):
             return result(status, answer, citations, sections, language)
@@ -246,8 +296,82 @@ def create_app(settings=None, index=None, model=None, speech=None):
         sections = list(dict.fromkeys(s for p in passages if p["id"] in used for s in p.get("poster_sections", [])))
         return reply("answered", output["answer"], citations, sections)
 
+    def recording_error(exc):
+        if isinstance(exc, RecordConflict):
+            return HTTPException(409, detail={"code": exc.code})
+        return HTTPException(503, detail={"code": "recording_unavailable"})
+
+    def keep_task(coroutine):
+        task = asyncio.create_task(coroutine)
+        app.state.record_tasks.add(task)
+
+        def finished(done):
+            app.state.record_tasks.discard(done)
+            if not done.cancelled():
+                done.exception()  # Consume detached failures without logging visitor data.
+
+        task.add_done_callback(finished)
+        return task
+
+    @app.post("/api/chat")
+    async def chat(body: ChatRequest):
+        request_id = str(body.request_id or uuid4())
+        conversation_id = str(body.conversation_id or uuid5(NAMESPACE_URL, request_id))
+        history_hash = payload_hash([turn.model_dump() for turn in body.history])
+        fingerprint = payload_hash({"question": body.question, "language": body.language,
+                                    "history_hash": history_hash, "section": body.section,
+                                    "conversation_id": conversation_id})
+
+        async def recorded_chat():
+            started = time.monotonic()
+            source = settings.index / "manifest.json"
+            try:
+                corpus_hash = await asyncio.to_thread(
+                    lambda: json.loads(source.read_text(encoding="utf-8")).get("corpus_hash")
+                ) if source.exists() else None
+                receipt = await asyncio.to_thread(records.claim_question, request_id=request_id,
+                    fingerprint=fingerprint, conversation_id=conversation_id, question=body.question,
+                    language=body.language, section=body.section, history_hash=history_hash,
+                    model_id=(model.info or {}).get("id", settings.expected_model), corpus_hash=corpus_hash)
+                if receipt is not None:
+                    return receipt
+            except (RecordConflict, RecordingUnavailable) as exc:
+                raise recording_error(exc) from None
+            except (OSError, ValueError):
+                raise recording_error(RecordingUnavailable()) from None
+            try:
+                response = await answer_chat(body)
+            except Exception as exc:  # noqa: BLE001 -- Persist the safe visitor failure; never log content.
+                logger.error("Chat processing failed: %s", type(exc).__name__)
+                response = result("unavailable", "The answer could not be completed. Please read the guide."
+                                  if body.language == "en" else "此題未能完成，請先閱讀導覽。", language=body.language)
+            response.update(request_id=request_id, record_saved=True)
+            try:
+                await asyncio.to_thread(records.complete_question, request_id, response,
+                    latency_ms=max(0, round((time.monotonic() - started) * 1000)),
+                    model_id=(model.info or {}).get("id", settings.expected_model))
+            except (RecordConflict, RecordingUnavailable) as exc:
+                raise recording_error(exc) from None
+            return response
+
+        # Includes admission persistence: cancellation cannot orphan a committed pending row.
+        return await asyncio.shield(keep_task(recorded_chat()))
+
+    @app.post("/api/feedback", status_code=201)
+    async def feedback(body: FeedbackRequest):
+        values = body.model_dump(mode="json")
+
+        async def saved_feedback():
+            try:
+                return await asyncio.to_thread(records.save_feedback,
+                    fingerprint=payload_hash(values), **values)
+            except (RecordConflict, RecordingUnavailable) as exc:
+                raise recording_error(exc) from None
+
+        return await asyncio.shield(keep_task(saved_feedback()))
+
     assets = settings.root / ".orchid" / "assets"
     assets.mkdir(parents=True, exist_ok=True)
-    app.mount("/assets", StaticFiles(directory=assets), name="assets")
-    app.mount("/", StaticFiles(directory=Path(__file__).parent / "static", html=True), name="static")
+    app.mount("/assets", ProtectedStaticFiles(directory=assets, records_file=settings.records_file), name="assets")
+    app.mount("/", ProtectedStaticFiles(directory=Path(__file__).parent / "static", html=True, records_file=settings.records_file), name="static")
     return app

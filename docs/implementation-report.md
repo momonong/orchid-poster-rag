@@ -55,7 +55,7 @@
 
 一次一題 active、最多兩題 pending，admission 在 CPU retrieval 前執行，pending 等候上限 35 秒，API 等待上限 44 秒。取消已啟動的請求仍保留工作名額；timeout 或未知 502/503/504 立即顯示未知並 quarantine，有限健康 probe 確認 inflight/detached/uncertain 皆 0 才解除。沒有自動重送、背景無限 retry 或未驗證部分輸出。
 
-訪客問題／回答不寫入伺服器日誌或永久儲存；前端使用 textContent，清除對話會忽略舊回應；body、question、history 有界。來源與文件僅由已登錄 allowlist 提供。
+2026-11-01 起，訪客問題／最終產品回答保存至本機 SQLite 供展後檢視（見[資料說明](visitor-records.md)），不寫入一般伺服器日誌；前端使用 textContent，清除對話會忽略舊回應；body、question、history 有界。來源與文件僅由已登錄 allowlist 提供。
 
 ## 操作與資料更新
 
