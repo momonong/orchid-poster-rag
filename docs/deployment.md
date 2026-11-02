@@ -1,6 +1,6 @@
 # Ubuntu CPU 部署包
 
-此包供 `https://cball.computing.ncku.edu.tw/orchid-poster/` 使用。這個階段只完成本機 Linux Docker 建置與隔離驗證；尚未登入或安裝 Ubuntu、修改 HTTPS 代理，也未驗收實體手機。
+此包供 `https://cball.computing.ncku.edu.tw/orchid-poster/` 使用。原始部署包的本機 Linux Docker 驗證記錄保留於下；2026-11-02 已完成實驗室工作站與正式 HTTPS 部署，實際拓樸、啟停與驗收見[工作站部署紀錄](ubuntu-deployment-20261102.md)。實體手機行動網路與人工音質仍待確認。
 
 Orchid 與 Qwen 是兩個獨立服務。Orchid 的 CPU 映像包含程式與已鎖定的 Python 依賴；原始 PDF、E5、固定版本 tokenizer、Kokoro、圖片、預錄音訊和索引由唯讀 runtime 掛載。訪客 SQLite 目錄與導覽語音 cache 分開持久保存。映像、runtime 與 Git 都不包含 API key、既有訪客資料或 Qwen 權重。
 

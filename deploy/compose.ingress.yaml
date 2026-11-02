@@ -1,0 +1,19 @@
+services:
+  ingress:
+    image: nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+    network_mode: host
+    user: "${ORCHID_UID:?set target UID}:${ORCHID_GID:?set target GID}"
+    entrypoint: [nginx]
+    command: [-g, "daemon off;"]
+    read_only: true
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 64
+    tmpfs: ["/tmp:size=64m,mode=1777"]
+    volumes:
+      - type: bind
+        source: ./deploy/nginx-lab.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+        bind: {create_host_path: false}
