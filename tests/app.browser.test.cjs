@@ -23,8 +23,11 @@ test('mobile playback exposes the introduction and preserves Chinese preferences
       });
       await page.route('**/*',async route=>{
         const url=new URL(route.request().url());
+        const prefix=process.env.ORCHID_TEST_PREFIX || '';
+        assert.ok(url.pathname.startsWith(prefix+'/'),`escaped prefix: ${url.pathname}`);
+        url.pathname=url.pathname.slice(prefix.length);
         const file=url.pathname==='/'?'index.html':url.pathname.slice(1);
-        if(['index.html','style.css','locale.js','speech.js','app.js'].includes(file)) {
+        if(['index.html','style.css','urls.js','locale.js','speech.js','app.js'].includes(file)) {
           const type=file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html';
           return route.fulfill({contentType:type,body:await fs.readFile(path.join(root,'orchid','static',file))});
         }
@@ -49,7 +52,7 @@ test('mobile playback exposes the introduction and preserves Chinese preferences
         }
         return route.fulfill({status:204});
       });
-      await page.goto('https://orchid.test/');
+      await page.goto(`https://orchid.test${process.env.ORCHID_TEST_PREFIX || ''}/`);
       await page.locator('#play-intro:not([disabled])').waitFor();
       assert.equal(await page.locator('#play-intro').count(),1);
       const intro=await page.locator('#play-intro').boundingBox();
@@ -60,7 +63,7 @@ test('mobile playback exposes the introduction and preserves Chinese preferences
       await answer.waitFor();
       await page.locator('.language-switch [data-language="zh-TW"]').click();
       assert.equal(await page.locator('html').getAttribute('lang'),'zh-Hant-TW');
-      const requested=page.waitForRequest(request=>new URL(request.url()).pathname==='/api/speech');
+      const requested=page.waitForRequest(request=>new URL(request.url()).pathname===(process.env.ORCHID_TEST_PREFIX || '')+'/api/speech');
       await answer.click();
       assert.deepEqual((await requested).postDataJSON(),{
         language:'en',text:'The model explores orchid patterns. [S04]',

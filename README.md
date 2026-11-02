@@ -185,3 +185,7 @@ uv run --locked orchid eval --mode live --limit 6
 每次 live run 保留獨立 `output/evaluation-live-時間-隨機ID.json`，並以 `output/evaluation-live.json` 作最新副本；每題送出前及收到結果後都原子保存 checkpoint，中途失敗仍保留前題。`product_response` 是產品實際完整 JSON；`state=complete` 只表示這批 HTTP 評估流程完成，`blocked/stopped` 或 `in_progress` 不算完整結果。`completed_cases` 是已收到產品回覆的題數，不是答對題數。字面關鍵字檢查只是診斷，≥90% 正確率、零數字／引用語意錯誤與拒答品質仍須人工核對。Windows sandbox 若卡在 asyncio socketpair，需在允許本機 loopback 的正式執行環境跑同一份測試，不改測試假裝通過。
 
 實作檔：`orchid/corpus.py`、`retrieval.py`、`generation.py`、`app.py`、`cli.py`、`evaluation.py` 與 `orchid/static/`。驗證與未完成項目列於 `docs/implementation-report.md`。
+
+## Ubuntu CPU 部署包
+
+`Dockerfile`、`compose.yaml` 與 `deploy/.env.example` 提供獨立 CPU 應用容器，Qwen 沿用既有 selfhost-models。支援 `/orchid-poster/` 代理前綴與外部唯讀 runtime，訪客 DB／語音 cache 分開持久保存；建置、載入、秘密檔案、停止／備份及現場驗收限制見[部署說明](docs/deployment.md)。本機部署包完成不代表 Ubuntu 或正式 HTTPS 已部署。

@@ -1,4 +1,6 @@
 'use strict';
+const appURL = OrchidURL;
+const appFetch = (url, options) => window.fetch(appURL(url), options);
 const $ = id => document.getElementById(id);
 const {locales, initialLanguage} = OrchidLocale;
 let storage;
@@ -17,7 +19,7 @@ let pending = false;
 let lastFocus;
 let lastHealth;
 let messageNumber = 0;
-const speech = OrchidSpeech.createSpeechController({fetch:(...args)=>fetch(...args),
+const speech = OrchidSpeech.createSpeechController({fetch:(...args)=>appFetch(...args),
   Audio:window.Audio,URL:window.URL,AbortController:window.AbortController}, () => renderSpeech());
 const t = (key, lang = language) => locales[lang][key];
 function node(tag, text, cls) {
@@ -108,7 +110,7 @@ function selectClue(index, focus = false, stop = true) {
   $('clue-title').textContent = item.title;
   $('clue-summary').textContent = item.summary;
   $('clue-detail').textContent = item.detail;
-  $('clue-image').src = `/assets/${item.image}`;
+  $('clue-image').src = appURL(`/assets/${item.image}`);
   $('clue-image').alt = `${t('clueAlt')} ${clue + 1}: ${item.summary}`;
   $('clue-caption').textContent = `${t('clueFigure')} ${clue + 2} · ${t('modelSimulation')}`;
   $('previous-clue').disabled = clue === 0;
@@ -125,7 +127,7 @@ async function loadGuide() {
   renderSpeech();
   try {
     if (!guideCache[lang]) {
-      const response = await fetch(`/api/guide?language=${encodeURIComponent(lang)}`);
+      const response = await appFetch(`/api/guide?language=${encodeURIComponent(lang)}`);
       if (!response.ok) throw new Error('guide');
       guideCache[lang] = await response.json();
     }
@@ -159,7 +161,7 @@ async function showSource(id) {
   $('source-content').replaceChildren(node('p',t('sourceLoading',lang)));
   if (!$('source-dialog').open) showDialog('source-dialog');
   try {
-    const response = await fetch(`/api/sources/${encodeURIComponent(id)}?language=${encodeURIComponent(lang)}`);
+    const response = await appFetch(`/api/sources/${encodeURIComponent(id)}?language=${encodeURIComponent(lang)}`);
     if (!response.ok) throw new Error('source');
     const item = await response.json();
     if (revision !== sourceRevision || lang !== language) return;
@@ -168,7 +170,7 @@ async function showSource(id) {
     const page = pages.length ? `${t('sourcePage')} ${pages.join(', ')}` : '';
     const meta = node('p',[item.document_title,page,item.figure,item.section,item.kind].filter(Boolean).join(' · '),'source-meta');
     const links = node('div',undefined,'source-links');
-    function link(label, url) { const el=node('a',label); el.href=url; el.target='_blank'; el.rel='noopener noreferrer'; return el; }
+    function link(label, url) { const el=node('a',label); el.href=appURL(url); el.target='_blank'; el.rel='noopener noreferrer'; return el; }
     links.append(link(t('sourceRead'),item.url));
     if (item.local_url) links.append(link(t('sourceLocal'),item.local_url+(item.page?`#page=${item.page}`:'')));
     const originalText = node('p',item.original_excerpt||t('sourceUnavailable'),'source-excerpt'); originalText.lang='en';
@@ -211,7 +213,7 @@ async function sendQuestion(event) {
   $('question').value='';
   const clientTimer=setTimeout(()=>requestController.abort(),80000);
   try {
-    const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
+    const response=await appFetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({question,history:history.slice(-4),language:requestLanguage}),signal:requestController.signal});
     if (!response.ok) throw new Error(t(response.status===422?'tooLong':'requestError',requestLanguage));
     const answer=await response.json();
@@ -289,7 +291,7 @@ window.addEventListener('pagehide',()=>speech.stop());
 window.addEventListener('beforeunload',()=>speech.stop());
 applyLocale(); loadGuide();
 (async()=>{
-  try { const response=await fetch('/api/health'); if(!response.ok) throw new Error('health'); lastHealth=await response.json(); }
+  try { const response=await appFetch('/api/health'); if(!response.ok) throw new Error('health'); lastHealth=await response.json(); }
   catch { lastHealth=null; }
   speech.setReadiness(lastHealth?.speech);
   renderHealth();

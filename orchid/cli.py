@@ -231,7 +231,8 @@ def main():
             import uvicorn
 
             from .app import create_app
-            uvicorn.run(create_app(settings), host="127.0.0.1", port=args.port, access_log=False)
+            uvicorn.run(create_app(settings), host="127.0.0.1", port=args.port, access_log=False,
+                        root_path=settings.root_path, timeout_graceful_shutdown=115)
         elif args.command == "start":
             start(settings, args.port)
         elif args.command == "stop":

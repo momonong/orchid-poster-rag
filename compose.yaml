@@ -1,0 +1,68 @@
+name: orchid-poster
+services:
+  orchid:
+    image: ${ORCHID_IMAGE:-orchid-poster:ubuntu-20261102}
+    platform: linux/amd64
+    network_mode: host
+    user: "${ORCHID_UID:?set target UID}:${ORCHID_GID:?set target GID}"
+    read_only: true
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 120s
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /tmp:size=256m,mode=1777
+    command: [python, -m, orchid.cli, serve, --port, "${ORCHID_PORT:-8000}"]
+    environment:
+      ORCHID_ROOT_PATH: ${ORCHID_ROOT_PATH:-/orchid-poster}
+      ORCHID_PUBLIC_URL: ${ORCHID_PUBLIC_URL:-}
+      ORCHID_RECORDS_FILE: /var/lib/orchid/visitor-records.sqlite3
+      SELFHOST_MODEL_BASE_URL: ${SELFHOST_MODEL_BASE_URL:-http://127.0.0.1:18080}
+      SELFHOST_MODEL_API_KEY_FILE: /run/secrets/model_api_key
+      SELFHOST_MODEL_EXPECTED_ID: ${SELFHOST_MODEL_EXPECTED_ID:-Qwen/Qwen3.5-4B}
+      SELFHOST_MODEL_CONTEXT_TOKENS: ${SELFHOST_MODEL_CONTEXT_TOKENS:-8192}
+    secrets: [model_api_key]
+    volumes:
+      - type: bind
+        source: ${ORCHID_RUNTIME_DIR:?set runtime directory}/.cache
+        target: /app/.cache
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${ORCHID_RUNTIME_DIR}/.orchid/assets
+        target: /app/.orchid/assets
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${ORCHID_RUNTIME_DIR}/.orchid/index
+        target: /app/.orchid/index
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${ORCHID_RUNTIME_DIR}/pdfs
+        target: /app/pdfs
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${ORCHID_RUNTIME_DIR}/data/sources.json
+        target: /app/data/sources.json
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${ORCHID_RECORDS_DIR:?set private records directory}
+        target: /var/lib/orchid
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${ORCHID_SPEECH_CACHE_DIR:?set speech cache directory}
+        target: /app/.cache/speech
+        bind: {create_host_path: false}
+    healthcheck:
+      test: [CMD, python, -c, "import httpx; r=httpx.get('http://127.0.0.1:${ORCHID_PORT:-8000}/api/health',timeout=10); r.raise_for_status(); d=r.json(); assert d['app']=='ready' and d['index']['ready'] and d['recording']['ready'] and d['speech']['ready']"]
+      interval: 60s
+      timeout: 15s
+      start_period: 90s
+      retries: 3
+secrets:
+  model_api_key:
+    file: ${SELFHOST_MODEL_KEY_FILE:?set existing private key file}

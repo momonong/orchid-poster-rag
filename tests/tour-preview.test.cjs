@@ -149,6 +149,9 @@ test('tour UI preserves URL/audio boundaries, pauses questions, ignores cleared 
       let chatRequests = 0;
       const routeHandler = async route => {
         const url = new URL(route.request().url());
+        const prefix=process.env.ORCHID_TEST_PREFIX || '';
+        assert.ok(url.pathname.startsWith(prefix+'/'),`escaped prefix: ${url.pathname}`);
+        url.pathname=url.pathname.slice(prefix.length);
         if (url.pathname === '/api/health') return route.fulfill({json:{model:{ready:true},index:{ready:true},speech:{ready:true,languages:['en','zh-TW']}}});
         if (url.pathname === '/assets/tour-preview/audio/manifest.json') return route.fulfill({json:{complete:false,items:[]}});
         if (url.pathname === '/api/speech') { speechBodies.push(route.request().postDataJSON()); return route.fulfill({contentType:'audio/wav',body:Buffer.from('mock audio; no TTS model is called')}); }
@@ -161,7 +164,7 @@ test('tour UI preserves URL/audio boundaries, pauses questions, ignores cleared 
         }
         let file;
         if (url.pathname.startsWith('/tour-preview/')) file=path.join(project,'orchid','static',url.pathname.endsWith('/')?'tour-preview/index.html':url.pathname.slice(1));
-        else if (url.pathname === '/speech.js') file=path.join(project,'orchid','static','speech.js');
+        else if (['/speech.js','/urls.js'].includes(url.pathname)) file=path.join(project,'orchid','static',url.pathname.slice(1));
         else if (url.pathname.startsWith('/assets/tour-preview/')) file=path.join(project,'.orchid',url.pathname.slice(1));
         if (!file) return route.fulfill({status:404});
         const contentType=file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.json')?'application/json':file.endsWith('.webp')?'image/webp':file.endsWith('.png')?'image/png':'text/html';
@@ -171,7 +174,7 @@ test('tour UI preserves URL/audio boundaries, pauses questions, ignores cleared 
       const page = await context.newPage();
       const errors = [];
       page.on('pageerror',error => errors.push(error.message));
-      await page.goto('https://orchid.test/tour-preview/');
+      await page.goto(`https://orchid.test${process.env.ORCHID_TEST_PREFIX || ''}/tour-preview/`);
       await page.locator('#play-guide:not([disabled])').waitFor();
       assert.equal(await page.locator('#menu-toggle').count(),1,'the guide needs one visible Menu disclosure');
       const titleCenter=await page.locator('#view-title').evaluate(el=>{const box=el.getBoundingClientRect();return box.y+box.height/2;});
@@ -276,7 +279,7 @@ test('tour UI preserves URL/audio boundaries, pauses questions, ignores cleared 
         await other.route('**/*',routeHandler);
         await other.addInitScript(() => sessionStorage.setItem('orchid-tour-welcome-seen','1'));
         const otherPage = await other.newPage();
-        await otherPage.goto('https://orchid.test/tour-preview/');
+        await otherPage.goto(`https://orchid.test${process.env.ORCHID_TEST_PREFIX || ''}/tour-preview/`);
         await otherPage.locator('#play-guide:not([disabled])').waitFor();
         assert.equal(await otherPage.evaluate(() => devicePixelRatio),dpr);
         for (const width of [320,360,390,430]) {
@@ -311,6 +314,9 @@ test('first-use guidance and feedback are bilingual, accessible on phones and sa
       let releaseFailure;
       await context.route('**/*',async route=>{
         const url=new URL(route.request().url());
+        const prefix=process.env.ORCHID_TEST_PREFIX || '';
+        assert.ok(url.pathname.startsWith(prefix+'/'),`escaped prefix: ${url.pathname}`);
+        url.pathname=url.pathname.slice(prefix.length);
         if(url.pathname==='/api/health')return route.fulfill({json:{model:{ready:true},index:{ready:true},speech:{ready:true,languages:['en','zh-TW']}}});
         if(url.pathname==='/assets/tour-preview/audio/manifest.json')return route.fulfill({json:{complete:false,items:[]}});
         if(url.pathname==='/api/speech')return route.fulfill({contentType:'audio/wav',body:Buffer.from('fixture; no TTS')});
@@ -322,7 +328,7 @@ test('first-use guidance and feedback are bilingual, accessible on phones and sa
         if(url.pathname==='/api/chat'){const body=route.request().postDataJSON();chatBodies.push(body);return chatBodies.length<=2 ? route.fulfill({status:503,json:{detail:{code:'recording_unavailable'}}}) : route.fulfill({json:{status:'answered',answer:'A fixture answer.',citations:[],request_id:body.request_id,record_saved:true}});}
         let file;
         if(url.pathname.startsWith('/tour-preview/'))file=path.join(project,'orchid','static',url.pathname.endsWith('/')?'tour-preview/index.html':url.pathname.slice(1));
-        else if(url.pathname==='/speech.js')file=path.join(project,'orchid','static','speech.js');
+        else if(['/speech.js','/urls.js'].includes(url.pathname))file=path.join(project,'orchid','static',url.pathname.slice(1));
         else if(url.pathname.startsWith('/assets/tour-preview/'))file=path.join(project,'.orchid',url.pathname.slice(1));
         if(!file)return route.fulfill({status:404});
         const contentType=file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.json')?'application/json':file.endsWith('.webp')?'image/webp':file.endsWith('.png')?'image/png':'text/html';
@@ -330,7 +336,7 @@ test('first-use guidance and feedback are bilingual, accessible on phones and sa
       });
       const page=await context.newPage();
       const errors=[];page.on('pageerror',error=>errors.push(error.message));
-      await page.goto('https://orchid.test/tour-preview/');
+      await page.goto(`https://orchid.test${process.env.ORCHID_TEST_PREFIX || ''}/tour-preview/`);
       await page.locator('#welcome-dialog[open]').waitFor();
       assert.equal(await page.locator('html').getAttribute('lang'),'en');
       assert.match(await page.locator('#welcome-dialog .recording-notice').textContent(),/saved locally/);
@@ -473,12 +479,15 @@ test('help screenshots match the language, enlarge without completing welcome an
       const writes=[];
       await context.route('**/*',async route=>{
         const request=route.request(),url=new URL(request.url());
+        const prefix=process.env.ORCHID_TEST_PREFIX || '';
+        assert.ok(url.pathname.startsWith(prefix+'/'),`escaped prefix: ${url.pathname}`);
+        url.pathname=url.pathname.slice(prefix.length);
         if(request.method()!=='GET'){writes.push(url.pathname);return route.fulfill({status:405});}
         if(url.pathname==='/api/health')return route.fulfill({json:{model:{ready:false},index:{ready:true},speech:{ready:false,languages:[]}}});
         if(url.pathname==='/assets/tour-preview/audio/manifest.json')return route.fulfill({json:{complete:false,items:[]}});
         let file;
         if(url.pathname.startsWith('/tour-preview/'))file=path.join(project,'orchid','static',url.pathname.endsWith('/')?'tour-preview/index.html':url.pathname.slice(1));
-        else if(url.pathname==='/speech.js')file=path.join(project,'orchid','static','speech.js');
+        else if(['/speech.js','/urls.js'].includes(url.pathname))file=path.join(project,'orchid','static',url.pathname.slice(1));
         else if(url.pathname.startsWith('/assets/tour-preview/'))file=path.join(project,'.orchid',url.pathname.slice(1));
         if(!file)return route.fulfill({status:404});
         const type=file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.json')?'application/json':file.endsWith('.png')?'image/png':file.endsWith('.webp')?'image/webp':'text/html';
@@ -486,7 +495,7 @@ test('help screenshots match the language, enlarge without completing welcome an
       });
       const page=await context.newPage(),errors=[];
       page.on('pageerror',error=>errors.push(error.message));
-      await page.goto('https://orchid.test/tour-preview/');await page.locator('#welcome-dialog[open]').waitFor();
+      await page.goto(`https://orchid.test${process.env.ORCHID_TEST_PREFIX || ''}/tour-preview/`);await page.locator('#welcome-dialog[open]').waitFor();
       assert.equal(await page.locator('[data-help-image]').count(),3);
       for(const language of ['en','zh-TW']){
         await page.locator(`#welcome-dialog [data-language="${language}"]`).click();
@@ -545,4 +554,49 @@ test('help screenshots match the language, enlarge without completing welcome an
       assert.deepEqual(errors,[]);
       await context.close();
     }finally{await browser.close();}
+  });
+
+test('prepared tour WAV and document links stay inside the application prefix',
+  {skip:!chromium,timeout:30000},async()=>{
+    const fs=require('node:fs/promises'),path=require('node:path');
+    const project=path.join(__dirname,'..'),prefix=process.env.ORCHID_TEST_PREFIX || '';
+    const browser=await chromium.launch({channel:process.env.ORCHID_BROWSER_CHANNEL || (process.platform==='win32'?'msedge':undefined),headless:true,args:['--disable-gpu','--disable-background-networking']});
+    try {
+      const context=await browser.newContext({viewport:{width:390,height:844}});
+      await context.addInitScript(()=>{
+        sessionStorage.setItem('orchid-tour-welcome-seen','1');
+        window.Audio=class {play(){this.onplaying?.();return Promise.resolve();}pause(){}removeAttribute(){}load(){}};
+      });
+      const requests=[],errors=[];
+      await context.route('**/*',async route=>{
+        const request=route.request(),url=new URL(request.url());
+        requests.push({path:url.pathname,method:request.method()});
+        assert.ok(url.pathname.startsWith(prefix+'/'),`escaped prefix: ${url.pathname}`);
+        url.pathname=url.pathname.slice(prefix.length);
+        if(url.pathname==='/api/health')return route.fulfill({json:{model:{ready:false},index:{ready:true},speech:{ready:true,languages:['en','zh-TW']}}});
+        if(url.pathname.endsWith('.wav'))return route.fulfill({contentType:'audio/wav',body:Buffer.from('prepared fixture; no TTS')});
+        let file;
+        if(url.pathname.startsWith('/tour-preview/'))file=path.join(project,'orchid','static',url.pathname.endsWith('/')?'tour-preview/index.html':url.pathname.slice(1));
+        else if(['/speech.js','/urls.js'].includes(url.pathname))file=path.join(project,'orchid','static',url.pathname.slice(1));
+        else if(url.pathname.startsWith('/assets/tour-preview/'))file=path.join(project,'.orchid',url.pathname.slice(1));
+        if(!file)return route.fulfill({status:404});
+        const type=file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.json')?'application/json':file.endsWith('.png')?'image/png':file.endsWith('.webp')?'image/webp':'text/html';
+        return route.fulfill({contentType:type,body:await fs.readFile(file)});
+      });
+      const page=await context.newPage();page.on('pageerror',error=>errors.push(error.message));
+      await page.goto(`https://orchid.test${prefix}/tour-preview/`);
+      await page.locator('#play-guide:not([disabled])').waitFor();
+      await page.locator('#play-guide').click();
+      await page.waitForFunction(()=>document.querySelector('#play-guide').textContent==='Pause');
+      assert.ok(requests.some(request=>request.method==='GET' && request.path.startsWith(prefix+'/assets/tour-preview/audio/') && request.path.endsWith('.wav')));
+      assert.ok(!requests.some(request=>request.method==='POST'),'prepared narration must never call TTS');
+      await page.locator('[data-section="references"]').click();
+      await page.waitForURL('**/#references');
+      await page.locator('a[href*="/api/documents/"]').first().waitFor();
+      const links=await page.locator('a[href*="/api/documents/"]').evaluateAll(items=>items.map(item=>item.href));
+      assert.ok(links.some(link=>link.includes(prefix+'/api/documents/poster')));
+      assert.ok(links.every(link=>new URL(link,'https://orchid.test').pathname.startsWith(prefix+'/api/documents/')));
+      assert.deepEqual(errors,[]);
+      await context.close();
+    } finally { await browser.close(); }
   });

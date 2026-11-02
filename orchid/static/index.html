@@ -6,15 +6,16 @@
   <meta name="theme-color" content="#f6f3f5">
   <meta name="description" content="Explore orchid pigmentation through three clues, source-linked questions and a local voice guide.">
   <title>Orchid patterns | One orchid, three clues</title>
-  <link rel="stylesheet" href="/style.css">
-  <script src="/locale.js" defer></script>
-  <script src="/speech.js" defer></script>
-  <script src="/app.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./urls.js" defer></script>
+  <script src="./locale.js" defer></script>
+  <script src="./speech.js" defer></script>
+  <script src="./app.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#question" data-i18n="skip">Ask a question</a>
   <header class="site-header">
-    <a href="/" class="wordmark"><span class="mark" aria-hidden="true">∴</span><span><span data-i18n="brand">Orchid patterns</span><small data-i18n="institution">NCKU · Research Day guide</small></span></a>
+    <a href="./" class="wordmark"><span class="mark" aria-hidden="true">∴</span><span><span data-i18n="brand">Orchid patterns</span><small data-i18n="institution">NCKU · Research Day guide</small></span></a>
     <div class="header-actions">
       <div class="language-switch" role="group" aria-label="Language / 語言"><button type="button" data-language="en" aria-pressed="true" lang="en">English</button><button type="button" data-language="zh-TW" aria-pressed="false" lang="zh-Hant-TW">繁體中文</button></div>
       <nav data-i18n-aria="researchNav" aria-label="Research sources"><button type="button" id="poster-open" data-i18n="posterOpen">View poster ↗</button><a href="https://link.springer.com/article/10.1186/s12870-024-05305-z" target="_blank" rel="noopener noreferrer" data-i18n="paperOpen">Read paper ↗</a></nav>
@@ -28,7 +29,7 @@
     </section>
     <div class="workspace">
       <section class="field-guide" aria-labelledby="guide-heading">
-        <figure class="flower-plate"><img src="/assets/flowers.webp" data-i18n-alt="flowerAlt" alt="Eight Phalaenopsis patterns from the research poster: separate purple spots through extensive purple patches" width="964" height="480"><figcaption><span class="flower-caption" data-i18n="flowerCaption">Different patterns may reflect different regulatory balances.</span><span data-i18n="flowerCredit">Original research poster · Introduction</span></figcaption></figure>
+        <figure class="flower-plate"><img src="./assets/flowers.webp" data-i18n-alt="flowerAlt" alt="Eight Phalaenopsis patterns from the research poster: separate purple spots through extensive purple patches" width="964" height="480"><figcaption><span class="flower-caption" data-i18n="flowerCaption">Different patterns may reflect different regulatory balances.</span><span data-i18n="flowerCredit">Original research poster · Introduction</span></figcaption></figure>
         <div class="intro-row"><h2 id="guide-heading" data-i18n="guideHeading">Meet the study in one minute</h2><button type="button" id="intro-toggle" aria-expanded="false" aria-controls="intro-detail">Open guide ＋</button></div>
         <div id="intro-detail" class="intro-detail" hidden><p id="intro-text">This study explores Phalaenopsis patterns with a reaction–diffusion model. Predictions still need experimental validation.</p><div id="intro-sources" class="source-row"></div></div>
         <div class="clue-tabs" role="tablist" data-i18n-aria="clueTabs" aria-label="Three research clues">
@@ -38,7 +39,7 @@
         </div>
         <article id="clue-panel" role="tabpanel" aria-labelledby="tab-clue1" class="clue-panel">
           <div class="clue-heading"><span id="clue-number">01</span><div><h2 id="clue-title">Where do spots come from?</h2><p id="clue-summary">Local activation meets faster-spreading inhibition.</p></div></div>
-          <figure class="clue-figure"><img id="clue-image" src="/assets/clue1.webp" alt="Poster simulation: regular spots" width="1400" height="430" loading="lazy"><figcaption id="clue-caption">Poster Figure 2 · model simulation</figcaption></figure>
+          <figure class="clue-figure"><img id="clue-image" src="./assets/clue1.webp" alt="Poster simulation: regular spots" width="1400" height="430" loading="lazy"><figcaption id="clue-caption">Poster Figure 2 · model simulation</figcaption></figure>
           <p id="clue-detail">PeMYB11 promotes its own activity and PeMYBx; PeMYBx limits PeMYB11 in turn. Together, these reactions and different diffusion rates can form regular spots in the model.</p>
           <button type="button" id="play-clue" class="play-button" data-play="clue" data-i18n="playClue" disabled>Play this clue</button>
           <div id="clue-sources" class="source-row"></div>
@@ -66,7 +67,7 @@
     <footer><p data-i18n="footerSource">Research: Lu et al. (2024), BMC Plant Biology 24, 681.</p><div><a href="https://link.springer.com/article/10.1186/s12870-024-05475-w" target="_blank" rel="noopener noreferrer" data-i18n="correction">Figure correction</a><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer" data-i18n="license">Paper: CC BY 4.0</a><button type="button" data-source="P16" data-i18n="contact">Contact the researchers</button></div><p class="credit" data-i18n="credit">Images cropped from the supplied poster; original biological and simulation context retained. Reviewed summaries are not verbatim quotations.</p></footer>
   </main>
   <dialog id="source-dialog" aria-labelledby="source-title"><div class="dialog-head"><h2 id="source-title" data-i18n="sourceTitle">Source information</h2><button type="button" data-close="source-dialog" data-i18n="close" data-i18n-aria="sourceClose" aria-label="Close source">Close ×</button></div><div id="source-content"></div></dialog>
-  <dialog id="poster-dialog" class="poster-dialog" aria-labelledby="poster-title"><div class="dialog-head"><h2 id="poster-title" data-i18n="posterTitle">Research Day poster</h2><button type="button" data-close="poster-dialog" data-i18n="close" data-i18n-aria="posterClose" aria-label="Close poster">Close ×</button></div><p><span data-i18n="posterNote">Poster Figures 1–4 use their own numbering, separate from the paper.</span> <a href="/api/documents/poster" target="_blank" rel="noopener noreferrer" data-i18n="posterPdf">Open original PDF ↗</a></p><div class="poster-zoom"><img src="/assets/poster.png" data-i18n-alt="posterAlt" alt="Complete research poster: Introduction, Methods, three clues and study limitations" width="1192" height="1684" loading="lazy"></div></dialog>
-  <noscript><div class="noscript">Interactive clues and questions need JavaScript. <a href="/api/documents/poster">Read the original poster PDF / 閱讀研究海報</a>.</div></noscript>
+  <dialog id="poster-dialog" class="poster-dialog" aria-labelledby="poster-title"><div class="dialog-head"><h2 id="poster-title" data-i18n="posterTitle">Research Day poster</h2><button type="button" data-close="poster-dialog" data-i18n="close" data-i18n-aria="posterClose" aria-label="Close poster">Close ×</button></div><p><span data-i18n="posterNote">Poster Figures 1–4 use their own numbering, separate from the paper.</span> <a href="./api/documents/poster" target="_blank" rel="noopener noreferrer" data-i18n="posterPdf">Open original PDF ↗</a></p><div class="poster-zoom"><img src="./assets/poster.png" data-i18n-alt="posterAlt" alt="Complete research poster: Introduction, Methods, three clues and study limitations" width="1192" height="1684" loading="lazy"></div></dialog>
+  <noscript><div class="noscript">Interactive clues and questions need JavaScript. <a href="./api/documents/poster">Read the original poster PDF / 閱讀研究海報</a>.</div></noscript>
 </body>
 </html>

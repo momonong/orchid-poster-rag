@@ -97,6 +97,8 @@
   else root.OrchidTour = api;
   if (!root.document) return;
 
+  const appURL = root.OrchidURL;
+  const appFetch = (url, options) => root.fetch(appURL(url), options);
   const $ = id => document.getElementById(id);
   const text = {
     en:{brand:'Perturbation of periodic spot-generation balance leads to diversified pigmentation patterning of harlequin Phalaenopsis orchids: in silico prediction',skip:'Skip to the guide text',back:'Back to entire poster',overview:'Entire poster tour',overviewLocation:'A guide to the whole study',duration:'Read the whole poster, or listen to the guide.',
@@ -126,7 +128,7 @@
   let sequence, speech, listening = null, completed = false;
   let health = null, healthChecked = false, overviewScroll = 0, fromOverview = false;
   let preparedAudio = null;
-  let speechFetch = fetch.bind(root);
+  let speechFetch = appFetch.bind(root);
   let chatEpoch = 0, requestController = null, pending = false, history = [];
   let sourceEpoch = 0, sourceController = null, zoomActual = false;
   const focusBeforeDialog = new Map();
@@ -184,8 +186,8 @@
     const first = variants[0];
     image.width = first.width; image.height = first.height;
     image.sizes = zoom ? 'min(1120px, calc(100vw - 56px))' : '(max-width: 711px) calc(100vw - 32px), (max-width: 900px) 680px, (max-width: 1280px) calc((100vw - 80px) / 2), 600px';
-    image.srcset = variants.map(value => `${value.url} ${value.width}w`).join(', ');
-    image.src = first.url;
+    image.srcset = variants.map(value => `${appURL(value.url)} ${value.width}w`).join(', ');
+    image.src = appURL(first.url);
     image.alt = section === 'overview' ? t('imageOverview') : `${t('imageSection')}: ${currentSection()[language].title}`;
   }
   function renderImage() {
@@ -328,7 +330,7 @@
     const timeout = setTimeout(() => { timedOut = true; activeController.abort(); },80000);
     appendMessage('user',$('question').value.trim());
     try {
-      const response = await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:activeController.signal});
+      const response = await appFetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:activeController.signal});
       if (!response.ok) throw await recordingError(response);
       const result = await response.json();
       if (epoch !== chatEpoch || language !== requestLanguage) return;
@@ -357,7 +359,7 @@
       const kind = button.dataset.helpImage;
       const image = button.querySelector('img');
       const fallback = document.querySelector(`[data-help-fallback="${kind}"]`);
-      const url = `/assets/tour-preview/help/${language}-${kind}.png`;
+      const url = appURL(`/assets/tour-preview/help/${language}-${kind}.png`);
       image.alt = t(helpKeys[kind][1]);
       button.setAttribute('aria-label',`${t('viewHelpImage')}: ${t(helpKeys[kind][0])}`);
       button.querySelector('span').textContent = t(button.disabled ? 'helpUnavailable' : 'viewHelpImage');
@@ -383,7 +385,7 @@
     $('help-image-scale').disabled = true; $('help-image-error').hidden = true;
     image.onload = () => { $('help-image-scale').disabled = false; };
     image.onerror = () => { image.hidden = true; $('help-image-error').hidden = false; };
-    image.src = `/assets/tour-preview/help/${language}-${kind}.png`;
+    image.src = appURL(`/assets/tour-preview/help/${language}-${kind}.png`);
     openDialog('help-image-dialog');
   }
   function openWelcome() { pauseForDialog(); openDialog('welcome-dialog'); }
@@ -416,7 +418,7 @@
     let timedOut = false;
     const timeout = setTimeout(() => { timedOut = true; controller.abort(); },20000);
     try {
-      const response = await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal});
+      const response = await appFetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal});
       if (!response.ok) throw await recordingError(response);
       const result = await response.json();
       if (result.status !== 'saved' || !result.id) throw new Error('Invalid receipt');
@@ -430,7 +432,7 @@
   function editFeedback() { if (!feedbackPending) { feedbackAttempt = null; feedbackStatusKey = ''; feedbackErrorKey = ''; renderFeedback(); } }
   function safeLink(label, value) {
     const link = node('a',label,'link-button');
-    try { const url = new URL(value,location.origin); if (!['http:','https:'].includes(url.protocol)) return node('span',label); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer'; }
+    try { const url = new URL(appURL(value),location.origin); if (!['http:','https:'].includes(url.protocol)) return node('span',label); link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer'; }
     catch { return node('span',label); }
     return link;
   }
@@ -441,7 +443,7 @@
     setText('source-title',`${id} · ${t('source')}`); $('source-content').replaceChildren(node('p',t('sourceLoading')));
     if (!$('source-dialog').open) openDialog('source-dialog');
     try {
-      const response = await fetch(`/api/sources/${encodeURIComponent(id)}?language=${encodeURIComponent(language)}`,{signal:sourceController.signal});
+      const response = await appFetch(`/api/sources/${encodeURIComponent(id)}?language=${encodeURIComponent(language)}`,{signal:sourceController.signal});
       if (!response.ok) throw new Error('source');
       const item = await response.json(); if (epoch !== sourceEpoch || sourceLanguage !== language) return;
       setText('source-title',`${id} · ${item.title}`);
@@ -459,7 +461,7 @@
     $('check-services').disabled = true;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(),10000);
-    try { const response = await fetch('/api/health',{signal:controller.signal}); if (!response.ok) throw new Error('health'); health = await response.json(); speech?.setReadiness(health.speech); }
+    try { const response = await appFetch('/api/health',{signal:controller.signal}); if (!response.ok) throw new Error('health'); health = await response.json(); speech?.setReadiness(health.speech); }
     catch { health = null; speech?.setReadiness(null); }
     finally { clearTimeout(timeout); healthChecked = true; $('check-services').disabled = false; renderAudio(); }
   }
@@ -484,10 +486,10 @@
       speech = root.OrchidSpeech.createSpeechController({fetch:(...args) => speechFetch(...args),Audio:root.Audio,URL:root.URL,AbortController:root.AbortController},state => { sequence?.onState(state); renderAudio(); });
       sequence = createTourSequence({speech,onChapter:chapter => { listening = chapter; highlightChapter(); renderAudio(); },onFinish:reason => { completed = reason === 'complete'; listening = null; highlightChapter(); renderAudio(); }});
     }
-    const results = await Promise.allSettled([fetch('./tour-data.json').then(response => { if (!response.ok) throw new Error('data'); return response.json(); }),fetch('/assets/tour-preview/manifest.json').then(response => { if (!response.ok) throw new Error('assets'); return response.json(); }),fetch('/assets/tour-preview/audio/manifest.json').then(response => { if (!response.ok) throw new Error('audio'); return response.json(); })]);
+    const results = await Promise.allSettled([appFetch('./tour-data.json').then(response => { if (!response.ok) throw new Error('data'); return response.json(); }),appFetch('/assets/tour-preview/manifest.json').then(response => { if (!response.ok) throw new Error('assets'); return response.json(); }),appFetch('/assets/tour-preview/audio/manifest.json').then(response => { if (!response.ok) throw new Error('audio'); return response.json(); })]);
     if (results[0].status === 'fulfilled') data = results[0].value;
     if (results[1].status === 'fulfilled') manifest = results[1].value;
-    if (data) { preparedAudio = await createPreparedSpeechFetch({fetch:fetch.bind(root),data,manifest:results[2].status === 'fulfilled' ? results[2].value : null,crypto:root.crypto}); speechFetch = preparedAudio.fetch; }
+    if (data) { preparedAudio = await createPreparedSpeechFetch({fetch:appFetch,data,manifest:results[2].status === 'fulfilled' ? results[2].value : null,crypto:root.crypto}); speechFetch = preparedAudio.fetch; }
     if (!data || !manifest) { $('asset-error').hidden = false; setText('asset-error',t(data ? 'assetError' : 'dataError')); }
     if (data) { section = parseSection(location.hash,data.order); if (location.hash !== `#${section}`) window.history.replaceState(null,'',`#${section}`); render(); }
     await checkHealth();
@@ -534,7 +536,7 @@
   $('back-overview').addEventListener('click',event => { if (fromOverview) { event.preventDefault(); fromOverview = false; window.history.back(); } });
   window.addEventListener('hashchange',changeView);
   $('open-image').addEventListener('click',() => { const item = imageItem(); if (!item) return; zoomActual = false; setText('image-title',$('view-title').textContent); setText('image-scale',t('actualPixels')); $('zoom-image').style.width = '100%'; setImage($('zoom-image'),item,true); openDialog('image-dialog'); });
-  $('image-scale').addEventListener('click',() => { zoomActual = !zoomActual; const largest = imageItem().variants.at(-1); $('zoom-image').style.width = zoomActual ? `${largest.width}px` : '100%'; if (zoomActual) { $('zoom-image').removeAttribute('srcset'); $('zoom-image').src = largest.url; } else setImage($('zoom-image'),imageItem(),true); setText('image-scale',t(zoomActual ? 'fitImage' : 'actualPixels')); });
+  $('image-scale').addEventListener('click',() => { zoomActual = !zoomActual; const largest = imageItem().variants.at(-1); $('zoom-image').style.width = zoomActual ? `${largest.width}px` : '100%'; if (zoomActual) { $('zoom-image').removeAttribute('srcset'); $('zoom-image').src = appURL(largest.url); } else setImage($('zoom-image'),imageItem(),true); setText('image-scale',t(zoomActual ? 'fitImage' : 'actualPixels')); });
   $('open-question').addEventListener('click',openQuestion);
   $('quick-question').addEventListener('click',openQuestion);
   $('read-along').addEventListener('click',() => {

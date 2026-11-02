@@ -1,4 +1,5 @@
 import os
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import urlparse
@@ -18,12 +19,15 @@ class Settings:
     expected_model: str = field(default_factory=lambda: os.getenv("SELFHOST_MODEL_EXPECTED_ID", "Qwen/Qwen3.5-4B"))
     context_tokens: int | None = field(default_factory=lambda: int(os.environ["SELFHOST_MODEL_CONTEXT_TOKENS"])
                                       if os.getenv("SELFHOST_MODEL_CONTEXT_TOKENS") else None)
+    root_path: str = field(default_factory=lambda: os.getenv("ORCHID_ROOT_PATH", ""))
     public_url: str = field(default_factory=lambda: os.getenv("ORCHID_PUBLIC_URL", ""))
     wait_seconds: float = 35
     response_seconds: float = 44
 
     def __post_init__(self):
         self.root = Path(self.root)
+        if self.root_path and (not re.fullmatch(r"(?:/[A-Za-z0-9_-]+)+", self.root_path)):
+            raise ValueError("ORCHID_ROOT_PATH must be empty or a path such as /orchid-poster")
         parsed = urlparse(self.model_base)
         if parsed.scheme != "http" or parsed.hostname not in {"127.0.0.1", "localhost", "::1"}:
             raise ValueError("模型服務必須使用同機 loopback HTTP 位址")

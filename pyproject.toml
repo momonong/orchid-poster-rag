@@ -9,11 +9,13 @@ dependencies = [
   "httpx>=0.28,<1",
   "numpy>=2,<3",
   "sentence-transformers>=3.4,<6",
+  "torch==2.15.0",
   "rank-bm25>=0.2.2,<0.3",
   "pymupdf>=1.25,<2",
   "qrcode[pil]>=8,<9",
   "psutil>=6,<8",
   "sherpa-onnx==1.13.3",
+  "sherpa-onnx-core==1.13.3; sys_platform == 'linux'",
   "opencc-python-reimplemented==0.1.7",
 ]
 
