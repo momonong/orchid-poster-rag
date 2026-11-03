@@ -32,6 +32,11 @@ def english_query_aliases(query):
     return query + " " + " ".join(aliases) if aliases else query
 
 
+def question_content(question):
+    # The UI's location label is navigation metadata, not the visitor's question.
+    return re.sub(r"^\[Poster section: [^\]\r\n]+\]\s*", "", question)
+
+
 def encoder_path(settings):
     return settings.cache / "e5-model"
 
@@ -109,17 +114,24 @@ class HybridIndex:
         if not self.ready:
             raise RuntimeError(self.reason)
         # History can disambiguate short follow-ups, but is never inserted as source evidence.
-        query = question
-        if history and len(question) < 35:
+        query = question_content(question)
+        if not query.strip():
+            return []
+        if history and len(query) < 35:
             previous = next((h["content"] for h in reversed(history) if h["role"] == "user"), "")
-            query = f"{previous[:200]} {question}"
+            query = f"{question_content(previous)[:200]} {query}"
         if len(self.encoder.tokenizer.encode("query: " + query, add_special_tokens=True)) > 512:
             raise ValueError("問題加上追問前文超過 embedding 長度限制，請縮短問題或清除對話後再問。")
+        expanded = query
         if language == "en":
             expanded = english_query_aliases(query)
-            # Optional aliases never truncate the original or make a valid query fail.
-            if len(self.encoder.tokenizer.encode("query: " + expanded, add_special_tokens=True)) <= 512:
-                query = expanded
+        elif "細胞" in query and re.search(r"斑點|斑塊", query):
+            # Concept vocabulary only, never answer text or hard-coded source IDs.
+            expanded = query + " 花青素 色素分布"
+        # Optional aliases never truncate the original or make a valid query fail.
+        if (expanded != query
+                and len(self.encoder.tokenizer.encode("query: " + expanded, add_special_tokens=True)) <= 512):
+            query = expanded
         vector = self.encoder.encode(["query: " + query], normalize_embeddings=True, show_progress_bar=False)[0]
         dense = self.vectors @ vector
         sparse = self.bm25.get_scores(lexical_tokens(query))

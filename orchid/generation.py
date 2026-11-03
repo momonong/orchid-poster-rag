@@ -135,9 +135,13 @@ def validate_claim_scope(answer):
 
 
 OUTPUT_CONTRACT = """只輸出一個完整 JSON 物件，恰好含兩個唯一欄位，先 status 再 answer。
-status 的值是 answered 或 unknown；answer 是一個字串，全部段落放在同一字串，多段用 \\n\\n 分隔。
-answer 最多兩小段，每段一至兩句；每段事實句末附 evidence 中的 [來源ID]。JSON 外不加文字。
-格式範例：{"status":"answered","answer":"..."}。"""
+status 的值是 answered 或 unknown；answer 是一個字串。
+answer 只寫一小段一至兩句，直接回答使用者實際問的內容；不要另寫補充段落或延伸介紹。
+問題開頭的 [Poster section: ...] 僅是觀看位置，不是要求總結該區塊；不要因位置標題提到融合，就補入使用者沒有問的融合條件或參數。
+每個事實句末附引用：把本次 evidence 的 id 原值直接放在半形方括號內。
+例如 id 是 S06 就寫 [S06]；id 是 P08_1 就寫 [P08_1]。範例只示範格式，實際只能引用本次 evidence 確實存在且直接支持該句的 id。
+括號內只有 id，不要加「來源」、「來源ID」、冒號或其他文字；不可寫成 [來源ID: S06] 或 [來源ID]。
+JSON 外不加文字。格式範例：{"status":"answered","answer":"..."}。"""
 
 
 SYSTEM = """你是蘭花研究海報的導覽員。使用台灣繁體中文，先回答再解釋。

@@ -64,3 +64,20 @@ def test_near_limit_retains_complete_original_query_when_optional_aliases_do_not
     question = " ".join(["word"] * 509 + ["micromolar", "measurement"])
     current.search(question, language="en")
     assert current.encoder.queries == ["query: " + question]
+
+
+def test_poster_location_does_not_replace_short_followup_with_section_keywords():
+    current = index()
+    current.search("[Poster section: Clue 2: fused patches] 為什麼？",
+        [{"role": "user", "content": "單獨提高 G_A 會讓斑點變大嗎？"}], language="zh-TW")
+    assert current.encoder.queries == ["query: 單獨提高 G_A 會讓斑點變大嗎？ 為什麼？"]
+
+
+def test_spot_vs_cell_question_retrieves_pigmentation_background_not_just_cell_coupling():
+    current = index()
+    current.chunks[0].update(text="花青素 色素分布", title="花瓣顏色背景")
+    current.bm25 = BM25Okapi([lexical_tokens(row["text"] + " " + row["title"]) for row in current.chunks])
+    results = current.search("[Poster section: Clue 2: fused patches] 每個斑點都代表一個細胞嗎？",
+                             language="zh-TW")
+    assert any(row["id"] == "threshold" for row in results)
+    assert "Poster section:" not in current.encoder.queries[0]
