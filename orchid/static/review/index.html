@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer">
+  <title>參觀者提問與回饋 · Orchid poster</title>
+  <link rel="stylesheet" href="__ROOT__/review/review.css">
+  <script src="__ROOT__/review/review.js" defer></script>
+</head>
+<body>
+  <header class="masthead"><span class="brand">Orchid poster <span>研究團隊</span></span><a class="button" href="__ROOT__/tour-preview/">回到海報導覽</a></header>
+  <main>
+    <div class="heading"><div><h1>參觀者提問與回饋</h1><p>保存現場的好奇，留給研究後續的討論。</p></div><button id="logout" hidden>登出</button></div>
+    <section id="login-panel" class="login-panel" aria-labelledby="login-title">
+      <h2 id="login-title">研究團隊審閱入口</h2>
+      <p>輸入審閱密碼，查看已保存的提問、回答與回饋。</p>
+      <form id="login-form"><label for="password">審閱密碼</label><div class="login-controls"><input id="password" type="password" autocomplete="current-password" required maxlength="128"><button class="primary" type="submit">開啟紀錄</button></div></form>
+      <p class="note">密碼只用於本次瀏覽；重新整理或登出後需再次輸入。</p>
+    </section>
+    <div id="workspace" hidden>
+      <div class="workspace-heading"><nav class="tabs" aria-label="紀錄類型"><button data-kind="questions" aria-pressed="true">提問與回答 <span id="questions-count">—</span></button><button data-kind="feedback" aria-pressed="false">回饋 <span id="feedback-count">—</span></button></nav><button id="refresh">重新載入</button></div>
+      <details id="filter-panel"><summary>搜尋與篩選</summary><form id="filters" class="filters"><div class="search"><label for="search">搜尋內容</label><input id="search" type="search" maxlength="200" placeholder="搜尋問題、回答或回饋"></div><div><label for="language">提問語言</label><select id="language"><option value="">全部語言</option><option value="en">English</option><option value="zh-TW">繁體中文</option></select></div><div id="status-filter"><label for="status">回答狀態</label><select id="status"><option value="">全部狀態</option><option value="answered">已回答</option><option value="unknown">未取得可確認回答</option><option value="pending">處理中</option><option value="busy">忙碌</option><option value="unavailable">服務無法使用</option><option value="interrupted">已中斷</option></select></div><button type="submit">搜尋</button></form></details>
+      <div class="list-caption"><p id="range" aria-live="polite"></p><span id="updated"></span></div>
+      <div id="items" aria-busy="false"></div>
+      <div class="paging"><button id="previous">上一頁</button><span id="page"></span><button id="next">下一頁</button></div>
+      <p class="note">僅顯示已保存的紀錄，時間以台灣時間呈現。「未取得可確認回答」可能包含證據不足或執行問題，請搭配回答內容判斷。</p>
+    </div>
+    <p id="message" role="status" aria-live="polite"></p>
+  </main>
+  <footer>研究團隊唯讀檢視 · 不會修改訪客紀錄</footer>
+</body>
+</html>

@@ -21,6 +21,7 @@ class Settings:
                                       if os.getenv("SELFHOST_MODEL_CONTEXT_TOKENS") else None)
     root_path: str = field(default_factory=lambda: os.getenv("ORCHID_ROOT_PATH", ""))
     public_url: str = field(default_factory=lambda: os.getenv("ORCHID_PUBLIC_URL", ""))
+    review_key_file: str = field(default_factory=lambda: os.getenv("ORCHID_REVIEW_KEY_FILE", ""))
     wait_seconds: float = 35
     response_seconds: float = 44
 

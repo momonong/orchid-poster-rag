@@ -1,0 +1,9 @@
+# Opt-in review access. Keep the separate random key outside the source/runtime bundle.
+services:
+  orchid:
+    environment:
+      ORCHID_REVIEW_KEY_FILE: /run/secrets/review_key
+    secrets: [review_key]
+secrets:
+  review_key:
+    file: ${ORCHID_REVIEW_KEY_FILE:?set private review key file}

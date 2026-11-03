@@ -18,14 +18,16 @@ Qwen服務使用selfhost-models已發布0.2.0映像，執行來源29bec681f6577f
 
 ## 啟停
 
+2026-11-03網站已更新為 `orchid-poster:review-20261103`，新增[研究團隊唯讀審閱入口](review.md)。以下網站指令包含必須保留的review override。原始2026-11-02的模型與資產驗收紀錄仍保留於本文件。
+
 在工作站執行，僅管理本專案網站：
 
 ```bash
 cd /home/cball/orchid-poster-deploy
-docker compose --env-file deploy/.env -f compose.yaml -f deploy/compose.ingress.yaml up -d orchid ingress
-docker compose --env-file deploy/.env -f compose.yaml -f deploy/compose.ingress.yaml ps
+docker compose --env-file deploy/.env -f compose.yaml -f deploy/compose.ingress.yaml -f deploy/compose.review.yaml up -d orchid ingress
+docker compose --env-file deploy/.env -f compose.yaml -f deploy/compose.ingress.yaml -f deploy/compose.review.yaml ps
 # 關閉網站入口與應用，保留資料與Qwen服務
-docker compose --env-file deploy/.env -f compose.yaml -f deploy/compose.ingress.yaml stop orchid ingress
+docker compose --env-file deploy/.env -f compose.yaml -f deploy/compose.ingress.yaml -f deploy/compose.review.yaml stop orchid ingress
 ```
 
 模型沿用已發布Compose的生命週期，沒有新增開機自啟政策；主機重開後需手動啟動並核對ready。模型服務的完整Compose前綴：

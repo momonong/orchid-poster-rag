@@ -28,6 +28,7 @@ from .generation import (
 from .localization import UNKNOWN, Language, error_text
 from .records import RecordConflict, RecordingUnavailable, RecordStore, payload_hash
 from .retrieval import HybridIndex
+from .review import review_router
 from .speech import MAX_TEXT_CHARS, SpeechService, SpeechTimeout
 
 logger = logging.getLogger(__name__)
@@ -134,6 +135,7 @@ def create_app(settings=None, index=None, model=None, speech=None):
     app.state.index, app.state.queue, app.state.model, app.state.speech = index, queue, model, speech
     app.state.records = records
     app.state.record_tasks = set()
+    app.include_router(review_router(settings))
 
     @app.middleware("http")
     async def bounds_and_headers(request: Request, call_next):
